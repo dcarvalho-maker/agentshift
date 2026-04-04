@@ -1,0 +1,54 @@
+{
+  "agents": {
+    "bob": {
+      "default": true,
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "workspace": "/opt/agentshift/bob/agents/bob",
+      "tools": {
+        "allow": ["agentToAgent", "web", "read", "write"]
+      }
+    },
+    "marcel": {
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "workspace": "/opt/agentshift/bob/agents/marcel",
+      "tools": {
+        "allow": ["web", "read", "write"]
+      }
+    },
+    "selma": {
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "workspace": "/opt/agentshift/bob/agents/selma",
+      "tools": {
+        "allow": ["web", "read"]
+      }
+    },
+    "hugo": {
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "workspace": "/opt/agentshift/bob/agents/hugo",
+      "tools": {
+        "allow": ["web", "read", "write"]
+      }
+    },
+    "raya": {
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "workspace": "/opt/agentshift/bob/agents/raya",
+      "tools": {
+        "allow": ["web", "read", "write"]
+      }
+    },
+    "noa": {
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "workspace": "/opt/agentshift/bob/agents/noa",
+      "tools": {
+        "allow": ["web", "read"]
+      }
+    },
+    "vigile": {
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "workspace": "/opt/agentshift/bob/agents/vigile",
+      "tools": {
+        "allow": ["web", "read"]
+      }
+    }
+  }
+}

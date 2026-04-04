@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentShift — Coaching Transition to AI · Organisation Cognitive</title>
+<meta name="description" content="David Carvalho — 25 ans de leadership design. Coaching en transformation agentique et organisation cognitive pour PME et startups.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #DBBF6A;
+    --gold-muted: #B89B45;
+    --gold-glow: rgba(201, 168, 76, 0.12);
+    --gold-glow-strong: rgba(201, 168, 76, 0.25);
+    --charcoal: #2B2B2D;
+    --charcoal-deep: #1E1E20;
+    --charcoal-mid: #252527;
+    --bg: #1E1E20;
+    --bg-alt: #242426;
+    --text-primary: #F2EFE8;
+    --text-secondary: #A09B90;
+    --text-muted: #6B675E;
+    --text-on-gold: #1E1E20;
+    --border: rgba(242, 239, 232, 0.07);
+    --border-gold: rgba(201, 168, 76, 0.25);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    padding: 0.9rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: transparent;
+    transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+
+  nav.scrolled {
+    background: rgba(30, 30, 32, 0.85);
+    backdrop-filter: blur(24px);
+    border-bottom-color: var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display); font-weight: 800; font-size: 1.2rem;
+    letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; align-items: center; gap: 1.8rem; list-style: none; }
+  .nav-links a {
+    color: rgba(242, 239, 232, 0.7); text-decoration: none;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; transition: color 0.3s; font-family: var(--font-display);
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-right { display: flex; align-items: center; gap: 0.6rem; }
+
+  .lang-toggle {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(242,239,232,0.7); padding: 0.3rem 0.65rem; border-radius: 5px;
+    font-size: 0.72rem; font-family: var(--font-display); font-weight: 700;
+    cursor: pointer; transition: all 0.3s; letter-spacing: 0.06em;
+  }
+  .lang-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+  .menu-toggle {
+    display: none; background: none; border: none;
+    color: var(--text-primary); font-size: 1.4rem; cursor: pointer;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero-img {
+    width: 100%;
+    display: block;
+  }
+
+  /* CTA bar floating at bottom of hero */
+  .hero-cta-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to top, rgba(30,30,32,0.95) 0%, rgba(30,30,32,0.6) 60%, transparent 100%);
+    gap: 1rem;
+  }
+
+  .hero-cta-text {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    max-width: 500px;
+  }
+
+  .hero-cta-text strong { color: var(--text-primary); font-weight: 700; }
+
+  .hero-cta-buttons {
+    display: flex; gap: 0.75rem; flex-shrink: 0;
+  }
+
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.8rem 1.5rem; background: var(--gold); color: var(--text-on-gold);
+    font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none;
+    border-radius: 6px; border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-gold:hover {
+    background: var(--gold-light); transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.3);
+  }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255,255,255,0.05); backdrop-filter: blur(8px);
+    color: var(--text-primary); font-family: var(--font-display);
+    font-weight: 600; font-size: 0.78rem; letter-spacing: 0.05em;
+    text-transform: uppercase; text-decoration: none;
+    border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--gold); color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 5.5rem 2.5rem; }
+  .container { max-width: 1080px; margin: 0 auto; }
+
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display); font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .section-tag::before { content: ''; width: 20px; height: 2px; background: var(--gold); }
+
+  .section-title {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    color: var(--text-secondary); max-width: 520px;
+    font-size: 0.95rem; line-height: 1.8; margin-bottom: 2.5rem;
+  }
+
+  /* ============ INTRO STRIP ============ */
+  .intro-strip {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 2.5rem;
+  }
+
+  .intro-inner {
+    max-width: 800px; margin: 0 auto; text-align: center;
+  }
+
+  .intro-inner p {
+    font-size: 1.2rem; line-height: 1.7;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+  }
+
+  .intro-inner p strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .intro-inner p em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ============ PILLARS ============ */
+  .pillars { background: var(--charcoal); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+
+  .pillar-card {
+    padding: 2rem 1.5rem; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--charcoal-deep);
+    transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  .pillar-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s;
+  }
+  .pillar-card:hover { border-color: var(--border-gold); transform: translateY(-4px); box-shadow: 0 10px 35px rgba(0,0,0,0.3); }
+  .pillar-card:hover::after { transform: scaleX(1); }
+
+  .pillar-num {
+    font-family: var(--font-display); font-weight: 800; font-size: 2.8rem;
+    color: var(--gold); opacity: 0.12; line-height: 1; margin-bottom: 0.6rem;
+  }
+  .pillar-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .pillar-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+
+  /* ============ ABOUT ============ */
+  .about-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3.5rem; align-items: start; }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .stat-box {
+    padding: 1.3rem 1rem; background: var(--charcoal);
+    border: 1px solid var(--border); border-radius: 8px;
+    text-align: center; transition: border-color 0.3s;
+  }
+  .stat-box:hover { border-color: var(--border-gold); }
+  .stat-num { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .stat-lbl { font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+
+  .method-badge {
+    margin-top: 1.25rem; padding: 1.1rem;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+    border: 1px solid var(--border-gold); border-radius: 8px; text-align: center;
+  }
+  .method-badge-tag { font-family: var(--font-display); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+  .method-badge-val { font-family: var(--font-display); font-weight: 800; font-size: 0.92rem; }
+
+  .about-text p { color: var(--text-secondary); margin-bottom: 1.15rem; font-size: 0.93rem; }
+
+  .timeline { margin-top: 2rem; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--border)); }
+  .tl-item { padding-left: 1.8rem; margin-bottom: 1.3rem; position: relative; }
+  .tl-item::before { content: ''; position: absolute; left: -5px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
+  .tl-year { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
+  .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
+  .tl-co { color: var(--text-secondary); font-size: 0.82rem; }
+
+  .brand-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .brand-chip {
+    padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 4px;
+    font-family: var(--font-display); font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); transition: all 0.3s;
+  }
+  .brand-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ============ TESTIMONIALS ============ */
+  .testimonials-section { background: var(--charcoal); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .test-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .test-card { padding: 1.75rem; background: var(--charcoal-deep); border: 1px solid var(--border); border-radius: 10px; transition: all 0.4s; }
+  .test-card:hover { border-color: var(--border-gold); transform: translateY(-3px); }
+  .test-quote { font-size: 0.9rem; line-height: 1.75; color: var(--text-secondary); font-style: italic; margin-bottom: 1.25rem; padding-left: 1.1rem; border-left: 2px solid var(--gold); }
+  .test-author { display: flex; align-items: center; gap: 0.65rem; }
+  .test-av { width: 36px; height: 36px; border-radius: 50%; background: var(--gold-glow); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 0.72rem; color: var(--gold); }
+  .test-name { font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; }
+  .test-role { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* ============ CONTACT ============ */
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-info p { color: var(--text-secondary); font-size: 0.93rem; margin-bottom: 1.75rem; line-height: 1.7; }
+  .c-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; color: var(--text-secondary); font-size: 0.88rem; }
+  .c-icon { width: 34px; height: 34px; border-radius: 7px; background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; }
+
+  .cal-box {
+    background: var(--charcoal); border: 1px solid var(--border); border-radius: 10px;
+    padding: 2.5rem 1.75rem; text-align: center; min-height: 380px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .cal-box h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
+  .cal-box p { color: var(--text-secondary); font-size: 0.85rem; }
+  .cal-box .hint { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-display); font-weight: 600; letter-spacing: 0.08em; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 2rem 2.5rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+  }
+  footer p { color: var(--text-muted); font-size: 0.75rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  .footer-meta { font-family: var(--font-display); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: all 0.65s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .pillar-grid { grid-template-columns: 1fr; }
+    .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .test-grid { grid-template-columns: 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .hero-cta-bar { flex-direction: column; text-align: center; padding: 1.25rem 1.5rem; }
+    .hero-cta-text { max-width: 100%; }
+  }
+  @media (max-width: 680px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(30,30,32,0.96); backdrop-filter: blur(20px);
+      padding: 1rem; gap: 0.6rem; border-bottom: 1px solid var(--border);
+    }
+    .menu-toggle { display: block; }
+    section { padding: 3.5rem 1.25rem; }
+    .intro-strip { padding: 2.5rem 1.25rem; }
+    .intro-inner p { font-size: 1rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Agent<span>Shift</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
+    <li><a href="#about" data-fr="Parcours" data-en="About">Parcours</a></li>
+    <li><a href="#testimonials" data-fr="Témoignages" data-en="Testimonials">Témoignages</a></li>
+    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">&#9776;</button>
+  </div>
+</nav>
+
+<!-- HERO = THE IMAGE, AS-IS -->
+<section class="hero">
+  <img class="hero-img" src="hero.png" alt="David Carvalho — Coaching Transition to AI — 4E Metacognition Design — Organisation Cognitive 2026">
+  <div class="hero-cta-bar">
+    <div class="hero-cta-text" data-fr="<strong>David Carvalho</strong> — 25 ans de leadership design au service de votre <strong>transformation agentique</strong>" data-en="<strong>David Carvalho</strong> — 25 years of design leadership for your <strong>agentic transformation</strong>"><strong>David Carvalho</strong> — 25 ans de leadership design au service de votre <strong>transformation agentique</strong></div>
+    <div class="hero-cta-buttons">
+      <a href="#contact" class="btn-gold" data-fr="Réserver un appel →" data-en="Book a call →">Réserver un appel →</a>
+      <a href="#pillars" class="btn-ghost" data-fr="En savoir plus" data-en="Learn more">En savoir plus</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <div class="intro-inner reveal">
+    <p data-fr="Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche — le <strong>4E Framework</strong> — transforme votre entreprise de l'intérieur." data-en="I don't deploy AI tools. I design the <em>cognitive organization</em> that makes them useful. My approach — the <strong>4E Framework</strong> — transforms your company from within.">Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche — le <strong>4E Framework</strong> — transforme votre entreprise de l'intérieur.</p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars" id="pillars">
+  <div class="container">
+    <div class="section-tag" data-fr="Méthode 4E" data-en="4E Method">Méthode 4E</div>
+    <h2 class="section-title reveal" data-fr="Trois piliers de la transformation agentique" data-en="Three pillars of agentic transformation">Trois piliers de la transformation agentique</h2>
+    <p class="section-desc reveal" data-fr="La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes." data-en="Most AI transformations fail because they focus on technology. My approach starts with humans and systems.">La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes.</p>
+    <div class="pillar-grid">
+      <div class="pillar-card reveal">
+        <div class="pillar-num">01</div>
+        <h3 data-fr="Diagnostic Agentique" data-en="Agentic Diagnostic">Diagnostic Agentique</h3>
+        <p data-fr="Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur — pas un gadget." data-en="Mapping your decision and operational flows. Identifying where an AI agent creates real value — not a gimmick.">Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur — pas un gadget.</p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-num">02</div>
+        <h3 data-fr="Architecture Cognitive" data-en="Cognitive Architecture">Architecture Cognitive</h3>
+        <p data-fr="Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé." data-en="Designing the target organization: human roles, agent roles, collaboration interfaces. Systemic design, not an isolated PoC.">Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé.</p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-num">03</div>
+        <h3 data-fr="Adoption & Échelle" data-en="Adoption & Scale">Adoption & Échelle</h3>
+        <p data-fr="Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent." data-en="Supporting teams through change. Training, iterations, impact measurement. AI only works if humans adopt it.">Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-visual reveal">
+        <div class="about-stats">
+          <div class="stat-box"><div class="stat-num">25+</div><div class="stat-lbl" data-fr="Ans d'expérience" data-en="Years experience">Ans d'expérience</div></div>
+          <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl" data-fr="Grands groupes" data-en="Major corps">Grands groupes</div></div>
+          <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl" data-fr="Pays" data-en="Countries">Pays</div></div>
+          <div class="stat-box"><div class="stat-num">&#8734;</div><div class="stat-lbl" data-fr="Curiosité" data-en="Curiosity">Curiosité</div></div>
+        </div>
+        <div class="method-badge">
+          <div class="method-badge-tag" data-fr="Méthodologie" data-en="Methodology">Méthodologie</div>
+          <div class="method-badge-val" data-fr="Metacognition Design · 4E" data-en="Metacognition Design · 4E">Metacognition Design · 4E</div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="section-tag" data-fr="Parcours" data-en="About">Parcours</div>
+        <h2 class="section-title" data-fr="Du design industriel à l'intelligence organisationnelle" data-en="From industrial design to organizational intelligence">Du design industriel à l'intelligence organisationnelle</h2>
+        <p data-fr="Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable." data-en="For 25 years, I designed complex systems at Pininfarina, Orange, Dassault Systèmes, and Philips. From automotive interfaces to digital platforms, my job has always been the same: making the invisible readable and innovation adoptable.">Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable.</p>
+        <p data-fr="Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles — ce sont celles qui ont la meilleure architecture humain-machine." data-en="Today, that discipline applies to agentic transformation. The organizations that succeed with AI won't have the best models — they'll have the best human-machine architecture.">Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles — ce sont celles qui ont la meilleure architecture humain-machine.</p>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year" data-fr="Aujourd'hui" data-en="Present">Aujourd'hui</div><div class="tl-role" data-fr="Coaching Transformation Agentique" data-en="Agentic Transformation Coaching">Coaching Transformation Agentique</div><div class="tl-co">AgentShift · 4E</div></div>
+          <div class="tl-item"><div class="tl-year">2018 – 2024</div><div class="tl-role">SVP Experience Design</div><div class="tl-co">Pininfarina</div></div>
+          <div class="tl-item"><div class="tl-year">2014 – 2018</div><div class="tl-role" data-fr="Directeur Vision & Design" data-en="Vision & Design Director">Directeur Vision & Design</div><div class="tl-co">Orange Group</div></div>
+          <div class="tl-item"><div class="tl-year">2008 – 2014</div><div class="tl-role" data-fr="Directeur Design Studio" data-en="Design Studio Director">Directeur Design Studio</div><div class="tl-co">Dassault Systèmes</div></div>
+          <div class="tl-item"><div class="tl-year">2000 – 2008</div><div class="tl-role">Senior Designer</div><div class="tl-co">Philips Design</div></div>
+        </div>
+        <div class="brand-row">
+          <span class="brand-chip">Pininfarina</span>
+          <span class="brand-chip">Orange</span>
+          <span class="brand-chip">Dassault Systèmes</span>
+          <span class="brand-chip">Philips</span>
+          <span class="brand-chip">L2 Concept</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="section-tag" data-fr="Témoignages" data-en="Testimonials">Témoignages</div>
+    <h2 class="section-title reveal" data-fr="Ce qu'en disent les dirigeants" data-en="What leaders say">Ce qu'en disent les dirigeants</h2>
+    <p class="section-desc reveal" data-fr="Des retours de ceux qui ont franchi le pas." data-en="Feedback from those who took the leap.">Des retours de ceux qui ont franchi le pas.</p>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-quote" data-fr="David a une capacité unique à comprendre nos process métier et à identifier exactement où l'IA crée de la valeur. Pas de buzzwords, que du concret." data-en="David has a unique ability to understand our business processes and pinpoint exactly where AI creates value. No buzzwords, just results.">David a une capacité unique à comprendre nos process métier et à identifier exactement où l'IA crée de la valeur. Pas de buzzwords, que du concret.</div>
+        <div class="test-author"><div class="test-av">SL</div><div><div class="test-name">Sophie L.</div><div class="test-role" data-fr="CEO — Startup SaaS B2B" data-en="CEO — B2B SaaS Startup">CEO — Startup SaaS B2B</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-quote" data-fr="On pensait avoir besoin d'un outil IA. On avait en fait besoin de repenser notre organisation. David nous a guidés avec une clarté impressionnante." data-en="We thought we needed an AI tool. We actually needed to rethink our organization. David guided us with impressive clarity.">On pensait avoir besoin d'un outil IA. On avait en fait besoin de repenser notre organisation. David nous a guidés avec une clarté impressionnante.</div>
+        <div class="test-author"><div class="test-av">MR</div><div><div class="test-name">Marc R.</div><div class="test-role" data-fr="COO — PME Industrielle" data-en="COO — Industrial SMB">COO — PME Industrielle</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-quote" data-fr="Son background design apporte une dimension rare : il pense adoption et expérience humaine avant la tech. C'est ce qui fait la différence." data-en="His design background brings a rare dimension: he thinks adoption and human experience before tech. That's what makes the difference.">Son background design apporte une dimension rare : il pense adoption et expérience humaine avant la tech. C'est ce qui fait la différence.</div>
+        <div class="test-author"><div class="test-av">AF</div><div><div class="test-name">Alice F.</div><div class="test-role" data-fr="Fondatrice — Agence Digitale" data-en="Founder — Digital Agency">Fondatrice — Agence Digitale</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-quote" data-fr="En 3 mois, notre équipe support a réduit son temps de traitement de 40% grâce à l'architecture cognitive mise en place avec David." data-en="In 3 months, our support team cut processing time by 40% thanks to the cognitive architecture David helped build.">En 3 mois, notre équipe support a réduit son temps de traitement de 40% grâce à l'architecture cognitive mise en place avec David.</div>
+        <div class="test-author"><div class="test-av">TK</div><div><div class="test-name">Thomas K.</div><div class="test-role" data-fr="Directeur Ops — Scale-up" data-en="Head of Ops — Scale-up">Directeur Ops — Scale-up</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <div class="section-tag" data-fr="Parlons-en" data-en="Let's talk">Parlons-en</div>
+        <h2 class="section-title" data-fr="Prêt à concevoir votre organisation cognitive ?" data-en="Ready to design your cognitive organization?">Prêt à concevoir votre organisation cognitive ?</h2>
+        <p data-fr="Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise." data-en="A 30-minute intro call, no commitment. Let's identify together if agentic transformation is the right lever for your business.">Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise.</p>
+        <div class="c-row"><div class="c-icon">&#128205;</div><span data-fr="Turin, Italie · Antibes, France" data-en="Turin, Italy · Antibes, France">Turin, Italie · Antibes, France</span></div>
+        <div class="c-row"><div class="c-icon">&#127760;</div><span data-fr="Coaching à distance — toute l'Europe" data-en="Remote coaching — all across Europe">Coaching à distance — toute l'Europe</span></div>
+        <div class="c-row"><div class="c-icon">&#9993;&#65039;</div><span>david@agentshift.co</span></div>
+        <a href="https://linkedin.com/in/davidcarvalho" target="_blank" class="btn-ghost" style="margin-top:1.25rem;" data-fr="LinkedIn →" data-en="LinkedIn →">LinkedIn →</a>
+      </div>
+      <div class="cal-box reveal">
+        <div style="font-size:2.2rem;">&#128197;</div>
+        <h3 data-fr="Réservez votre créneau" data-en="Book your slot">Réservez votre créneau</h3>
+        <p data-fr="L'intégration Calendly apparaîtra ici." data-en="Calendly widget will appear here.">L'intégration Calendly apparaîtra ici.</p>
+        <p class="hint" data-fr="→ Remplacer par embed Calendly" data-en="→ Replace with Calendly embed">→ Remplacer par embed Calendly</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 AgentShift · David Carvalho — <a href="mailto:david@agentshift.co">david@agentshift.co</a></p>
+  <div class="footer-meta" data-fr="2026 // Metacognition Design" data-en="2026 // Metacognition Design">2026 // Metacognition Design</div>
+</footer>
+
+<script>
+  // Language toggle with HTML support
+  let currentLang = 'fr';
+  function toggleLang() {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    document.getElementById('langToggle').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('[data-fr][data-en]').forEach(el => {
+      const val = el.getAttribute('data-' + currentLang);
+      if (val.includes('<')) { el.innerHTML = val; } else { el.textContent = val; }
+    });
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('menuToggle');
+    nav.classList.toggle('open');
+    btn.innerHTML = nav.classList.contains('open') ? '&#10005;' : '&#9776;';
+  }
+
+  // Nav background on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('menuToggle').innerHTML = '&#9776;';
+    });
+  });
+</script>
+</body>
+</html>

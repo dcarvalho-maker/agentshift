@@ -816,10 +816,17 @@
     }
 
     async function submitBooking(bd) {
-      const res = await fetch(APPS_SCRIPT_URL + '?origin=' + encodeURIComponent(window.location.origin), {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({action:'book', ...bd})
+      const params = new URLSearchParams({
+        action: 'book',
+        origin: window.location.origin,
+        start: bd.start,
+        name: bd.name,
+        email: bd.email,
+        company: bd.company || '',
+        size: bd.size || '',
+        message: bd.message || ''
       });
+      const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString());
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
       return data;

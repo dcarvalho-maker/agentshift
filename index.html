@@ -294,13 +294,196 @@
   .c-icon { width: 34px; height: 34px; border-radius: 7px; background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; }
 
   .cal-box {
-    background: var(--charcoal); border: 1px solid var(--border); border-radius: 10px;
-    padding: 2.5rem 1.75rem; text-align: center; min-height: 380px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
+    background: transparent; border: none; border-radius: 0;
+    padding: 0; min-height: auto;
   }
-  .cal-box h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
-  .cal-box p { color: var(--text-secondary); font-size: 0.85rem; }
-  .cal-box .hint { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-display); font-weight: 600; letter-spacing: 0.08em; }
+
+  /* ============ BOOKING WIDGET ============ */
+  .booking-widget {
+    width: 100%;
+    max-width: 480px;
+    background: var(--charcoal-deep);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .booking-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .booking-header h3 {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 1.15rem;
+    color: var(--text-primary); margin-bottom: 0.3rem;
+  }
+  .booking-header p {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;
+  }
+  .booking-header .booking-duration {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    margin-top: 0.5rem; padding: 0.25rem 0.65rem;
+    background: var(--gold-glow); border: 1px solid var(--border-gold);
+    border-radius: 20px; font-family: var(--font-display);
+    font-size: 0.75rem; font-weight: 600; color: var(--gold); letter-spacing: 0.03em;
+  }
+  .booking-steps {
+    display: flex; gap: 0.5rem; padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .booking-step {
+    flex: 1; height: 3px; background: var(--border);
+    border-radius: 2px; transition: background 0.4s ease;
+  }
+  .booking-step.active { background: var(--gold); }
+  .booking-step.done { background: var(--gold-muted); }
+  .booking-body {
+    padding: 1.25rem 1.5rem; min-height: 320px; position: relative;
+  }
+  .booking-loading {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 1rem; min-height: 280px;
+    color: var(--text-secondary); font-size: 0.9rem;
+  }
+  .booking-spinner {
+    width: 32px; height: 32px;
+    border: 2.5px solid var(--border); border-top-color: var(--gold);
+    border-radius: 50%; animation: booking-spin 0.8s linear infinite;
+  }
+  @keyframes booking-spin { to { transform: rotate(360deg); } }
+  .booking-dates {
+    display: flex; gap: 0.5rem; overflow-x: auto;
+    padding-bottom: 0.75rem; margin-bottom: 1rem;
+    scrollbar-width: thin; scrollbar-color: var(--gold-muted) transparent;
+  }
+  .booking-dates::-webkit-scrollbar { height: 4px; }
+  .booking-dates::-webkit-scrollbar-thumb { background: var(--gold-muted); border-radius: 2px; }
+  .booking-date-btn {
+    flex-shrink: 0; display: flex; flex-direction: column;
+    align-items: center; gap: 0.15rem; padding: 0.6rem 0.85rem;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.25s ease; min-width: 68px;
+  }
+  .booking-date-btn:hover { border-color: var(--border-gold); color: var(--text-primary); }
+  .booking-date-btn.selected {
+    background: var(--gold-glow); border-color: var(--gold); color: var(--gold);
+  }
+  .booking-date-btn .weekday {
+    font-family: var(--font-display); font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .booking-date-btn .day {
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; line-height: 1;
+  }
+  .booking-date-btn .month {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .booking-times {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem; max-height: 220px; overflow-y: auto; padding-right: 0.25rem;
+    scrollbar-width: thin; scrollbar-color: var(--gold-muted) transparent;
+  }
+  .booking-times::-webkit-scrollbar { width: 4px; }
+  .booking-times::-webkit-scrollbar-thumb { background: var(--gold-muted); border-radius: 2px; }
+  .booking-time-btn {
+    padding: 0.6rem 0.5rem; background: transparent;
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text-secondary); font-family: var(--font-body);
+    font-size: 0.85rem; font-weight: 500; cursor: pointer;
+    transition: all 0.25s ease; text-align: center;
+  }
+  .booking-time-btn:hover {
+    border-color: var(--border-gold); color: var(--text-primary);
+    background: var(--gold-glow);
+  }
+  .booking-time-btn.selected {
+    background: var(--gold); border-color: var(--gold);
+    color: var(--charcoal-deep); font-weight: 700;
+  }
+  .booking-no-slots {
+    text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 2rem 0;
+  }
+  .booking-form { display: flex; flex-direction: column; gap: 0.85rem; }
+  .booking-field { display: flex; flex-direction: column; gap: 0.3rem; }
+  .booking-field label {
+    font-family: var(--font-display); font-size: 0.72rem; font-weight: 600;
+    color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .booking-field input,
+  .booking-field select,
+  .booking-field textarea {
+    padding: 0.65rem 0.85rem; background: var(--bg-alt);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text-primary); font-family: var(--font-body);
+    font-size: 0.9rem; transition: border-color 0.25s ease; outline: none;
+  }
+  .booking-field input:focus,
+  .booking-field select:focus,
+  .booking-field textarea:focus { border-color: var(--gold); }
+  .booking-field input::placeholder,
+  .booking-field textarea::placeholder { color: var(--text-muted); }
+  .booking-field textarea { resize: vertical; min-height: 60px; }
+  .booking-field select {
+    cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A09B90' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.85rem center; padding-right: 2.2rem;
+  }
+  .booking-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .booking-recap {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1rem; background: var(--gold-glow);
+    border: 1px solid var(--border-gold); border-radius: 10px; margin-bottom: 0.5rem;
+  }
+  .booking-recap-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .booking-recap-text {
+    font-size: 0.82rem; line-height: 1.5; color: var(--text-primary);
+  }
+  .booking-recap-text strong { color: var(--gold); font-weight: 600; }
+  .booking-actions {
+    display: flex; gap: 0.75rem; padding: 1rem 1.5rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .booking-btn {
+    flex: 1; padding: 0.75rem 1rem; border-radius: 8px;
+    font-family: var(--font-display); font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; text-align: center; border: none;
+  }
+  .booking-btn-gold { background: var(--gold); color: var(--charcoal-deep); }
+  .booking-btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .booking-btn-gold:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .booking-btn-ghost {
+    background: transparent; border: 1px solid var(--border); color: var(--text-secondary);
+  }
+  .booking-btn-ghost:hover { border-color: var(--border-gold); color: var(--text-primary); }
+  .booking-confirmation {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 1rem; padding: 2rem 0;
+  }
+  .booking-confirmation-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--gold-glow); border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .booking-confirmation h4 {
+    font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--gold);
+  }
+  .booking-confirmation p {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; max-width: 320px;
+  }
+  .booking-confirmation .booking-conf-details {
+    padding: 0.85rem 1.2rem; background: var(--bg-alt);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.85rem; line-height: 1.8; color: var(--text-primary);
+  }
+  .booking-error { text-align: center; padding: 2rem; color: var(--text-secondary); }
+  .booking-error p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+  @media (max-width: 520px) {
+    .booking-widget { border-radius: 12px; }
+    .booking-header, .booking-body, .booking-actions { padding-left: 1rem; padding-right: 1rem; }
+    .booking-row { grid-template-columns: 1fr; }
+    .booking-date-btn { min-width: 58px; padding: 0.5rem 0.65rem; }
+  }
 
   /* ============ FOOTER ============ */
   footer {
@@ -480,14 +663,35 @@
         <p data-fr="Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise." data-en="A 30-minute intro call, no commitment. Let's identify together if agentic transformation is the right lever for your business.">Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise.</p>
         <div class="c-row"><div class="c-icon">&#128205;</div><span data-fr="Turin, Italie · Antibes, France" data-en="Turin, Italy · Antibes, France">Turin, Italie · Antibes, France</span></div>
         <div class="c-row"><div class="c-icon">&#127760;</div><span data-fr="Coaching à distance — toute l'Europe" data-en="Remote coaching — all across Europe">Coaching à distance — toute l'Europe</span></div>
-        <div class="c-row"><div class="c-icon">&#9993;&#65039;</div><span>david@agentshift.co</span></div>
-        <a href="https://www.linkedin.com/in/davcarvalho/" target="_blank" class="btn-ghost" style="margin-top:1.25rem;" data-fr="LinkedIn →" data-en="LinkedIn →">LinkedIn →</a>
+        <div class="c-row"><div class="c-icon">&#9993;&#65039;</div><span>contact@agentshift.pro</span></div>
+        <a href="https://linkedin.com/in/davidcarvalho" target="_blank" class="btn-ghost" style="margin-top:1.25rem;" data-fr="LinkedIn →" data-en="LinkedIn →">LinkedIn →</a>
       </div>
       <div class="cal-box reveal">
-        <div style="font-size:2.2rem;">&#128197;</div>
-        <h3 data-fr="Réservez votre créneau" data-en="Book your slot">Réservez votre créneau</h3>
-        <p data-fr="L'intégration Calendly apparaîtra ici." data-en="Calendly widget will appear here.">L'intégration Calendly apparaîtra ici.</p>
-        <p class="hint" data-fr="→ Remplacer par embed Calendly" data-en="→ Replace with Calendly embed">→ Remplacer par embed Calendly</p>
+        <div class="booking-widget" id="bookingWidget">
+          <div class="booking-header">
+            <h3 data-fr="Diagnostic Agentique" data-en="AI Diagnostic">Diagnostic Agentique</h3>
+            <p data-fr="Choisissez un créneau pour votre session gratuite avec David Carvalho." data-en="Pick a slot for your free session with David Carvalho.">Choisissez un créneau pour votre session gratuite avec David Carvalho.</p>
+            <span class="booking-duration">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              45 min
+            </span>
+          </div>
+          <div class="booking-steps">
+            <div class="booking-step active" id="step1"></div>
+            <div class="booking-step" id="step2"></div>
+            <div class="booking-step" id="step3"></div>
+          </div>
+          <div class="booking-body" id="bookingBody">
+            <div class="booking-loading">
+              <div class="booking-spinner"></div>
+              <span data-fr="Chargement des disponibilités..." data-en="Loading availability...">Chargement des disponibilités...</span>
+            </div>
+          </div>
+          <div class="booking-actions" id="bookingActions" style="display:none;">
+            <button class="booking-btn booking-btn-ghost" id="btnBack" style="display:none;" data-fr="Retour" data-en="Back">Retour</button>
+            <button class="booking-btn booking-btn-gold" id="btnNext" disabled data-fr="Continuer" data-en="Continue">Continuer</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -495,11 +699,6 @@
 
 <footer>
   <p>&copy; 2026 AgentShift · David Carvalho — <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
-  <p style="margin-top:0.4rem;font-size:0.72rem;">
-    <a href="./mentions-legales.html">Mentions légales</a> ·
-    <a href="./politique-confidentialite.html">Confidentialité</a> ·
-    <a href="./cgv.html">CGV</a>
-  </p>
   <div class="footer-meta" data-fr="2026 // Metacognition Design" data-en="2026 // Metacognition Design">2026 // Metacognition Design</div>
 </footer>
 
@@ -547,6 +746,243 @@
       document.getElementById('menuToggle').innerHTML = '&#9776;';
     });
   });
+
+  // ============ BOOKING WIDGET ============
+  (function() {
+    'use strict';
+
+    // IMPORTANT: Remplace par l'URL de ton Google Apps Script déployé
+    const APPS_SCRIPT_URL = 'COLLE_TON_URL_ICI';
+
+    const LABELS = {
+      fr: {
+        loading: 'Chargement des disponibilités...',
+        noSlots: 'Aucun créneau disponible pour cette date.',
+        noDays: 'Aucune disponibilité dans les prochains jours. Contactez-nous directement.',
+        continue: 'Continuer', back: 'Retour', confirm: 'Confirmer',
+        sending: 'Réservation...',
+        name: 'Votre nom', email: 'Email', company: 'Entreprise', size: 'Effectif',
+        message: 'Un mot sur votre besoin (optionnel)',
+        namePh: 'Prénom Nom', emailPh: 'vous@entreprise.com',
+        companyPh: 'Nom de votre entreprise',
+        messagePh: 'Décrivez brièvement votre contexte...',
+        sizeOptions: ['1-5','6-20','21-50','51-100','100+'],
+        confirmTitle: 'C\u2019est confirmé !',
+        confirmText: 'Vous allez recevoir une invitation Google Calendar à l\u2019adresse indiquée. À très bientôt\u00a0!',
+        errorTitle: 'Impossible de charger les disponibilités',
+        errorRetry: 'Réessayer',
+        errorBook: 'Erreur lors de la réservation. Veuillez réessayer.',
+        recapAt: 'à'
+      },
+      en: {
+        loading: 'Loading availability...',
+        noSlots: 'No slots available for this date.',
+        noDays: 'No availability in the coming days. Contact us directly.',
+        continue: 'Continue', back: 'Back', confirm: 'Confirm',
+        sending: 'Booking...',
+        name: 'Your name', email: 'Email', company: 'Company', size: 'Team size',
+        message: 'Tell us about your needs (optional)',
+        namePh: 'First Last', emailPh: 'you@company.com',
+        companyPh: 'Company name',
+        messagePh: 'Briefly describe your context...',
+        sizeOptions: ['1-5','6-20','21-50','51-100','100+'],
+        confirmTitle: 'You\u2019re all set!',
+        confirmText: 'A Google Calendar invite has been sent to your email. See you soon!',
+        errorTitle: 'Could not load availability',
+        errorRetry: 'Retry',
+        errorBook: 'Booking failed. Please try again.',
+        recapAt: 'at'
+      }
+    };
+
+    let lang = currentLang || 'fr';
+    let slotsData = [];
+    let selectedDateIdx = null;
+    let selectedSlot = null;
+    let step = 1;
+
+    const L = () => LABELS[lang];
+    const body = document.getElementById('bookingBody');
+    const actions = document.getElementById('bookingActions');
+    const btnNext = document.getElementById('btnNext');
+    const btnBack = document.getElementById('btnBack');
+    const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3')];
+
+    async function fetchSlots() {
+      const res = await fetch(APPS_SCRIPT_URL + '?action=slots&origin=' + encodeURIComponent(window.location.origin));
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      return data.slots;
+    }
+
+    async function submitBooking(bd) {
+      const res = await fetch(APPS_SCRIPT_URL + '?origin=' + encodeURIComponent(window.location.origin), {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({action:'book', ...bd})
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      return data;
+    }
+
+    function updateSteps() {
+      steps.forEach((s,i) => {
+        s.className = 'booking-step';
+        if (i+1 < step) s.classList.add('done');
+        if (i+1 === step) s.classList.add('active');
+      });
+    }
+
+    function renderLoading() {
+      body.innerHTML = '<div class="booking-loading"><div class="booking-spinner"></div><span>' + L().loading + '</span></div>';
+      actions.style.display = 'none';
+    }
+
+    function renderError(msg) {
+      body.innerHTML = '<div class="booking-error"><p>' + (msg || L().errorTitle) + '</p><button class="booking-btn booking-btn-gold" onclick="window._bookingInit()">' + L().errorRetry + '</button></div>';
+      actions.style.display = 'none';
+    }
+
+    function renderStep1() {
+      step = 1; updateSteps(); selectedSlot = null;
+      if (!slotsData.length) {
+        body.innerHTML = '<div class="booking-no-slots">' + L().noDays + '</div>';
+        actions.style.display = 'none'; return;
+      }
+      if (selectedDateIdx === null) selectedDateIdx = 0;
+
+      var datesHTML = slotsData.map(function(d, i) {
+        var date = new Date(d.dateISO);
+        var weekday = date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {weekday:'short'}).replace('.','');
+        var month = date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {month:'short'}).replace('.','');
+        var sel = i === selectedDateIdx ? 'selected' : '';
+        return '<button class="booking-date-btn ' + sel + '" data-idx="' + i + '">' +
+          '<span class="weekday">' + weekday + '</span>' +
+          '<span class="day">' + date.getDate() + '</span>' +
+          '<span class="month">' + month + '</span></button>';
+      }).join('');
+
+      var daySlots = slotsData[selectedDateIdx].slots;
+      var timesHTML = daySlots.length > 0
+        ? daySlots.map(function(s) {
+            return '<button class="booking-time-btn" data-start="' + s.start + '">' + s.display + '</button>';
+          }).join('')
+        : '<div class="booking-no-slots">' + L().noSlots + '</div>';
+
+      body.innerHTML = '<div class="booking-dates">' + datesHTML + '</div><div class="booking-times">' + timesHTML + '</div>';
+
+      body.querySelectorAll('.booking-date-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          selectedDateIdx = parseInt(btn.dataset.idx); renderStep1();
+        });
+      });
+      body.querySelectorAll('.booking-time-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          body.querySelectorAll('.booking-time-btn').forEach(function(b) { b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          selectedSlot = daySlots.find(function(s) { return s.start === btn.dataset.start; });
+          btnNext.disabled = false;
+        });
+      });
+
+      actions.style.display = 'flex';
+      btnBack.style.display = 'none';
+      btnNext.textContent = L().continue;
+      btnNext.disabled = true;
+    }
+
+    function renderStep2() {
+      step = 2; updateSteps();
+      var d = new Date(selectedSlot.start);
+      var dateStr = d.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {weekday:'long', day:'numeric', month:'long'});
+
+      body.innerHTML =
+        '<div class="booking-recap">' +
+          '<span class="booking-recap-icon">&#128197;</span>' +
+          '<span class="booking-recap-text"><strong>' + dateStr + '</strong> ' + L().recapAt + ' <strong>' + selectedSlot.display + '</strong></span>' +
+        '</div>' +
+        '<form class="booking-form" id="bookingForm" autocomplete="on">' +
+          '<div class="booking-row">' +
+            '<div class="booking-field"><label>' + L().name + ' *</label><input type="text" id="bkName" required placeholder="' + L().namePh + '" autocomplete="name"></div>' +
+            '<div class="booking-field"><label>' + L().email + ' *</label><input type="email" id="bkEmail" required placeholder="' + L().emailPh + '" autocomplete="email"></div>' +
+          '</div>' +
+          '<div class="booking-row">' +
+            '<div class="booking-field"><label>' + L().company + '</label><input type="text" id="bkCompany" placeholder="' + L().companyPh + '" autocomplete="organization"></div>' +
+            '<div class="booking-field"><label>' + L().size + '</label><select id="bkSize"><option value="">—</option>' + L().sizeOptions.map(function(o) { return '<option value="' + o + '">' + o + '</option>'; }).join('') + '</select></div>' +
+          '</div>' +
+          '<div class="booking-field"><label>' + L().message + '</label><textarea id="bkMessage" rows="2" placeholder="' + L().messagePh + '"></textarea></div>' +
+        '</form>';
+
+      actions.style.display = 'flex';
+      btnBack.style.display = '';
+      btnBack.textContent = L().back;
+      btnNext.textContent = L().confirm;
+      btnNext.disabled = false;
+
+      var nameInput = document.getElementById('bkName');
+      var emailInput = document.getElementById('bkEmail');
+      var checkValid = function() {
+        btnNext.disabled = !(nameInput.value.trim() && emailInput.value.trim() && emailInput.validity.valid);
+      };
+      nameInput.addEventListener('input', checkValid);
+      emailInput.addEventListener('input', checkValid);
+      checkValid();
+    }
+
+    function renderStep3(result) {
+      step = 3; updateSteps();
+      body.innerHTML =
+        '<div class="booking-confirmation">' +
+          '<div class="booking-confirmation-icon">&#10003;</div>' +
+          '<h4>' + L().confirmTitle + '</h4>' +
+          '<div class="booking-conf-details">' + result.date + '<br>' + result.time + '</div>' +
+          '<p>' + L().confirmText + '</p>' +
+        '</div>';
+      actions.style.display = 'none';
+    }
+
+    btnNext.addEventListener('click', async function() {
+      if (step === 1 && selectedSlot) { renderStep2(); }
+      else if (step === 2) {
+        var bd = {
+          start: selectedSlot.start,
+          name: document.getElementById('bkName').value.trim(),
+          email: document.getElementById('bkEmail').value.trim(),
+          company: document.getElementById('bkCompany').value.trim(),
+          size: document.getElementById('bkSize').value,
+          message: document.getElementById('bkMessage').value.trim()
+        };
+        btnNext.disabled = true; btnNext.textContent = L().sending;
+        try {
+          var result = await submitBooking(bd);
+          renderStep3(result);
+        } catch(e) {
+          alert(L().errorBook + '\n' + e.message);
+          btnNext.disabled = false; btnNext.textContent = L().confirm;
+        }
+      }
+    });
+
+    btnBack.addEventListener('click', function() { if (step === 2) renderStep1(); });
+
+    async function init() {
+      renderLoading();
+      try { slotsData = await fetchSlots(); renderStep1(); }
+      catch(e) { renderError(); }
+    }
+
+    window._bookingInit = init;
+    window._bookingSetLang = function(l) {
+      lang = l;
+      if (slotsData.length > 0) renderStep1(); else init();
+    };
+
+    // Hook language toggle
+    var origToggle = window.toggleLang;
+    window.toggleLang = function() { origToggle(); window._bookingSetLang(currentLang); };
+
+    init();
+  })();
 </script>
 </body>
 </html>

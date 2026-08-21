@@ -1106,11 +1106,19 @@
 
     function renderStep3(result) {
       step = 3; updateSteps();
+      // Le créneau vient du client, pas de la réponse : /api/rdv renvoie
+      // {ok, id, creneau}, pas les {date, time} de l'ancien contrat Apps Script.
+      var cd = selectedSlot ? new Date(selectedSlot.start) : null;
+      var confDate = cd
+        ? cd.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US',
+            { weekday: 'long', day: 'numeric', month: 'long' })
+        : '';
+      var confTime = selectedSlot ? selectedSlot.display : '';
       body.innerHTML =
         '<div class="booking-confirmation">' +
           '<div class="booking-confirmation-icon">&#10003;</div>' +
           '<h4>' + L().confirmTitle + '</h4>' +
-          '<div class="booking-conf-details">' + result.date + '<br>' + result.time + '</div>' +
+          '<div class="booking-conf-details">' + confDate + '<br>' + confTime + '</div>' +
           '<p>' + L().confirmText + '</p>' +
         '</div>';
       actions.style.display = 'none';

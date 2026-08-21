@@ -112,7 +112,7 @@ async function creerEvenement(env, ligne) {
   }
 }
 
-export async function onRequestPost({ request, env }) {
+async function traiterPost(request, env) {
   for (const k of ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'TURNSTILE_SECRET_KEY']) {
     if (!env[k]) {
       console.error('variable manquante:', k);
@@ -179,5 +179,17 @@ export async function onRequestPost({ request, env }) {
   return json({ ok: true, id: rdv?.id, creneau: rdv?.creneau, calendrier: cal.ok }, 201);
 }
 
-// Les méthodes autres que POST reçoivent automatiquement un 405 de Pages,
-// puisque seul un handler de méthode est exporté ici.
+// Handler unique : on dispatche nous-mêmes sur la méthode. Sans ça, une requête
+// GET sur /api/rdv retombe sur le repli statique de Pages et renvoie la page
+// d'accueil en 200 — trompeur pour un endpoint d'API.
+export async function onRequest({ request, env }) {
+  if (request.method === 'POST') return traiterPost(request, env);
+  return new Response(JSON.stringify({ ok: false, erreur: 'methode_non_autorisee' }), {
+    status: 405,
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      allow: 'POST',
+      'cache-control': 'no-store',
+    },
+  });
+}

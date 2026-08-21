@@ -238,7 +238,7 @@
     "q16_canal_reception": {
       "status": "todo",
       "action": "Créer l'email dédié",
-      "canal": "Email dédié (ex: contact@agentshift.fr)",
+      "canal": "Email dédié (ex: contact@agentshift.pro)",
       "workflow": "Lead entrant → Bob qualifie → Si OK : propose créneau Calendly → Brief pré-appel pour David → Appel diagnostic"
     },
     "q17_types_demandes": {
@@ -422,7 +422,7 @@
       { "id": "legal", "action": "Fournir raison sociale, SIRET, adresse, n° TVA", "owner": "David" }
     ],
     "prioritaire": [
-      { "id": "email", "action": "Créer email dédié (contact@agentshift.fr)", "owner": "David" },
+      { "id": "email", "action": "Créer email dédié (contact@agentshift.pro)", "owner": "David" },
       { "id": "calendly", "action": "Créer compte Calendly et partager le lien", "owner": "David" },
       { "id": "tjm", "action": "Confirmer TJM (800-1200€/jour) et conditions de paiement", "owner": "David" }
     ],

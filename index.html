@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <style>
   :root {
     --gold: #C9A84C;
@@ -440,6 +441,18 @@
     background: var(--gold); border-color: var(--gold);
     color: var(--charcoal-deep); font-weight: 700;
   }
+  .booking-inline-error {
+    margin: 0.75rem 0 0;
+    padding: 0.7rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid rgba(224, 122, 95, 0.35);
+    background: rgba(224, 122, 95, 0.08);
+    color: #E07A5F;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+  .booking-inline-error[hidden] { display: none; }
+
   .booking-no-slots {
     text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 2rem 0;
   }
@@ -856,8 +869,15 @@
   (function() {
     'use strict';
 
-    // IMPORTANT: Remplace par l'URL de ton Google Apps Script déployé
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyS4ktoaWpc4sH5msWm4E9esWO3tsSQVpvYIRMS13Fm4txYGXskPKmVSyApge5wpBM/exec';
+    // Endpoints internes (Cloudflare Pages Functions).
+    // L'URL Apps Script vit désormais côté serveur, dans les variables d'env.
+    const API_SLOTS = '/api/creneaux';
+    const API_BOOK  = '/api/rdv';
+
+    // Clé publique du widget Turnstile « AgentShift — Prise de RDV ».
+    // Volontairement en clair : une site key n'est pas un secret. La clé SECRÈTE
+    // correspondante vit uniquement dans les variables d'env Cloudflare Pages.
+    const TURNSTILE_SITE_KEY = '0x4AAAAAAEW4VXONQ6rfrQLF';
 
     const LABELS = {
       fr: {
@@ -877,6 +897,10 @@
         errorTitle: 'Impossible de charger les disponibilités',
         errorRetry: 'Réessayer',
         errorBook: 'Erreur lors de la réservation. Veuillez réessayer.',
+        errorTaken: 'Ce créneau vient d\u2019être réservé. Merci d\u2019en choisir un autre.',
+        errorBot: 'Vérification anti-robot échouée. Rechargez la page et réessayez.',
+        errorFields: 'Certains champs sont invalides. Merci de les corriger.',
+        humanCheck: 'Vérification de sécurité',
         recapAt: 'à'
       },
       en: {
@@ -896,6 +920,10 @@
         errorTitle: 'Could not load availability',
         errorRetry: 'Retry',
         errorBook: 'Booking failed. Please try again.',
+        errorTaken: 'This slot has just been taken. Please pick another one.',
+        errorBot: 'Anti-bot check failed. Reload the page and try again.',
+        errorFields: 'Some fields are invalid. Please correct them.',
+        humanCheck: 'Security check',
         recapAt: 'at'
       }
     };
@@ -914,26 +942,27 @@
     const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3')];
 
     async function fetchSlots() {
-      const res = await fetch(APPS_SCRIPT_URL + '?action=slots&origin=' + encodeURIComponent(window.location.origin));
+      const res = await fetch(API_SLOTS, { headers: { 'accept': 'application/json' } });
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
       return data.slots;
     }
 
+    // POST + corps JSON : les données personnelles ne transitent plus dans
+    // l'URL (query string), donc ni dans l'historique, ni dans les logs, ni
+    // dans le Referer.
     async function submitBooking(bd) {
-      const params = new URLSearchParams({
-        action: 'book',
-        origin: window.location.origin,
-        start: bd.start,
-        name: bd.name,
-        email: bd.email,
-        company: bd.company || '',
-        size: bd.size || '',
-        message: bd.message || ''
+      const res = await fetch(API_BOOK, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(bd)
       });
-      const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString());
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error);
+      const data = await res.json().catch(function() { return {}; });
+      if (!res.ok || !data.ok) {
+        var e = new Error(data.erreur || 'erreur');
+        e.code = data.erreur;
+        throw e;
+      }
       return data;
     }
 
@@ -1023,8 +1052,11 @@
             '<div class="booking-field"><label>' + L().size + '</label><select id="bkSize"><option value="">—</option>' + L().sizeOptions.map(function(o) { return '<option value="' + o + '">' + o + '</option>'; }).join('') + '</select></div>' +
           '</div>' +
           '<div class="booking-field"><label>' + L().message + '</label><textarea id="bkMessage" rows="2" placeholder="' + L().messagePh + '"></textarea></div>' +
+          '<div class="booking-field"><label>' + L().humanCheck + '</label><div id="bkTurnstile"></div></div>' +
+          '<p class="booking-inline-error" id="bkError" role="alert" hidden></p>' +
         '</form>';
 
+      renderTurnstile();
       actions.style.display = 'flex';
       btnBack.style.display = '';
       btnBack.textContent = L().back;
@@ -1039,6 +1071,37 @@
       nameInput.addEventListener('input', checkValid);
       emailInput.addEventListener('input', checkValid);
       checkValid();
+    }
+
+    var turnstileWidgetId = null;
+
+    // Rendu explicite : l'API peut ne pas être encore chargée quand l'étape 2
+    // s'affiche, d'où la boucle d'attente courte.
+    function renderTurnstile(essais) {
+      essais = essais || 0;
+      var el = document.getElementById('bkTurnstile');
+      if (!el) return;
+      if (!window.turnstile) {
+        if (essais < 40) setTimeout(function() { renderTurnstile(essais + 1); }, 150);
+        return;
+      }
+      turnstileWidgetId = window.turnstile.render(el, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'dark',
+        language: lang
+      });
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('bkError');
+      if (!el) return;
+      el.textContent = msg;
+      el.hidden = false;
+    }
+
+    function clearError() {
+      var el = document.getElementById('bkError');
+      if (el) el.hidden = true;
     }
 
     function renderStep3(result) {
@@ -1056,20 +1119,37 @@
     btnNext.addEventListener('click', async function() {
       if (step === 1 && selectedSlot) { renderStep2(); }
       else if (step === 2) {
+        clearError();
+        var token = window.turnstile && turnstileWidgetId !== null
+          ? window.turnstile.getResponse(turnstileWidgetId)
+          : '';
+        if (!token) { showError(L().errorBot); return; }
+
         var bd = {
           start: selectedSlot.start,
           name: document.getElementById('bkName').value.trim(),
           email: document.getElementById('bkEmail').value.trim(),
           company: document.getElementById('bkCompany').value.trim(),
           size: document.getElementById('bkSize').value,
-          message: document.getElementById('bkMessage').value.trim()
+          message: document.getElementById('bkMessage').value.trim(),
+          'cf-turnstile-response': token
         };
         btnNext.disabled = true; btnNext.textContent = L().sending;
         try {
           var result = await submitBooking(bd);
           renderStep3(result);
         } catch(e) {
-          alert(L().errorBook + '\n' + e.message);
+          // Message inline : un alert() bloquerait la page et casserait l'UX mobile.
+          var msg = e.code === 'creneau_indisponible' ? L().errorTaken
+                  : e.code === 'turnstile_refuse'     ? L().errorBot
+                  : e.code === 'champs_invalides'     ? L().errorFields
+                  : L().errorBook;
+          showError(msg);
+          // Le jeton Turnstile est à usage unique : il faut en regénérer un.
+          if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+          if (e.code === 'creneau_indisponible') {
+            slotsData = await fetchSlots().catch(function() { return slotsData; });
+          }
           btnNext.disabled = false; btnNext.textContent = L().confirm;
         }
       }

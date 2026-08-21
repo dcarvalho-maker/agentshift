@@ -150,7 +150,7 @@ Format : Contexte → Problème → Solution → Résultats chiffrés → Témoi
 
 **Q16. Comment recevoir les demandes ?**
 
-Email dédié (ex : `contact@agentshift.fr` ou alias à créer). Bob qualifie d'abord chaque demande entrante, puis oriente vers une prise de RDV via Calendly. David ne voit que les leads qualifiés avec un brief préparé.
+Email dédié (ex : `contact@agentshift.pro` ou alias à créer). Bob qualifie d'abord chaque demande entrante, puis oriente vers une prise de RDV via Calendly. David ne voit que les leads qualifiés avec un brief préparé.
 
 **Flux :** Lead entrant → Bob analyse et qualifie → Si qualifié : créneau Calendly → Brief pré-appel pour David → Appel diagnostic.
 
@@ -322,7 +322,7 @@ Approche **progressive** :
 ## Actions restantes — David doit fournir
 
 - [ ] Raison sociale, SIRET, adresse légale, n° TVA intracommunautaire
-- [ ] Email dédié à créer (ex: contact@agentshift.fr)
+- [ ] Email dédié à créer (ex: contact@agentshift.pro)
 - [ ] 3 liens de concurrents/inspirations précis
 - [ ] Confirmer le TJM (800-1200€/jour proposé) et conditions de paiement
 - [ ] 2-3 cas clients à rédiger (même anonymisés)

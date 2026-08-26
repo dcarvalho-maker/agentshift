@@ -2,173 +2,140 @@
  * AgentShift — Booking Backend (Google Apps Script)
  *
  * DEPLOIEMENT :
- * 1. Va sur https://script.google.com → Nouveau projet
- * 2. Colle ce code dans le fichier Code.gs
- * 3. Configure les variables ci-dessous
- * 4. Déployer → Nouvelle déploiement → Application Web
+ * 1. https://script.google.com → Nouveau projet
+ * 2. Coller ce code dans Code.gs
+ * 3. Renseigner CONFIG ci-dessous
+ * 4. Déployer → Nouveau déploiement → Application Web
  *    - Exécuter en tant que : Moi
  *    - Accès : Tout le monde
- * 5. Copie l'URL de déploiement → colle-la dans le widget frontend
+ * 5. Copier l'URL /exec → la reporter dans le widget du site
+ *
+ * ⚠️ Le script s'exécute sous le compte qui le déploie. Si ce compte
+ *    est supprimé, la réservation du site s'arrête sans avertissement.
  */
 
 // ============================================
-// CONFIGURATION — À PERSONNALISER
+// CONFIGURATION
 // ============================================
 
 const CONFIG = {
-  // ID de ton Google Calendar (souvent ton email)
-  CALENDAR_ID: 'primary',
+  // Agendas CONSULTÉS pour détecter les indisponibilités.
+  // Y mettre TOUS les agendas où l'on peut être occupé, sinon des
+  // créneaux déjà pris seront proposés aux prospects.
+  BUSY_CALENDAR_IDS: ['primary'],
 
-  // Email de notification quand un RDV est pris
+  // Agenda où le rendez-vous est CRÉÉ.
+  // Peut différer des précédents : on lit les occupations partout,
+  // on écrit à un seul endroit.
+  BOOKING_CALENDAR_ID: 'primary',
+
   NOTIFICATION_EMAIL: 'contact@agentshift.pro',
 
-  // Créneaux disponibles (format 24h)
-  AVAILABLE_HOURS: {
-    start: 9,   // 9h00
-    end: 18     // 18h00 (dernier créneau à 17h00)
-  },
-
-  // Durée du RDV en minutes
+  AVAILABLE_HOURS: { start: 9, end: 18 },
   SLOT_DURATION: 45,
-
-  // Pause entre les RDV en minutes
   BUFFER: 15,
-
-  // Jours ouvrés (0=Dim, 1=Lun, ... 6=Sam)
   WORKING_DAYS: [1, 2, 3, 4, 5],
-
-  // Nombre de jours à afficher dans le futur
   DAYS_AHEAD: 28,
-
-  // Délai minimum avant réservation (en heures)
   MIN_NOTICE_HOURS: 24,
-
-  // Fuseau horaire
   TIMEZONE: 'Europe/Paris',
-
-  // Titre de l'événement créé dans le calendrier
-  EVENT_TITLE_PREFIX: 'Diagnostic AgentShift —',
-
-  // Origines autorisées (CORS)
-  ALLOWED_ORIGINS: [
-    'https://dcarvalho-maker.github.io',
-    'https://agentshift.pro',
-    'http://localhost',
-    'http://127.0.0.1'
-  ]
+  EVENT_TITLE_PREFIX: 'Diagnostic AgentShift —'
 };
 
+// NOTE CORS — Apps Script ne permet pas de définir d'en-têtes sur
+// ContentService : toute liste d'origines autorisées y serait sans
+// effet. L'ancien getCorsHeaders() calculait des en-têtes que
+// jsonResponse() ignorait, donnant une fausse impression de contrôle.
+// Le filtrage d'origine doit se faire en amont (Cloudflare Function).
 
 // ============================================
-// POINTS D'ENTRÉE (GET & POST)
+// POINTS D'ENTRÉE
 // ============================================
 
 function doGet(e) {
-  const origin = e.parameter.origin || '';
-  const headers = getCorsHeaders(origin);
-
   try {
     const action = e.parameter.action;
 
     if (action === 'slots') {
-      const slots = getAvailableSlots();
-      return jsonResponse({ success: true, slots: slots }, headers);
+      return jsonResponse({ success: true, slots: getAvailableSlots() });
     }
 
     if (action === 'book') {
-      const data = {
-        start: e.parameter.start,
-        name: e.parameter.name,
-        email: e.parameter.email,
+      return jsonResponse(bookSlot({
+        start:   e.parameter.start,
+        name:    e.parameter.name,
+        email:   e.parameter.email,
         company: e.parameter.company || '',
-        size: e.parameter.size || '',
-        message: e.parameter.message || ''
-      };
-      const result = bookSlot(data);
-      return jsonResponse(result, headers);
+        size:    e.parameter.size || '',
+        message: e.parameter.message || '',
+        guests:  e.parameter.guests || ''
+      }));
     }
 
-    return jsonResponse({ success: false, error: 'Action inconnue' }, headers);
+    return jsonResponse({ success: false, error: 'Action inconnue' });
 
   } catch (error) {
     Logger.log('GET Error: ' + error.toString());
-    return jsonResponse({ success: false, error: error.toString() }, headers);
+    return jsonResponse({ success: false, error: error.toString() });
   }
 }
 
 function doPost(e) {
-  const origin = e.parameter.origin || '';
-  const headers = getCorsHeaders(origin);
-
   try {
     const data = JSON.parse(e.postData.contents);
-
-    if (data.action === 'book') {
-      const result = bookSlot(data);
-      return jsonResponse(result, headers);
-    }
-
-    return jsonResponse({ success: false, error: 'Action inconnue' }, headers);
-
+    if (data.action === 'book') return jsonResponse(bookSlot(data));
+    return jsonResponse({ success: false, error: 'Action inconnue' });
   } catch (error) {
     Logger.log('POST Error: ' + error.toString());
-    return jsonResponse({ success: false, error: error.toString() }, headers);
+    return jsonResponse({ success: false, error: error.toString() });
   }
 }
-
 
 // ============================================
 // LOGIQUE MÉTIER
 // ============================================
 
-/**
- * Récupère les créneaux disponibles sur les N prochains jours
- */
-function getAvailableSlots() {
-  const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
-  const now = new Date();
-  const minBookingTime = new Date(now.getTime() + CONFIG.MIN_NOTICE_HOURS * 60 * 60 * 1000);
+/** Événements de tous les agendas surveillés, sur une plage donnée. */
+function getBusyEvents(from, to) {
+  var events = [];
+  CONFIG.BUSY_CALENDAR_IDS.forEach(function (id) {
+    var cal = CalendarApp.getCalendarById(id);
+    if (!cal) { Logger.log('Agenda introuvable : ' + id); return; }
+    events = events.concat(cal.getEvents(from, to));
+  });
+  return events;
+}
 
+function getAvailableSlots() {
+  const now = new Date();
+  const minBookingTime = new Date(now.getTime() + CONFIG.MIN_NOTICE_HOURS * 3600 * 1000);
   const slots = [];
   const totalSlotMinutes = CONFIG.SLOT_DURATION + CONFIG.BUFFER;
 
   for (let d = 0; d < CONFIG.DAYS_AHEAD; d++) {
     const date = new Date(now);
     date.setDate(date.getDate() + d);
-
-    // Vérifier que c'est un jour ouvré
     if (!CONFIG.WORKING_DAYS.includes(date.getDay())) continue;
 
-    // Récupérer les événements de la journée
     const dayStart = new Date(date);
     dayStart.setHours(CONFIG.AVAILABLE_HOURS.start, 0, 0, 0);
     const dayEnd = new Date(date);
     dayEnd.setHours(CONFIG.AVAILABLE_HOURS.end, 0, 0, 0);
 
-    const events = calendar.getEvents(dayStart, dayEnd);
-
-    // Générer les créneaux possibles
+    const events = getBusyEvents(dayStart, dayEnd);
     const daySlotsCount = Math.floor(
       (CONFIG.AVAILABLE_HOURS.end - CONFIG.AVAILABLE_HOURS.start) * 60 / totalSlotMinutes
     );
-
     const daySlots = [];
 
     for (let s = 0; s < daySlotsCount; s++) {
       const slotStart = new Date(dayStart);
       slotStart.setMinutes(slotStart.getMinutes() + s * totalSlotMinutes);
+      const slotEnd = new Date(slotStart.getTime() + CONFIG.SLOT_DURATION * 60000);
 
-      const slotEnd = new Date(slotStart);
-      slotEnd.setMinutes(slotEnd.getMinutes() + CONFIG.SLOT_DURATION);
-
-      // Vérifier que le créneau est dans le futur (+ délai minimum)
       if (slotStart < minBookingTime) continue;
 
-      // Vérifier qu'il n'y a pas de conflit avec un événement existant
-      const hasConflict = events.some(event => {
-        const eventStart = event.getStartTime();
-        const eventEnd = event.getEndTime();
-        return (slotStart < eventEnd && slotEnd > eventStart);
+      const hasConflict = events.some(function (event) {
+        return (slotStart < event.getEndTime() && slotEnd > event.getStartTime());
       });
 
       if (!hasConflict) {
@@ -183,41 +150,82 @@ function getAvailableSlots() {
     if (daySlots.length > 0) {
       slots.push({
         date: formatDate(dayStart),
-        dateISO: dayStart.toISOString().split('T')[0],
+        dateISO: Utilities.formatDate(dayStart, CONFIG.TIMEZONE, 'yyyy-MM-dd'),
         weekday: formatWeekday(dayStart),
         slots: daySlots
       });
     }
   }
-
   return slots;
 }
 
-
 /**
- * Réserve un créneau
+ * Le créneau demandé fait-il partie de ceux réellement proposés ?
+ * Seul garde-fou fiable : une seule source de vérité, getAvailableSlots().
+ * Sans cette vérification, n'importe quelle date est réservable —
+ * y compris dans le passé, la nuit ou un dimanche.
  */
+function isSlotOffered(slotStart) {
+  const wanted = slotStart.getTime();
+  const days = getAvailableSlots();
+  for (var i = 0; i < days.length; i++) {
+    for (var j = 0; j < days[i].slots.length; j++) {
+      if (new Date(days[i].slots[j].start).getTime() === wanted) return true;
+    }
+  }
+  return false;
+}
+
+/** Normalise une liste d'invités : dédoublonne et écarte les adresses invalides. */
+function normalizeGuests(primaryEmail, extra) {
+  const re = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/;
+  var raw = [primaryEmail];
+  if (extra) {
+    raw = raw.concat(Array.isArray(extra) ? extra : String(extra).split(/[,;]/));
+  }
+  const seen = {}, out = [];
+  raw.forEach(function (a) {
+    const addr = String(a).trim().toLowerCase();
+    if (addr && re.test(addr) && !seen[addr]) { seen[addr] = true; out.push(addr); }
+  });
+  return out;
+}
+
 function bookSlot(data) {
-  // Validation
   if (!data.start || !data.name || !data.email) {
     return { success: false, error: 'Champs requis : start, name, email' };
   }
 
-  const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
   const slotStart = new Date(data.start);
-  const slotEnd = new Date(slotStart.getTime() + CONFIG.SLOT_DURATION * 60 * 1000);
+  if (isNaN(slotStart.getTime())) {
+    return { success: false, error: 'Date invalide.' };
+  }
 
-  // Double-vérification qu'il n'y a pas de conflit
-  const conflicts = calendar.getEvents(slotStart, slotEnd);
-  if (conflicts.length > 0) {
+  // Garde-fou : refuse tout créneau qui n'est pas réellement proposé.
+  if (!isSlotOffered(slotStart)) {
+    return {
+      success: false,
+      error: 'Ce créneau n\'est pas disponible. Veuillez en choisir un autre.'
+    };
+  }
+
+  const slotEnd = new Date(slotStart.getTime() + CONFIG.SLOT_DURATION * 60000);
+
+  // Double-vérification anti-collision, sur tous les agendas surveillés.
+  if (getBusyEvents(slotStart, slotEnd).length > 0) {
     return {
       success: false,
       error: 'Ce créneau vient d\'être réservé. Veuillez en choisir un autre.'
     };
   }
 
-  // Créer l'événement
-  const title = CONFIG.EVENT_TITLE_PREFIX + ' ' + data.name;
+  const guests = normalizeGuests(data.email, data.guests);
+
+  const bookingCal = CalendarApp.getCalendarById(CONFIG.BOOKING_CALENDAR_ID);
+  if (!bookingCal) {
+    return { success: false, error: 'Agenda de réservation introuvable.' };
+  }
+
   const description = [
     '--- Diagnostic AgentShift ---',
     '',
@@ -226,95 +234,87 @@ function bookSlot(data) {
     'Entreprise : ' + (data.company || 'Non renseigné'),
     'Effectif : ' + (data.size || 'Non renseigné'),
     'Message : ' + (data.message || 'Aucun'),
+    guests.length > 1 ? 'Participants : ' + guests.join(', ') : '',
     '',
     '---',
     'Réservé via le site agentshift.pro'
-  ].join('\n');
+  ].filter(String).join('\n');
 
-  const event = calendar.createEvent(title, slotStart, slotEnd, {
-    description: description,
-    guests: data.email,
-    sendInvites: true
-  });
+  const event = bookingCal.createEvent(
+    CONFIG.EVENT_TITLE_PREFIX + ' ' + data.name,
+    slotStart, slotEnd,
+    { description: description, guests: guests.join(','), sendInvites: true }
+  );
 
-  // Notification email à David
-  sendNotificationEmail(data, slotStart, slotEnd);
+  sendNotificationEmail(data, slotStart, slotEnd, guests);
 
   return {
     success: true,
     message: 'Votre créneau est confirmé.',
     eventId: event.getId(),
     date: formatDate(slotStart),
-    time: formatTime(slotStart) + ' – ' + formatTime(slotEnd)
+    time: formatTime(slotStart) + ' – ' + formatTime(slotEnd),
+    guests: guests
   };
 }
 
-
-/**
- * Envoie un email de notification au consultant
- */
-function sendNotificationEmail(data, start, end) {
-  const subject = '🟢 Nouveau RDV AgentShift — ' + data.name;
+function sendNotificationEmail(data, start, end, guests) {
   const body = [
-    'Nouveau diagnostic réservé !',
+    'Nouveau diagnostic réservé.',
     '',
     'Qui : ' + data.name + ' (' + data.email + ')',
     'Entreprise : ' + (data.company || 'Non renseigné'),
     'Effectif : ' + (data.size || 'Non renseigné'),
     'Quand : ' + formatDate(start) + ' à ' + formatTime(start) + ' – ' + formatTime(end),
     'Message : ' + (data.message || '—'),
+    (guests && guests.length > 1) ? 'Participants : ' + guests.join(', ') : '',
     '',
     'L\'invitation Google Calendar a été envoyée automatiquement.',
     '',
-    '— Bob (AgentShift CEO)'
-  ].join('\n');
+    '— L\'équipe AgentShift'
+  ].filter(String).join('\n');
 
   MailApp.sendEmail({
     to: CONFIG.NOTIFICATION_EMAIL,
-    subject: subject,
+    subject: 'Nouveau RDV AgentShift — ' + data.name,
     body: body
   });
 }
-
 
 // ============================================
 // UTILITAIRES
 // ============================================
 
-function formatTime(date) {
-  return Utilities.formatDate(date, CONFIG.TIMEZONE, 'HH:mm');
-}
+function formatTime(date)    { return Utilities.formatDate(date, CONFIG.TIMEZONE, 'HH:mm'); }
+function formatDate(date)    { return Utilities.formatDate(date, CONFIG.TIMEZONE, 'EEEE d MMMM yyyy'); }
+function formatWeekday(date) { return Utilities.formatDate(date, CONFIG.TIMEZONE, 'EEE'); }
 
-function formatDate(date) {
-  return Utilities.formatDate(date, CONFIG.TIMEZONE, 'EEEE d MMMM yyyy');
-}
-
-function formatWeekday(date) {
-  return Utilities.formatDate(date, CONFIG.TIMEZONE, 'EEE');
-}
-
-function getCorsHeaders(origin) {
-  const isAllowed = CONFIG.ALLOWED_ORIGINS.some(o => origin.startsWith(o));
-  return {
-    'Access-Control-Allow-Origin': isAllowed ? origin : CONFIG.ALLOWED_ORIGINS[0],
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
-  };
-}
-
-function jsonResponse(data, headers) {
-  const output = ContentService
+function jsonResponse(data) {
+  return ContentService
     .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
-  return output;
 }
 
-
 // ============================================
-// TEST (exécuter manuellement pour vérifier)
+// TESTS (à exécuter manuellement dans l'éditeur)
 // ============================================
 
 function testGetSlots() {
-  const slots = getAvailableSlots();
-  Logger.log(JSON.stringify(slots, null, 2));
+  Logger.log(JSON.stringify(getAvailableSlots(), null, 2));
+}
+
+/** Doit échouer : créneau dans le passé. */
+function testRefusePasse() {
+  Logger.log(JSON.stringify(bookSlot({
+    start: '2020-01-01T09:00:00.000Z', name: 'Test', email: 'test@example.com'
+  })));
+}
+
+/** Doit échouer : heure hors grille. */
+function testRefuseHorsGrille() {
+  const d = new Date(Date.now() + 72 * 3600 * 1000);
+  d.setHours(3, 47, 0, 0);
+  Logger.log(JSON.stringify(bookSlot({
+    start: d.toISOString(), name: 'Test', email: 'test@example.com'
+  })));
 }

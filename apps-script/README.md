@@ -27,11 +27,21 @@ C'est exactement le risque en cours : le script vit historiquement sous
 ## Configuration
 
 ```js
-BUSY_CALENDAR_IDS: ['primary', '<id-agenda-agentshift>'],
-BOOKING_CALENDAR_ID: '<id-agenda-agentshift>',
+BUSY_CALENDAR_IDS: ['primary'],
+BOOKING_CALENDAR_ID: 'primary',
 ```
 
-**Les deux listes sont distinctes et c'est volontaire.**
+**État déployé au 27/08/2026.** Le script s'exécutant sous
+`contact@agentshift.pro`, `primary` désigne l'agenda principal de ce compte.
+Les rendez-vous du site **et** ceux créés par Bob y atterrissent, décision du
+27/08 : un agenda principal ne peut pas être orphelin, contrairement à un
+agenda secondaire qui meurt avec le compte qui l'a créé.
+
+Corollaire heureux : `BOOKING_CALENDAR_ID` figurant par construction dans
+`BUSY_CALENDAR_IDS`, la double réservation décrite plus bas devient impossible.
+
+Les deux clés **peuvent** différer, et le reste de cette section explique
+pourquoi on pourrait le vouloir un jour.
 
 `BUSY_CALENDAR_IDS` — tous les agendas consultés pour savoir quand vous êtes
 occupé. En oublier un fait proposer aux prospects des créneaux déjà pris.

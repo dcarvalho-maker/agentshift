@@ -641,6 +641,47 @@
     .intro-inner p { font-size: 1rem; }
     footer { flex-direction: column; text-align: center; }
   }
+
+
+  /* =====================================================================
+     COLONNE DE LECTURE  --  regle de style AgentShift, posee le 31/08/2026
+     ---------------------------------------------------------------------
+     DEFAUT CORRIGE. Les paragraphes s'arretaient a 520 px (.section-desc)
+     ou 704 px, quand les titres, les grilles de cartes et les tableaux
+     allaient tous a 1080 px. Le bord droit du texte n'etait donc jamais le
+     meme deux fois de suite : cela se lit comme un defaut d'alignement,
+     jamais comme une composition.
+
+     LA REGLE. Tout le texte courant partage une seule largeur, --measure.
+     Les blocs -- grilles de cartes, tableaux, medias -- sont les seuls
+     autorises a la depasser, et leur debordement devient alors une
+     intention lisible plutot qu'un accident.
+
+     A NE PAS FAIRE. Elargir --measure pour "remplir" le conteneur. Au-dela
+     de 44rem la ligne depasse 80 caracteres et la lecture decroche. Si un
+     bloc de texte parait perdu dans le vide a droite, c'est le conteneur
+     qu'il faut resserrer, pas la colonne de lecture qu'il faut etirer.
+
+     NOUVELLE PAGE. Rien a faire : la regle s'applique par le selecteur
+     ci-dessous des lors que le contenu est dans `section > .container`.
+     ===================================================================== */
+  :root { --measure: 44rem; }
+
+  section :is(h1, h2, h3, p, ul, ol, blockquote),
+  .section-desc {
+    max-width: var(--measure);
+  }
+
+  /* Dans un bloc, le texte remplit son bloc : c'est le bloc qui porte la
+     largeur, pas la colonne de lecture. Sans cette exception, une cellule
+     de tableau large se retrouverait bridee a 44rem au milieu du tableau.
+     Les cartes et colonnes du site font toutes moins de 44rem : la regle
+     ci-dessus ne les touche donc pas, elle ne fait que plafonner. */
+  td, th,
+  .t-card :is(h1, h2, h3, p, ul, ol, blockquote) {
+    max-width: none;
+  }
+
 </style>
 </head>
 <body>

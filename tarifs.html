@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentShift — L'expérience de vos équipes, démultipliée · Organisation Cognitive</title>
-<meta name="description" content="David Carvalho — 25 ans de leadership design. Coaching en transformation agentique et organisation cognitive pour PME et startups.">
+<title>Tarifs et engagement &middot; AgentShift</title>
+<meta name="description" content="Grille tarifaire et modèle d’engagement AgentShift. Deux mouvements, ce que vous portez, la condition d’arrêt. Quatre à cinq maisons, une par secteur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -682,19 +682,56 @@
     max-width: none;
   }
 
+
+/* ---- Page Tarifs ---- */
+.page-head { padding-top: 8.5rem; }
+.page-head h1 { font-family: var(--font-display); font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 1.2rem; text-wrap: balance; }
+.page-head .lede { font-size: 1.15rem; line-height: 1.65; color: var(--text-secondary); max-width: var(--measure); }
+.t-section h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -0.01em; margin: 0 0 1.1rem; text-wrap: balance; }
+.t-section p { color: var(--text-secondary); line-height: 1.7; max-width: var(--measure); margin: 0 0 1rem; }
+.t-section p strong, .t-card p strong { color: var(--text-primary); font-weight: 600; }
+.t-lead { color: var(--text-primary) !important; font-size: 1.08rem; }
+
+.t-tablebox { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--charcoal-mid); margin: 1.6rem 0; }
+.t-tablebox table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.95rem; }
+.t-tablebox th, .t-tablebox td { text-align: left; padding: 0.85rem 1.05rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.55; }
+.t-tablebox thead th { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 700; background: var(--charcoal); }
+.t-tablebox tbody tr:last-child td { border-bottom: none; }
+.t-tablebox td.lab { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+.t-num { font-variant-numeric: tabular-nums; color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+
+.t-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.6rem 0; }
+@media (max-width: 760px) { .t-grid { grid-template-columns: 1fr; } .page-head { padding-top: 6.5rem; } }
+.t-card { background: var(--charcoal-mid); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem 1.6rem; display: flex; flex-direction: column; }
+.t-card.gold { border-color: var(--border-gold); }
+.t-card .t-kicker { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 700; display: block; margin-bottom: 0.5rem; }
+.t-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 0 0 0.7rem; color: var(--text-primary); }
+.t-card p { color: var(--text-secondary); line-height: 1.62; margin: 0 0 0.7rem; font-size: 0.96rem; max-width: none; }
+.t-card p:last-child { margin-bottom: 0; }
+.t-price { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; color: var(--gold); letter-spacing: -0.015em; display: block; margin-top: auto; padding-top: 1.1rem; }
+.t-price small { display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0; margin-top: 0.2rem; }
+
+.t-quote { border-left: 2px solid var(--gold); padding: 0.2rem 0 0.2rem 1.2rem; margin: 1.5rem 0; font-size: 1.08rem; line-height: 1.6; color: var(--text-primary); max-width: var(--measure); }
+.t-list { margin: 0 0 1rem; padding-left: 1.1rem; color: var(--text-secondary); line-height: 1.7; max-width: var(--measure); }
+.t-list li { margin-bottom: 0.45rem; }
+.t-list li::marker { color: var(--gold-muted); }
+.t-q { margin: 0 0 0.4rem; color: var(--text-primary); font-weight: 600; }
+.t-a { margin: 0 0 1.5rem; color: var(--text-secondary); line-height: 1.7; max-width: var(--measure); }
+.t-cta { text-align: center; padding: 3rem 0 0; }
+/* Bloc centre : le titre et le texte partagent la meme boite, sinon deux bords. */
+.t-cta h2, .t-cta p { margin-left: auto; margin-right: auto; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="mainNav">
-  <a href="#" class="nav-logo">Agent<span>Shift</span></a>
+  <a href="index.html" class="nav-logo">Agent<span>Shift</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
-    <li><a href="#about" data-fr="Parcours" data-en="About">Parcours</a></li>
+    <li><a href="index.html#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
+    <li><a href="index.html#about" data-fr="Parcours" data-en="About">Parcours</a></li>
     <li><a href="tarifs.html" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
-    <li><a href="#testimonials" data-fr="Questions" data-en="Questions">Questions</a></li>
-    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+    <li><a href="index.html#testimonials" data-fr="Questions" data-en="Questions">Questions</a></li>
+    <li><a href="index.html#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
   </ul>
   <div class="nav-right">
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
@@ -702,159 +739,252 @@
   </div>
 </nav>
 
-<!-- HERO = THE IMAGE, AS-IS -->
-<section class="hero">
-  <img class="hero-img" src="hero.png" alt="David Carvalho — 4E Metacognition Design — Organisation Cognitive 2026">
-  <div class="hero-title-overlay">
-    <h1 data-fr="L'expérience<br>De vos équipes<br><span>démultipliée</span>" data-en="The experience<br>Of your teams<br><span>multiplied</span>">L'expérience<br>De vos équipes<br><span>démultipliée</span></h1>
-  </div>
-  <div class="hero-cta-bar">
-    <div class="hero-cta-text" data-fr="<strong>David Carvalho</strong> a 25 ans d'expérience en transformations et Innovations sur 4 industries pour vous accompagner dans votre <strong>transformation agentique</strong>." data-en="<strong>David Carvalho</strong> has 25 years of experience in transformations and innovations across 4 industries to guide your <strong>agentic transformation</strong>."><strong>David Carvalho</strong> a 25 ans d'expérience en transformations et Innovations sur 4 industries pour vous accompagner dans votre <strong>transformation agentique</strong>.</div>
-    <div class="hero-cta-buttons">
-      <a href="#contact" class="btn-gold" data-fr="Réserver un appel →" data-en="Book a call →">Réserver un appel →</a>
-    </div>
+<section class="page-head">
+  <div class="container">
+    <div class="section-tag" data-fr="Tarifs et engagement" data-en="Pricing and engagement">Tarifs et engagement</div>
+    <h1 data-fr="Ce que ça coûte, ce que vous portez,<br>et quand ça s’arrête" data-en="What it costs, what you carry,<br>and when it ends">Ce que ça coûte, ce que vous portez,<br>et quand ça s’arrête</h1>
+    <p class="lede" data-fr="Trois questions qu’un dirigeant pose en réunion et auxquelles peu de pages répondent. Voici les miennes, avec le périmètre qui va avec." data-en="Three questions a director asks in a meeting, and few pages answer. Here are mine, with the scope that comes with them.">Trois questions qu’un dirigeant pose en réunion et auxquelles peu de pages répondent. Voici les miennes, avec le périmètre qui va avec.</p>
   </div>
 </section>
 
-<!-- INTRO STRIP -->
-<div class="intro-strip">
-  <div class="intro-inner reveal">
-    <p data-fr="Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche — le <strong>4E Framework</strong> — transforme votre entreprise de l'intérieur." data-en="I don't deploy AI tools. I design the <em>cognitive organization</em> that makes them useful. My approach — the <strong>4E Framework</strong> — transforms your company from within.">Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche — le <strong>4E Framework</strong> — transforme votre entreprise de l'intérieur.</p>
-  </div>
-</div>
-
-<!-- PILLARS -->
-<section class="pillars" id="pillars">
+<section class="t-section">
   <div class="container">
-    <div class="section-tag" data-fr="Méthode 4E" data-en="4E Method">Méthode 4E</div>
-    <h2 class="section-title reveal" data-fr="Trois piliers de la transformation agentique" data-en="Three pillars of agentic transformation">Trois piliers de la transformation agentique</h2>
-    <p class="section-desc reveal" data-fr="La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes." data-en="Most AI transformations fail because they focus on technology. My approach starts with humans and systems.">La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes.</p>
-    <div class="pillar-grid">
-      <div class="pillar-card reveal">
-        <div class="pillar-num">01</div>
-        <h3 data-fr="Diagnostic Agentique" data-en="Agentic Diagnostic">Diagnostic Agentique</h3>
-        <p data-fr="Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur — pas un gadget." data-en="Mapping your decision and operational flows. Identifying where an AI agent creates real value — not a gimmick.">Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur — pas un gadget.</p>
+    <h2 data-fr="Ce métier est neuf, et je le dis avant qu’on me le demande" data-en="This craft is new, and I say so before I am asked">Ce métier est neuf, et je le dis avant qu’on me le demande</h2>
+    <p class="t-lead" data-fr="Personne n’a vingt ans d’expérience en organisation cognitive. La discipline n’existait pas. J’ai 25 ans de conception de systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips, et je les applique à une matière récente." data-en="Nobody has twenty years of experience in cognitive organisation. The discipline did not exist. I have 25 years designing complex systems at Pininfarina, Orange, Dassault Systèmes and Philips, and I apply them to a recent subject.">Personne n’a vingt ans d’expérience en organisation cognitive. La discipline n’existait pas. J’ai 25 ans de conception de systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips, et je les applique à une matière récente.</p>
+    <p data-fr="C’est exactement pourquoi je ne vends pas une méthode sur étagère. Il n’existe pas de recette éprouvée, et quiconque vous en vend une vous vend celle d’une autre maison. Chaque atelier a ses gestes. L’outil qui les sert se construit, il ne s’achète pas." data-en="That is precisely why I do not sell an off-the-shelf method. No proven recipe exists, and anyone selling you one is selling you another company’s. Every workshop has its own gestures. The tool that serves them is built, not bought.">C’est exactement pourquoi je ne vends pas une méthode sur étagère. Il n’existe pas de recette éprouvée, et quiconque vous en vend une vous vend celle d’une autre maison. Chaque atelier a ses gestes. L’outil qui les sert se construit, il ne s’achète pas.</p>
+  </div>
+</section>
+
+<section class="t-section pillars">
+  <div class="container">
+    <h2 data-fr="Des outils faits pour vous, pas une licence de plus" data-en="Tools built for you, not one more licence">Des outils faits pour vous, pas une licence de plus</h2>
+    <div class="t-grid">
+      <div class="t-card">
+        <h3 data-fr="Je ne revends rien" data-en="I resell nothing">Je ne revends rien</h3>
+        <p data-fr="Aucune licence, aucune commission d’éditeur. Mon chiffrage ne contient que du travail, ce qui le rend lisible ligne à ligne." data-en="No licences, no vendor commission. My pricing contains labour only, which makes it readable line by line.">Aucune licence, aucune commission d’éditeur. Mon chiffrage ne contient que du travail, ce qui le rend lisible ligne à ligne.</p>
       </div>
-      <div class="pillar-card reveal">
-        <div class="pillar-num">02</div>
-        <h3 data-fr="Architecture Cognitive" data-en="Cognitive Architecture">Architecture Cognitive</h3>
-        <p data-fr="Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé." data-en="Designing the target organization: human roles, agent roles, collaboration interfaces. Systemic design, not an isolated PoC.">Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé.</p>
+      <div class="t-card">
+        <h3 data-fr="L’infrastructure reste chez vous" data-en="The infrastructure stays with you">L’infrastructure reste chez vous</h3>
+        <p data-fr="Hébergement, abonnements et consommation sont à votre nom, sur vos comptes, payés en direct. Les clés ne passent jamais par moi." data-en="Hosting, subscriptions and usage are in your name, on your accounts, paid directly. The keys never pass through me.">Hébergement, abonnements et consommation sont à votre nom, sur vos comptes, payés en direct. Les clés ne passent jamais par moi.</p>
       </div>
-      <div class="pillar-card reveal">
-        <div class="pillar-num">03</div>
-        <h3 data-fr="Adoption & Échelle" data-en="Adoption & Scale">Adoption & Échelle</h3>
-        <p data-fr="Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent." data-en="Supporting teams through change. Training, iterations, impact measurement. AI only works if humans adopt it.">Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent.</p>
+      <div class="t-card">
+        <h3 data-fr="Ce que je produis, vous pouvez déjà l’ouvrir" data-en="What I produce, you can already open">Ce que je produis, vous pouvez déjà l’ouvrir</h3>
+        <p data-fr="Pas de note d’intention. Un objet qui s’ouvre, construit sur vos propres relevés, dès les premiers jours." data-en="No statement of intent. An object that opens, built on your own findings, within the first days.">Pas de note d’intention. Un objet qui s’ouvre, construit sur vos propres relevés, dès les premiers jours.</p>
+      </div>
+      <div class="t-card">
+        <h3 data-fr="Le sur-mesure a une limite, et je la dis" data-en="Bespoke has a limit, and I state it">Le sur-mesure a une limite, et je la dis</h3>
+        <p data-fr="Construire pour vous coûte plus cher qu’installer un produit. En échange, l’outil épouse vos gestes au lieu de vous demander de changer les vôtres." data-en="Building for you costs more than installing a product. In exchange, the tool fits your gestures instead of asking you to change them.">Construire pour vous coûte plus cher qu’installer un produit. En échange, l’outil épouse vos gestes au lieu de vous demander de changer les vôtres.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
+<section class="t-section">
   <div class="container">
-    <div class="about-layout">
-      <div class="about-visual reveal">
-        <div class="about-stats">
-          <div class="stat-box"><div class="stat-num">25+</div><div class="stat-lbl" data-fr="Ans d'expérience" data-en="Years experience">Ans d'expérience</div></div>
-          <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl" data-fr="Grands groupes" data-en="Major corps">Grands groupes</div></div>
-          <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl" data-fr="Pays" data-en="Countries">Pays</div></div>
-          <div class="stat-box"><div class="stat-num">&#8734;</div><div class="stat-lbl" data-fr="Curiosité" data-en="Curiosity">Curiosité</div></div>
-        </div>
-        <div class="method-badge">
-          <div class="method-badge-tag" data-fr="Méthodologie" data-en="Methodology">Méthodologie</div>
-          <div class="method-badge-val" data-fr="Metacognition Design · 4E" data-en="Metacognition Design · 4E">Metacognition Design · 4E</div>
-        </div>
+    <div class="section-tag" data-fr="Le mécanisme" data-en="The mechanism">Le mécanisme</div>
+    <h2 data-fr="Ce que les modèles ne savent pas de vous" data-en="What the models do not know about you">Ce que les modèles ne savent pas de vous</h2>
+    <p class="t-lead" data-fr="Les modèles qui font parler de l’intelligence artificielle ont été entraînés sur l’internet accessible. Ils savent ce que le monde a publié. Ils ne savent rien de vous." data-en="The models everyone talks about were trained on the accessible internet. They know what the world has published. They know nothing about you.">Les modèles qui font parler de l’intelligence artificielle ont été entraînés sur l’internet accessible. Ils savent ce que le monde a publié. Ils ne savent rien de vous.</p>
+    <p data-fr="Vos comptes rendus de réunion, vos rapports internes, vos études, les échanges de vos équipes, les vidéos de vos ateliers, ce que vos machines se disent entre elles : rien de tout cela n’a jamais été lu par un modèle. Et rien de tout cela n’est exploitable en l’état." data-en="Your meeting notes, your internal reports, your studies, your teams’ exchanges, the video of your workshop floor, what your machines say to each other: none of it has ever been read by a model. And none of it is usable as it stands.">Vos comptes rendus de réunion, vos rapports internes, vos études, les échanges de vos équipes, les vidéos de vos ateliers, ce que vos machines se disent entre elles : rien de tout cela n’a jamais été lu par un modèle. Et rien de tout cela n’est exploitable en l’état.</p>
+    <p class="t-quote" data-fr="C’est pourtant là qu’est votre matière, et c’est la seule que vos concurrents n’auront jamais." data-en="Yet that is where your material sits, and it is the only material your competitors will never have.">C’est pourtant là qu’est votre matière, et c’est la seule que vos concurrents n’auront jamais.</p>
+    <div class="t-grid">
+      <div class="t-card">
+        <span class="t-kicker" data-fr="Étape 1" data-en="Step 1">Étape 1</span>
+        <h3 data-fr="Lire ce qui n’a jamais été lu" data-en="Read what has never been read">Lire ce qui n’a jamais été lu</h3>
+        <p data-fr="On ouvre les gisements dormants : archives, comptes rendus, fils de discussion, relevés machine, enregistrements. Ce qui n’est ni indexé ni structuré est justement ce qui a le plus de valeur, parce que personne d’autre ne l’a." data-en="We open the dormant seams: archives, minutes, message threads, machine logs, recordings. What is neither indexed nor structured is exactly what holds the most value, because nobody else has it.">On ouvre les gisements dormants : archives, comptes rendus, fils de discussion, relevés machine, enregistrements. Ce qui n’est ni indexé ni structuré est justement ce qui a le plus de valeur, parce que personne d’autre ne l’a.</p>
       </div>
-      <div class="about-text reveal">
-        <div class="section-tag" data-fr="Parcours" data-en="About">Parcours</div>
-        <h2 class="section-title" data-fr="Du design industriel à l'intelligence organisationnelle" data-en="From industrial design to organizational intelligence">Du design industriel à l'intelligence organisationnelle</h2>
-        <p data-fr="Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable." data-en="For 25 years, I designed complex systems at Pininfarina, Orange, Dassault Systèmes, and Philips. From automotive interfaces to digital platforms, my job has always been the same: making the invisible readable and innovation adoptable.">Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable.</p>
-        <p data-fr="Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles — ce sont celles qui ont la meilleure architecture humain-machine." data-en="Today, that discipline applies to agentic transformation. The organizations that succeed with AI won't have the best models — they'll have the best human-machine architecture.">Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles — ce sont celles qui ont la meilleure architecture humain-machine.</p>
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-year" data-fr="Aujourd'hui" data-en="Present">Aujourd'hui</div><div class="tl-role" data-fr="Coaching Transformation Agentique" data-en="Agentic Transformation Coaching">Coaching Transformation Agentique</div><div class="tl-co">AgentShift · 4E</div></div>
-          <div class="tl-item"><div class="tl-year">2018 – 2024</div><div class="tl-role">SVP Experience Design</div><div class="tl-co">Pininfarina</div></div>
-          <div class="tl-item"><div class="tl-year">2014 – 2018</div><div class="tl-role" data-fr="Directeur Vision & Design" data-en="Vision & Design Director">Directeur Vision & Design</div><div class="tl-co">Orange Group</div></div>
-          <div class="tl-item"><div class="tl-year">2008 – 2014</div><div class="tl-role" data-fr="Directeur Design Studio" data-en="Design Studio Director">Directeur Design Studio</div><div class="tl-co">Dassault Systèmes</div></div>
-          <div class="tl-item"><div class="tl-year">2000 – 2008</div><div class="tl-role">Senior Designer</div><div class="tl-co">Philips Design</div></div>
-        </div>
-        <div class="brand-row">
-          <span class="brand-chip">Pininfarina</span>
-          <span class="brand-chip">Orange</span>
-          <span class="brand-chip">Dassault Systèmes</span>
-          <span class="brand-chip">Philips</span>
-          <span class="brand-chip">L2 Concept</span>
-        </div>
+      <div class="t-card">
+        <span class="t-kicker" data-fr="Étape 2" data-en="Step 2">Étape 2</span>
+        <h3 data-fr="En tirer un jeu de référence" data-en="Distil a reference set">En tirer un jeu de référence</h3>
+        <p data-fr="Le corpus propre, vérifié, qui fait autorité chez vous. On l’appelle un golden dataset. C’est lui qui distingue une réponse juste d’une réponse plausible, et il ne se télécharge nulle part." data-en="The clean, verified corpus that is authoritative inside your company. It is called a golden dataset. It is what separates a correct answer from a plausible one, and it cannot be downloaded anywhere.">Le corpus propre, vérifié, qui fait autorité chez vous. On l’appelle un golden dataset. C’est lui qui distingue une réponse juste d’une réponse plausible, et il ne se télécharge nulle part.</p>
       </div>
+      <div class="t-card">
+        <span class="t-kicker" data-fr="Étape 3" data-en="Step 3">Étape 3</span>
+        <h3 data-fr="Relier, plutôt qu’empiler" data-en="Connect, rather than stack">Relier, plutôt qu’empiler</h3>
+        <p data-fr="Un graphe de connaissances dit comment vos objets, vos gestes et vos décisions se tiennent entre eux. Une pièce, un client, un chantier, une règle de métier : ce sont les liens qui portent le savoir, pas les documents." data-en="A knowledge graph states how your objects, your gestures and your decisions hold together. A part, a client, a site, a rule of the trade: knowledge lives in the links, not in the documents.">Un graphe de connaissances dit comment vos objets, vos gestes et vos décisions se tiennent entre eux. Une pièce, un client, un chantier, une règle de métier : ce sont les liens qui portent le savoir, pas les documents.</p>
+      </div>
+      <div class="t-card gold">
+        <span class="t-kicker" data-fr="Étape 4" data-en="Step 4">Étape 4</span>
+        <h3 data-fr="Orchestrer, et seulement alors" data-en="Orchestrate, and only then">Orchestrer, et seulement alors</h3>
+        <p data-fr="Les agents viennent en dernier, et ils travaillent sur cette matière-là. C’est à ce moment que l’organisation devient cognitive : elle sait ce qu’elle sait, elle voit où elle se trompe, et elle l’apprend de sa propre activité. C’est la métacognition de votre marque." data-en="The agents come last, and they work on that material. This is the point where the organisation becomes cognitive: it knows what it knows, it sees where it errs, and it learns that from its own activity. That is your brand’s metacognition.">Les agents viennent en dernier, et ils travaillent sur cette matière-là. C’est à ce moment que l’organisation devient cognitive : elle sait ce qu’elle sait, elle voit où elle se trompe, et elle l’apprend de sa propre activité. C’est la métacognition de votre marque.</p>
+      </div>
+    </div>
+    <p data-fr="L’ordre compte. Brancher des agents sur une matière qui n’a pas été convertie produit des réponses plausibles et fausses, ce qui coûte plus cher que de n’avoir rien fait." data-en="The order matters. Wiring agents onto material that has not been converted produces answers that are plausible and wrong, which costs more than doing nothing.">L’ordre compte. Brancher des agents sur une matière qui n’a pas été convertie produit des réponses plausibles et fausses, ce qui coûte plus cher que de n’avoir rien fait.</p>
+  </div>
+</section>
+
+<section class="t-section">
+  <div class="container">
+    <div class="section-tag" data-fr="Avant de choisir" data-en="Before choosing">Avant de choisir</div>
+    <h2 data-fr="Où se trouve votre valeur" data-en="Where your value sits">Où se trouve votre valeur</h2>
+    <p data-fr="Votre valeur est-elle dans un actif que vous possédez déjà, ou dans ce que vous produisez chaque jour sans le garder ? La réponse change l’unité de prix, pas la méthode." data-en="Is your value in an asset you already own, or in what you produce every day without keeping it? The answer changes the pricing unit, not the method.">Votre valeur est-elle dans un actif que vous possédez déjà, ou dans ce que vous produisez chaque jour sans le garder ? La réponse change l’unité de prix, pas la méthode.</p>
+    <div class="t-tablebox">
+      <table>
+        <thead><tr>
+          <th data-fr="&nbsp;" data-en="&nbsp;">&nbsp;</th>
+          <th data-fr="Un capital à structurer" data-en="Capital to structure">Un capital à structurer</th>
+          <th data-fr="Un flux qui capitalise" data-en="A flow that compounds">Un flux qui capitalise</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="lab" data-fr="La matière" data-en="The material">La matière</td><td data-fr="un catalogue, un référentiel produit, un savoir de métier" data-en="a catalogue, a product reference, a body of craft knowledge">un catalogue, un référentiel produit, un savoir de métier</td><td data-fr="des chantiers, des interventions, des dossiers" data-en="sites, jobs, case files">des chantiers, des interventions, des dossiers</td></tr>
+          <tr><td class="lab" data-fr="D’où vient la valeur" data-en="Where value comes from">D’où vient la valeur</td><td data-fr="rendre exploitable un actif qui existe déjà" data-en="making an existing asset usable">rendre exploitable un actif qui existe déjà</td><td data-fr="enregistrer, puis voir les motifs apparaître avec le volume" data-en="recording, then watching patterns emerge with volume">enregistrer, puis voir les motifs apparaître avec le volume</td></tr>
+          <tr><td class="lab" data-fr="La forme du travail" data-en="Shape of the work">La forme du travail</td><td data-fr="structurer une fois, ça tient" data-en="structure once, it holds">structurer une fois, ça tient</td><td data-fr="enregistrer sans cesse, ça compose" data-en="record continuously, it compounds">enregistrer sans cesse, ça compose</td></tr>
+          <tr><td class="lab" data-fr="L’unité de prix" data-en="Pricing unit">L’unité de prix</td><td data-fr="le jour" data-en="the day">le jour</td><td data-fr="le jour, puis un jalon par site déployé" data-en="the day, then a milestone per deployed site">le jour, puis un jalon par site déployé</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-fr="Sur un flux, un prix à l’usage taxerait exactement ce qui produit la valeur. Plus vous enregistrez, plus les motifs apparaissent : facturer l’enregistrement reviendrait à décourager la seule chose utile." data-en="On a flow, usage-based pricing would tax the very thing that creates value. The more you record, the more patterns emerge: charging for recording would discourage the one useful act.">Sur un flux, un prix à l’usage taxerait exactement ce qui produit la valeur. Plus vous enregistrez, plus les motifs apparaissent : facturer l’enregistrement reviendrait à décourager la seule chose utile.</p>
+  </div>
+</section>
+
+<section class="t-section">
+  <div class="container">
+    <div class="section-tag" data-fr="L’offre" data-en="The offer">L’offre</div>
+    <h2 data-fr="Deux mouvements, et le premier suffit souvent" data-en="Two movements, and the first is often enough">Deux mouvements, et le premier suffit souvent</h2>
+    <div class="t-grid">
+
+      <div class="t-card gold">
+        <span class="t-kicker" data-fr="Le MOVE" data-en="The MOVE">Le MOVE</span>
+        <h3 data-fr="Le relevé et l’objet" data-en="The survey and the object">Le relevé et l’objet</h3>
+        <p data-fr="<strong>Ce que vous repartez avec.</strong> Des relevés datés de votre propre maison, de nos échanges et d’exemples concrets, plus un objet consultable construit sur eux, avec un avant-goût de ce que devient l’après." data-en="<strong>What you leave with.</strong> Dated findings from your own company, from our exchanges and from concrete examples, plus a workable object built on them, with a foretaste of what comes next."><strong>Ce que vous repartez avec.</strong> Des relevés datés de votre propre maison, de nos échanges et d’exemples concrets, plus un objet consultable construit sur eux, avec un avant-goût de ce que devient l’après.</p>
+        <p data-fr="<strong>Ce que ça consomme, chez moi.</strong> Deux jours d’observation et d’échanges sur site, puis deux jours de fabrication, le BUILD comme on dit." data-en="<strong>What it takes, on my side.</strong> Two days of on-site observation and discussion, then two days of build."><strong>Ce que ça consomme, chez moi.</strong> Deux jours d’observation et d’échanges sur site, puis deux jours de fabrication, le BUILD comme on dit.</p>
+        <p data-fr="<strong>Ce que vous portez.</strong> L’accès à vos équipes le jour de l’observation, et un accès à vos données, même restreint. Rien d’autre." data-en="<strong>What you carry.</strong> Access to your teams on the observation day, and access to your data, even limited. Nothing else."><strong>Ce que vous portez.</strong> L’accès à vos équipes le jour de l’observation, et un accès à vos données, même restreint. Rien d’autre.</p>
+        <p data-fr="<strong>La condition d’arrêt.</strong> L’objet est ouvert, les relevés sont remis. Beaucoup s’arrêtent là, et c’est prévu : prendre le temps de réfléchir, chercher d’autres avis, consulter." data-en="<strong>Stopping condition.</strong> The object is open, the findings are handed over. Many stop there, and that is by design: taking time to think, seeking other views, consulting."><strong>La condition d’arrêt.</strong> L’objet est ouvert, les relevés sont remis. Beaucoup s’arrêtent là, et c’est prévu : prendre le temps de réfléchir, chercher d’autres avis, consulter.</p>
+        <span class="t-price" data-fr="4 500 € HT<small>Forfait tout compris. Déplacement et séjour compris. La réunion de restitution est dedans, et le temps pour répondre à vos questions aussi.</small>" data-en="€4,500 excl. VAT<small>All-inclusive fixed price. Travel and accommodation included. The closing meeting is part of it, and so is the time to answer your questions.</small>">4 500 € HT<small>Forfait tout compris. Déplacement et séjour compris. La réunion de restitution est dedans, et le temps pour répondre à vos questions aussi.</small></span>
+      </div>
+
+      <div class="t-card">
+        <span class="t-kicker" data-fr="Le SAUT" data-en="The LEAP">Le SAUT</span>
+        <h3 data-fr="Le golden dataset et la surcouche agentique" data-en="The golden dataset and the agentic layer">Le golden dataset et la surcouche agentique</h3>
+        <p data-fr="Convertir votre matière dormante, puis orchestrer des agents dessus, y compris sur les logiciels auxquels vous tenez." data-en="Convert your dormant material, then orchestrate agents on top of it, including on the software you are attached to.">Convertir votre matière dormante, puis orchestrer des agents dessus, y compris sur les logiciels auxquels vous tenez.</p>
+        <p data-fr="<strong>Le travail.</strong> Les quatre étapes ci-dessus, dans l’ordre : ouvrir vos gisements de savoirs et de compétences dormants, en tirer un jeu de référence, le relier en graphe, puis orchestrer les agents dessus, sur une architecture à l’image du système robuste que vous avez déjà." data-en="<strong>The work.</strong> The four steps above, in order: open your dormant seams of knowledge and skill, distil a reference set, connect it into a graph, then orchestrate the agents on top, on an architecture shaped like the robust system you already run."><strong>Le travail.</strong> Les quatre étapes ci-dessus, dans l’ordre : ouvrir vos gisements de savoirs et de compétences dormants, en tirer un jeu de référence, le relier en graphe, puis orchestrer les agents dessus, sur une architecture à l’image du système robuste que vous avez déjà.</p>
+        <p data-fr="<strong>La forme.</strong> Au temps passé, sur votre calendrier, qui a ses contraintes et ses rendez-vous. Pas une mission, une présence auprès de vos équipes. Chaque jalon vaut contrat." data-en="<strong>The form.</strong> Time-based, on your calendar, with its own constraints and fixed dates. Not a project, a presence alongside your teams. Each milestone is its own contract."><strong>La forme.</strong> Au temps passé, sur votre calendrier, qui a ses contraintes et ses rendez-vous. Pas une mission, une présence auprès de vos équipes. Chaque jalon vaut contrat.</p>
+        <p data-fr="<strong>Ce que ça consomme, chez moi.</strong> Trois jours toutes les deux semaines, sur site, avec un bureau." data-en="<strong>What it takes, on my side.</strong> Three days every two weeks, on site, with a desk."><strong>Ce que ça consomme, chez moi.</strong> Trois jours toutes les deux semaines, sur site, avec un bureau.</p>
+        <p data-fr="<strong>Qui décide de l’ordre.</strong> Vous. La feuille de route est priorisée par vous, jamais par moi." data-en="<strong>Who sets the order.</strong> You. The roadmap is prioritised by you, never by me."><strong>Qui décide de l’ordre.</strong> Vous. La feuille de route est priorisée par vous, jamais par moi.</p>
+        <p data-fr="<strong>La condition d’arrêt.</strong> Écrite avant chaque jalon, et vos équipes tiennent l’ensemble sans moi. C’est le critère, pas la date." data-en="<strong>Stopping condition.</strong> Written before each milestone, and your teams hold it without me. That is the criterion, not a date."><strong>La condition d’arrêt.</strong> Écrite avant chaque jalon, et vos équipes tiennent l’ensemble sans moi. C’est le critère, pas la date.</p>
+        <span class="t-price" data-fr="1 200 € HT / jour<small>Sur place et hors site, frais compris. Compter environ 100 000 € HT pour une année pleine, amorti en moins de deux ans. Nous tiendrons les comptes.</small>" data-en="€1,200 excl. VAT / day<small>On site and off site, expenses included. Around €100,000 excl. VAT for a full year, paid back in under two years. We will keep the count.</small>">1 200 € HT / jour<small>Sur place et hors site, frais compris. Compter environ 100 000 € HT pour une année pleine, amorti en moins de deux ans. Nous tiendrons les comptes.</small></span>
+      </div>
+    </div>
+    <p data-fr="Il n’y a pas de total pluriannuel sur cette page, et il n’y en aura pas en réunion. Un total se compare à un abonnement, et ce n’est pas ce que vous achetez." data-en="There is no multi-year total on this page, and there will be none in a meeting. A total invites comparison with a subscription, and that is not what you are buying.">Il n’y a pas de total pluriannuel sur cette page, et il n’y en aura pas en réunion. Un total se compare à un abonnement, et ce n’est pas ce que vous achetez.</p>
+  </div>
+</section>
+
+<section class="t-section pillars">
+  <div class="container">
+    <div class="section-tag" data-fr="La ligne qu’on lit en premier" data-en="The line read first">La ligne qu’on lit en premier</div>
+    <h2 data-fr="Ce que vous portez, en heures et en décisions" data-en="What you carry, in hours and decisions">Ce que vous portez, en heures et en décisions</h2>
+    <p data-fr="Vous n’avez pas de direction informatique, et c’est la première chose que vous vérifiez. Alors je ne dis jamais « votre implication », qui se lit comme un risque. Je dis des heures et des décisions nommées, qui se lisent comme un coût connu." data-en="You have no IT department, and that is the first thing you check. So I never say &quot;your involvement&quot;, which reads as a risk. I state hours and named decisions, which read as a known cost.">Vous n’avez pas de direction informatique, et c’est la première chose que vous vérifiez. Alors je ne dis jamais « votre implication », qui se lit comme un risque. Je dis des heures et des décisions nommées, qui se lisent comme un coût connu.</p>
+    <div class="t-tablebox">
+      <table>
+        <thead><tr>
+          <th data-fr="Rôle" data-en="Role">Rôle</th>
+          <th data-fr="Qui" data-en="Who">Qui</th>
+          <th data-fr="Charge" data-en="Load">Charge</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="lab" data-fr="Architecte embarqué" data-en="Embedded architect">Architecte embarqué</td><td data-fr="moi" data-en="me">moi</td><td data-fr="3 jours toutes les 2 semaines" data-en="3 days every 2 weeks">3 jours toutes les 2 semaines</td></tr>
+          <tr><td class="lab" data-fr="Responsable projet" data-en="Project owner">Responsable projet</td><td data-fr="à nommer, chez vous" data-en="to be named, on your side">à nommer, chez vous</td><td data-fr="1 jour par semaine, minimum" data-en="1 day per week, minimum">1 jour par semaine, minimum</td></tr>
+          <tr><td class="lab" data-fr="Propriétaire du contenu" data-en="Content owner">Propriétaire du contenu</td><td data-fr="à nommer" data-en="to be named">à nommer</td><td data-fr="une demi-journée, puis 1 jour par semaine" data-en="half a day, then 1 day per week">une demi-journée, puis 1 jour par semaine</td></tr>
+          <tr><td class="lab" data-fr="Équipes de terrain" data-en="Front-line teams">Équipes de terrain</td><td data-fr="selon les processus retenus" data-en="depending on the processes chosen">selon les processus retenus</td><td data-fr="60 à 80 jours par an, cumulés" data-en="60 to 80 days a year, combined">60 à 80 jours par an, cumulés</td></tr>
+          <tr><td class="lab" data-fr="Direction" data-en="Leadership">Direction</td><td data-fr="le sponsor" data-en="the sponsor">le sponsor</td><td data-fr="1 heure par mois" data-en="1 hour a month">1 heure par mois</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="t-quote" data-fr="Vos équipes de terrain, c’est le poste qui remplace le partenaire technique. Ce n’est pas une charge en plus, c’est une charge à la place." data-en="Your front-line teams are the line item that replaces the systems integrator. It is not an added cost, it is a cost instead.">Vos équipes de terrain, c’est le poste qui remplace le partenaire technique. Ce n’est pas une charge en plus, c’est une charge à la place.</p>
+    <p data-fr="Et son revers, que je préfère dire avant la signature : une direction qui accepte le budget sans accepter cette charge signe un échec à retardement. Le risque le plus fréquent n’est pas le coût, c’est qu’aucune des deux personnes ne soit jamais nommée." data-en="And its flip side, which I would rather say before signing: leadership that accepts the budget without accepting this load is signing a delayed failure. The most common risk is not cost, it is that neither person ever gets named.">Et son revers, que je préfère dire avant la signature : une direction qui accepte le budget sans accepter cette charge signe un échec à retardement. Le risque le plus fréquent n’est pas le coût, c’est qu’aucune des deux personnes ne soit jamais nommée.</p>
+  </div>
+</section>
+
+<section class="t-section">
+  <div class="container">
+    <div class="section-tag" data-fr="Le modèle d’engagement" data-en="Engagement model">Le modèle d’engagement</div>
+    <h2 data-fr="Six règles, valables pour les deux mouvements" data-en="Six rules, for both movements">Six règles, valables pour les deux mouvements</h2>
+    <div class="t-tablebox">
+      <table>
+        <thead><tr>
+          <th data-fr="Règle" data-en="Rule">Règle</th>
+          <th data-fr="Pourquoi" data-en="Why">Pourquoi</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="lab" data-fr="50 % à la commande" data-en="50% on order">50 % à la commande</td><td data-fr="ce qui transforme un engagement en démarrage" data-en="what turns a commitment into a start">ce qui transforme un engagement en démarrage</td></tr>
+          <tr><td class="lab" data-fr="Chaque jalon vaut contrat" data-en="Each milestone is a contract">Chaque jalon vaut contrat</td><td data-fr="vous ne vous engagez jamais sur ce que vous n’avez pas encore vu" data-en="you never commit to what you have not yet seen">vous ne vous engagez jamais sur ce que vous n’avez pas encore vu</td></tr>
+          <tr><td class="lab" data-fr="Condition d’arrêt écrite" data-en="Written stopping condition">Condition d’arrêt écrite</td><td data-fr="avant chaque jalon. Aucun éditeur de logiciel ne peut vous l’offrir" data-en="before each milestone. No software vendor can offer you this">avant chaque jalon. Aucun éditeur de logiciel ne peut vous l’offrir</td></tr>
+          <tr><td class="lab" data-fr="Infrastructure jamais refacturée" data-en="Infrastructure never resold">Infrastructure jamais refacturée</td><td data-fr="je ne suis pas revendeur, les clés restent chez vous" data-en="I am not a reseller, the keys stay with you">je ne suis pas revendeur, les clés restent chez vous</td></tr>
+          <tr><td class="lab" data-fr="Frais compris" data-en="Expenses included">Frais compris</td><td data-fr="déplacement et séjour sont dans les montants annoncés" data-en="travel and accommodation are inside the stated amounts">déplacement et séjour sont dans les montants annoncés</td></tr>
+          <tr><td class="lab" data-fr="Aides publiques" data-en="Public funding">Aides publiques</td><td data-fr="votre éligibilité vous appartient. Je ne la présente jamais comme une remise" data-en="your eligibility is yours. I never present it as a discount">votre éligibilité vous appartient. Je ne la présente jamais comme une remise</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- QUESTIONS -->
-<section class="testimonials-section" id="testimonials">
+<section class="t-section pillars">
   <div class="container">
-    <div class="section-tag" data-fr="Questions" data-en="Questions">Questions</div>
-    <h2 class="section-title reveal" data-fr="Les questions que vous vous posez" data-en="The questions you are asking">Les questions que vous vous posez</h2>
-    <p class="section-desc reveal" data-fr="Ces questions reviennent dans presque tous mes échanges. Voici comment je les aborde." data-en="These come up in almost every conversation I have. Here is how I approach them.">Ces questions reviennent dans presque tous mes échanges. Voici comment je les aborde.</p>
-    <div class="test-grid">
-      <div class="test-card reveal">
-        <div class="test-quote" data-fr="Mon chef d'atelier part à la retraite dans deux ans. Trente ans de tour de main — comment est-ce qu'on garde ça vivant ?" data-en="My workshop manager retires in two years. Thirty years of craft — how do we keep that alive?">Mon chef d'atelier part à la retraite dans deux ans. Trente ans de tour de main — comment est-ce qu'on garde ça vivant ?</div>
-        <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="Atelier de fabrication" data-en="Manufacturing workshop">Atelier de fabrication</div><div class="test-role" data-fr="12 personnes" data-en="12 people">12 personnes</div></div></div>
-      </div>
-      <div class="test-card reveal">
-        <div class="test-quote" data-fr="Ce que mes équipes savent n'est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?" data-en="What my teams know isn't written down anywhere. Can that become a real asset?">Ce que mes équipes savent n'est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?</div>
-        <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="PME de services" data-en="Service SMB">PME de services</div><div class="test-role" data-fr="40 personnes" data-en="40 people">40 personnes</div></div></div>
-      </div>
-      <div class="test-card reveal">
-        <div class="test-quote" data-fr="Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu'on peut leur rendre le goût du métier ?" data-en="My teams spend their days on draining tasks. Can we give them back the joy of their work?">Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu'on peut leur rendre le goût du métier ?</div>
-        <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="PME industrielle" data-en="Industrial SMB">PME industrielle</div><div class="test-role" data-fr="80 personnes" data-en="80 people">80 personnes</div></div></div>
-      </div>
-      <div class="test-card reveal">
-        <div class="test-quote" data-fr="On est six. Est-ce qu'on peut vraiment s'y mettre sans DSI ni budget de grand groupe ?" data-en="There are six of us. Can we really get started without an IT department or a big budget?">On est six. Est-ce qu'on peut vraiment s'y mettre sans DSI ni budget de grand groupe ?</div>
-        <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="TPE" data-en="Small business">TPE</div><div class="test-role" data-fr="6 personnes" data-en="6 people">6 personnes</div></div></div>
-      </div>
-    </div>
-    <div class="test-closing reveal" data-fr="Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n'a pu capter. Des années d'expérience, des gestes, des intuitions — une matière précieuse qui disparaît sans avoir jamais été écrite.<br><br>Une organisation cognitive, c'est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu'il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d'activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d'avance. Je travaille cette question depuis plusieurs années, et j'ouvre quelques accompagnements à des dirigeants curieux d'explorer ce terrain." data-en="Every retirement, every reorganisation carries away knowledge no one was able to capture. Years of experience, instincts, know-how — precious material that vanishes without ever having been written down.<br><br>A cognitive organisation is a more sensitive setup, closer to people: capturing that knowledge while it is still here, freeing teams from what wears them down, and giving them back the pleasure of their craft.<br><br>Many new ventures will emerge in the coming years. Those who have prepared their material will start with a head start. I have been working on this question for several years, and I am opening a few engagements to leaders curious to explore this ground.">Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n'a pu capter. Des années d'expérience, des gestes, des intuitions — une matière précieuse qui disparaît sans avoir jamais été écrite.<br><br>Une organisation cognitive, c'est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu'il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d'activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d'avance. Je travaille cette question depuis plusieurs années, et j'ouvre quelques accompagnements à des dirigeants curieux d'explorer ce terrain.</div>
+    <div class="section-tag" data-fr="Capacité" data-en="Capacity">Capacité</div>
+    <h2 data-fr="Quatre à cinq maisons, une par secteur" data-en="Four or five companies, one per sector">Quatre à cinq maisons, une par secteur</h2>
+    <p class="t-lead" data-fr="Je travaille avec quatre à cinq maisons à la fois, chacune dans un secteur différent. Deux au plus en cadre intégré : à trois jours toutes les deux semaines, une année n’en contient pas davantage." data-en="I work with four or five companies at a time, each in a different sector. Two at most on the embedded framework: at three days every two weeks, a year does not hold more.">Je travaille avec quatre à cinq maisons à la fois, chacune dans un secteur différent. Deux au plus en cadre intégré : à trois jours toutes les deux semaines, une année n’en contient pas davantage.</p>
+    <p data-fr="Ce n’est pas une méthode de vente, c’est une contrainte d’arithmétique. Elle a un effet utile pour vous : ce que j’apprends chez vous ne part pas chez votre concurrent, et je reste disponible quand un chantier dérape." data-en="This is not a sales tactic, it is arithmetic. It has a useful effect for you: what I learn at your company does not go to your competitor, and I stay available when a project slips.">Ce n’est pas une méthode de vente, c’est une contrainte d’arithmétique. Elle a un effet utile pour vous : ce que j’apprends chez vous ne part pas chez votre concurrent, et je reste disponible quand un chantier dérape.</p>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
+<section class="t-section">
   <div class="container">
-    <div class="contact-layout">
-      <div class="contact-info reveal">
-        <div class="section-tag" data-fr="Parlons-en" data-en="Let's talk">Parlons-en</div>
-        <h2 class="section-title" data-fr="Prêt à concevoir votre organisation cognitive ?" data-en="Ready to design your cognitive organization?">Prêt à concevoir votre organisation cognitive ?</h2>
-        <p data-fr="Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise." data-en="A 30-minute intro call, no commitment. Let's identify together if agentic transformation is the right lever for your business.">Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise.</p>
-        <div class="c-row"><div class="c-icon">&#128205;</div><span data-fr="Turin, Italie · Antibes, France" data-en="Turin, Italy · Antibes, France">Turin, Italie · Antibes, France</span></div>
-        <div class="c-row"><div class="c-icon">&#127760;</div><span data-fr="Coaching à distance — toute l'Europe" data-en="Remote coaching — all across Europe">Coaching à distance — toute l'Europe</span></div>
-        <div class="c-row"><div class="c-icon">&#9993;&#65039;</div><span>contact@agentshift.pro</span></div>
-        <a href="https://www.linkedin.com/in/davcarvalho/" target="_blank" class="btn-ghost" style="margin-top:1.25rem;" data-fr="LinkedIn →" data-en="LinkedIn →">LinkedIn →</a>
-      </div>
-      <div class="cal-box reveal">
-        <div class="booking-widget" id="bookingWidget">
-          <div class="booking-header">
-            <h3 data-fr="Diagnostic Agentique" data-en="AI Diagnostic">Diagnostic Agentique</h3>
-            <p data-fr="Choisissez un créneau pour votre session gratuite avec David Carvalho." data-en="Pick a slot for your free session with David Carvalho.">Choisissez un créneau pour votre session gratuite avec David Carvalho.</p>
-            <span class="booking-duration">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              45 min
-            </span>
+    <div class="section-tag" data-fr="Ce qui revient en rendez-vous" data-en="What comes up in meetings">Ce qui revient en rendez-vous</div>
+    <h2 data-fr="Quatre questions, et mes réponses" data-en="Four questions, and my answers">Quatre questions, et mes réponses</h2>
+
+    <p class="t-q" data-fr="« Je ne peux pas refacturer ces heures à mon client. »" data-en="&quot;I cannot pass these hours on to my client.&quot;">« Je ne peux pas refacturer ces heures à mon client. »</p>
+    <p class="t-a" data-fr="C’est juste, et c’est une objection de structure de coût, pas de montant. Une dépense de coordination sort de votre marge. Alors on commence par le poste où le gain revient dans votre marge, pas dans celle du maître d’ouvrage. C’est le premier arbitrage du relevé." data-en="That is fair, and it is a cost-structure objection, not a price objection. Coordination spend comes out of your margin. So we start with the area where the gain returns to your margin, not the client’s. That is the first call made during the survey.">C’est juste, et c’est une objection de structure de coût, pas de montant. Une dépense de coordination sort de votre marge. Alors on commence par le poste où le gain revient dans votre marge, pas dans celle du maître d’ouvrage. C’est le premier arbitrage du relevé.</p>
+
+    <p class="t-q" data-fr="« Il me faut quelque chose d’incontournable sur tous les chantiers, pas à géométrie variable. »" data-en="&quot;I need something unavoidable on every site, not something optional.&quot;">« Il me faut quelque chose d’incontournable sur tous les chantiers, pas à géométrie variable. »</p>
+    <p class="t-a" data-fr="D’accord, et c’est pour ça que je ne facture jamais à l’usage. Un prix qui monte avec le nombre de chantiers enregistrés décourage l’enregistrement, donc détruit les motifs, donc détruit ce qu’il y avait à remettre. Vous enregistrez tout, et le prix ne bouge pas." data-en="Agreed, and that is why I never charge by usage. A price that rises with the number of sites recorded discourages recording, destroys the patterns, and destroys what there was to hand over. You record everything, and the price does not move.">D’accord, et c’est pour ça que je ne facture jamais à l’usage. Un prix qui monte avec le nombre de chantiers enregistrés décourage l’enregistrement, donc détruit les motifs, donc détruit ce qu’il y avait à remettre. Vous enregistrez tout, et le prix ne bouge pas.</p>
+
+    <p class="t-q" data-fr="« J’ai déjà payé un diagnostic. Je ne vais pas le repayer. »" data-en="&quot;I have already paid for a diagnostic. I am not paying for it twice.&quot;">« J’ai déjà payé un diagnostic. Je ne vais pas le repayer. »</p>
+    <p class="t-a" data-fr="Vous ne le repayez pas. Si un diagnostic existe, quelle qu’en soit l’origine, on entre directement au mouvement 2 et je m’appuie dessus. Le mouvement 1 est une porte, pas un péage." data-en="You do not. If a diagnostic exists, whatever its origin, we start directly at movement 2 and I build on it. Movement 1 is a door, not a toll.">Vous ne le repayez pas. Si un diagnostic existe, quelle qu’en soit l’origine, on entre directement au mouvement 2 et je m’appuie dessus. Le mouvement 1 est une porte, pas un péage.</p>
+
+    <p class="t-q" data-fr="« Qui travaille réellement chez nous ? »" data-en="&quot;Who actually works with us?&quot;">« Qui travaille réellement chez nous ? »</p>
+    <p class="t-a" data-fr="Moi. Il n’y a pas d’équipe junior derrière cette page, et c’est la raison de la limite à quatre ou cinq maisons. Sur les sujets qui ne sont pas les miens, la cybersécurité par exemple, je le dis et je vous laisse la main." data-en="Me. There is no junior team behind this page, and that is the reason for the four or five company limit. On subjects that are not mine, cybersecurity for instance, I say so and leave it to you.">Moi. Il n’y a pas d’équipe junior derrière cette page, et c’est la raison de la limite à quatre ou cinq maisons. Sur les sujets qui ne sont pas les miens, la cybersécurité par exemple, je le dis et je vous laisse la main.</p>
+  </div>
+</section>
+
+<section class="t-section">
+  <div class="container t-cta">
+    <h2 data-fr="Trente minutes pour savoir si ça vous concerne" data-en="Thirty minutes to find out if this is for you">Trente minutes pour savoir si ça vous concerne</h2>
+    <p data-fr="Un premier appel, sans engagement. Si votre situation ne relève pas de ce travail, je vous le dirai pendant l’appel." data-en="A first call, no commitment. If your situation does not call for this work, I will tell you during the call.">Un premier appel, sans engagement. Si votre situation ne relève pas de ce travail, je vous le dirai pendant l’appel.</p>
+    <p style="margin-top:1.6rem;"><a href="#prendre-rdv" class="btn-gold" data-fr="Choisir un créneau" data-en="Pick a slot">Choisir un créneau</a></p>
+  </div>
+</section>
+
+<!-- PRISE DE RENDEZ-VOUS -->
+<!-- Le meme widget que la section #contact de index.html, meme balisage, meme
+     script, memes points d'entree /api/creneaux et /api/rdv. Deux copies a tenir
+     synchronisees : toute correction faite ici se reporte la-bas, et l'inverse.
+     Les points d'entree sont des Pages Functions : ils n'existent que sur le
+     deploiement Cloudflare Pages, jamais sur GitHub Pages. -->
+<section class="t-section" id="prendre-rdv">
+  <div class="container">
+    <div class="cal-box" style="max-width: 520px; margin: 0 auto;">
+      <div class="booking-widget" id="bookingWidget">
+        <div class="booking-header">
+          <h3 data-fr="Diagnostic Agentique" data-en="AI Diagnostic">Diagnostic Agentique</h3>
+          <p data-fr="Choisissez un créneau pour votre session gratuite avec David Carvalho." data-en="Pick a slot for your free session with David Carvalho.">Choisissez un créneau pour votre session gratuite avec David Carvalho.</p>
+          <span class="booking-duration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            45 min
+          </span>
+        </div>
+        <div class="booking-steps">
+          <div class="booking-step active" id="step1"></div>
+          <div class="booking-step" id="step2"></div>
+          <div class="booking-step" id="step3"></div>
+        </div>
+        <div class="booking-body" id="bookingBody">
+          <div class="booking-loading">
+            <div class="booking-spinner"></div>
+            <span data-fr="Chargement des disponibilités..." data-en="Loading availability...">Chargement des disponibilités...</span>
           </div>
-          <div class="booking-steps">
-            <div class="booking-step active" id="step1"></div>
-            <div class="booking-step" id="step2"></div>
-            <div class="booking-step" id="step3"></div>
-          </div>
-          <div class="booking-body" id="bookingBody">
-            <div class="booking-loading">
-              <div class="booking-spinner"></div>
-              <span data-fr="Chargement des disponibilités..." data-en="Loading availability...">Chargement des disponibilités...</span>
-            </div>
-          </div>
-          <div class="booking-actions" id="bookingActions" style="display:none;">
-            <button class="booking-btn booking-btn-ghost" id="btnBack" style="display:none;" data-fr="Retour" data-en="Back">Retour</button>
-            <button class="booking-btn booking-btn-gold" id="btnNext" disabled data-fr="Continuer" data-en="Continue">Continuer</button>
-          </div>
+        </div>
+        <div class="booking-actions" id="bookingActions" style="display:none;">
+          <button class="booking-btn booking-btn-ghost" id="btnBack" style="display:none;" data-fr="Retour" data-en="Back">Retour</button>
+          <button class="booking-btn booking-btn-gold" id="btnNext" disabled data-fr="Continuer" data-en="Continue">Continuer</button>
         </div>
       </div>
     </div>
@@ -862,12 +992,11 @@
 </section>
 
 <footer>
-  <p>&copy; 2026 AgentShift · David Carvalho — <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
+  <p>&copy; 2026 AgentShift &middot; David Carvalho &middot; <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
   <div class="footer-meta" data-fr="2026 // Metacognition Design" data-en="2026 // Metacognition Design">2026 // Metacognition Design</div>
 </footer>
 
 <script>
-  // Language toggle with HTML support
   let currentLang = 'fr';
   function toggleLang() {
     currentLang = currentLang === 'fr' ? 'en' : 'fr';
@@ -878,37 +1007,14 @@
       if (val.includes('<')) { el.innerHTML = val; } else { el.textContent = val; }
     });
   }
-
-  // Mobile menu
   function toggleMenu() {
     const nav = document.getElementById('navLinks');
     const btn = document.getElementById('menuToggle');
     nav.classList.toggle('open');
     btn.innerHTML = nav.classList.contains('open') ? '&#10005;' : '&#9776;';
   }
-
-  // Nav background on scroll
   window.addEventListener('scroll', () => {
     document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Reveal on scroll
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 70);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // Close mobile menu on link click
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-      document.getElementById('menuToggle').innerHTML = '&#9776;';
-    });
   });
 
   // ============ BOOKING WIDGET ============

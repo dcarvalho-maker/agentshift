@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden dataset pour PME | AgentShift</title>
+<meta name="description" content="Le golden dataset : le jeu de référence qui dit si un agent IA répond juste. Trois notions à ne pas confondre, comment on le construit en 8 à 20 jours, et ce que vous gardez.">
+<link rel="canonical" href="https://agentshift.pro/golden-dataset-pme.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Golden dataset pour PME | AgentShift">
+<meta property="og:description" content="Le golden dataset : le jeu de référence qui dit si un agent IA répond juste. Trois notions à ne pas confondre, comment on le construit en 8 à 20 jours, et ce que vous gardez.">
+<meta property="og:url" content="https://agentshift.pro/golden-dataset-pme.html">
+<meta property="og:image" content="https://agentshift.pro/hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Golden dataset : le jeu de référence qu’une PME ne télécharge nulle part", "datePublished": "2026-10-04", "inLanguage": "fr", "author": {"@type": "Person", "name": "David Carvalho", "url": "https://agentshift.pro/", "sameAs": ["https://www.linkedin.com/in/davcarvalho/"]}, "publisher": {"@type": "Organization", "name": "AgentShift", "legalName": "4e OEIL", "url": "https://agentshift.pro/"}, "about": ["golden dataset", "préparer ses données pour l’IA", "données de référence", "capitaliser le savoir-faire"], "mainEntityOfPage": "https://agentshift.pro/golden-dataset-pme.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Combien de questions contient un golden dataset ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour une PME, 20 à 50 questions de votre métier suffisent pour démarrer, chacune avec sa réponse attendue et sa source exacte. On en ajoute à mesure que les usages s’étendent."}}, {"@type": "Question", "name": "Faut-il des données propres au départ ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. C’est justement le travail : partir de vos documents tels qu’ils sont, scannés, dispersés, contradictoires, et en tirer un socle vérifié."}}, {"@type": "Question", "name": "Mes documents sortent-ils de l’entreprise ?", "acceptedAnswer": {"@type": "Answer", "text": "L’extraction passe par une chaîne française hébergée en Europe, avec une option sur vos propres serveurs pour les documents sensibles. Le choix se fait au départ, par écrit."}}, {"@type": "Question", "name": "Est-ce un entraînement de modèle d’IA ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Aucun modèle n’est entraîné sur vos données. Le golden dataset sert à vérifier les réponses d’un outil, pas à le fabriquer."}}, {"@type": "Question", "name": "Combien cela coûte-t-il ?", "acceptedAnswer": {"@type": "Answer", "text": "Le palier MATIÈRE va de 9 600 à 24 000 € HT selon le volume de documents et la nature des sources, soit 8 à 20 jours d’intervention. L’outil d’extraction est refacturé au réel. Le configurateur donne une fourchette pour votre cas."}}]}</script>
+<style>
+:root {
+  --bg: #1E1E20; --surface: #252527; --surface-2: #2B2B2D;
+  --fg: #F2EFE8; --fg-2: #B3AEA3; --fg-3: #8C877C;
+  --gold: #C9A84C; --on-gold: #1E1E20; --warn: #D9A35B; --ok: #7FB38A;
+  --line: rgba(242,239,232,0.09); --line-gold: rgba(201,168,76,0.32); --glow: rgba(201,168,76,0.08);
+  --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --measure: 44rem;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16.5px; line-height: 1.7; }
+a { color: var(--gold); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; }
+.sitebar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.sitebar a { color: var(--fg-2); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+.sitebar a:hover, .sitebar a:focus-visible { color: var(--gold); }
+.sitebar .logo { color: var(--fg); font-weight: 800; font-size: 1.15rem; }
+.sitebar .logo span { color: var(--gold); }
+.sitebar nav { display: flex; gap: 20px; flex-wrap: wrap; }
+article { max-width: var(--measure); margin: 0 auto; padding-block: 48px 72px; }
+.eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.12; font-weight: 800; margin: 0 0 18px; letter-spacing: -0.015em; text-wrap: balance; }
+.lede { font-size: 1.12rem; color: var(--fg-2); margin: 0 0 12px; }
+.meta { font-family: var(--mono); font-size: 0.76rem; color: var(--fg-3); margin: 0 0 40px; }
+h2 { font-size: 1.4rem; line-height: 1.25; font-weight: 800; margin: 52px 0 14px; text-wrap: balance; }
+h3 { font-size: 1.05rem; font-weight: 700; margin: 28px 0 8px; }
+p { margin: 0 0 16px; }
+ul, ol { margin: 0 0 18px; padding-left: 1.2em; display: grid; gap: 6px; }
+strong { color: var(--fg); }
+.muted { color: var(--fg-2); }
+.chain { list-style: none; padding: 0; margin: 20px 0 24px; display: grid; gap: 0; counter-reset: etape; }
+.chain li { counter-increment: etape; display: grid; grid-template-columns: 2.4rem minmax(0,1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.chain li:last-child { border-bottom: 1px solid var(--line); }
+.chain li::before { content: counter(etape, decimal-leading-zero); font-family: var(--mono); color: var(--gold); font-size: 0.85rem; padding-top: 3px; }
+.chain strong { display: block; }
+.chain span { color: var(--fg-2); font-size: 0.95rem; }
+.proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 26px; }
+.proof { border: 1px solid var(--line-gold); border-radius: 10px; background: var(--surface); padding: 16px; display: grid; gap: 6px; align-content: start; }
+.proof .v { font-size: 1.5rem; font-weight: 800; line-height: 1.15; }
+.proof .l { font-size: 0.9rem; color: var(--fg-2); line-height: 1.45; }
+.status { justify-self: start; font-family: var(--mono); font-size: 0.7rem; padding: 1px 7px; border-radius: 4px; border: 1px solid currentColor; }
+.status.releve { color: var(--ok); } .status.declare { color: var(--fg-2); } .status.cible { color: var(--warn); }
+.limit { border-left: 2px solid var(--warn); background: var(--surface); padding: 16px 18px; border-radius: 0 8px 8px 0; margin: 22px 0; }
+.limit h2 { margin-top: 0; font-size: 1.1rem; }
+.limit ul { margin-bottom: 0; }
+.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 18px 0 24px; }
+.three > div { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--surface); }
+.three h3 { margin: 0 0 6px; font-size: 0.98rem; }
+.three p { margin: 0; font-size: 0.92rem; color: var(--fg-2); }
+.three .ours { border-color: var(--line-gold); background: var(--glow); }
+.example { font-family: var(--mono); font-size: 0.82rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin: 16px 0 22px; overflow-x: auto; color: var(--fg-2); }
+.example b { color: var(--fg); font-weight: 500; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 14px 0 22px; }
+th, td { text-align: left; padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); font-weight: 700; }
+.tablewrap { overflow-x: auto; }
+details { border-top: 1px solid var(--line); padding: 14px 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; }
+details p { margin: 10px 0 0; color: var(--fg-2); }
+.cta { margin-top: 56px; border: 1px solid var(--line-gold); border-radius: 12px; background: var(--surface); padding: 26px; display: grid; gap: 12px; }
+.cta h2 { margin: 0; }
+.cta p { margin: 0; color: var(--fg-2); }
+.cta .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn { font-weight: 700; font-size: 0.92rem; text-decoration: none; border-radius: 8px; padding: 12px 18px; border: 1px solid var(--gold); }
+.btn.primary { background: var(--gold); color: var(--on-gold); }
+.btn.ghost { color: var(--gold); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+footer.site { border-top: 1px solid var(--line); padding-block: 22px 40px; color: var(--fg-3); font-size: 0.82rem; }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+footer.site a { color: var(--fg-3); }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="sitebar"><a class="logo" href="index.html">Agent<span>Shift</span></a><nav><a href="golden-dataset-pme.html">Golden dataset</a><a href="cas-wood-maker.html">Wood Maker</a><a href="configurateur.html">Configurateur</a><a href="index.html#contact">Contact</a></nav></div></div>
+<main class="wrap">
+
+<article>
+  <p class="eyebrow">Pilier · données et IA en PME</p>
+  <h1>Golden dataset : le jeu de référence qu’une PME ne télécharge nulle part</h1>
+  <p class="lede">Avant de brancher un agent sur vos documents, il faut savoir ce qu’il doit répondre. Le golden dataset, c’est cette réponse attendue, écrite et vérifiée par ceux qui savent : vos équipes.</p>
+  <p class="meta">David Carvalho · publié le 4 octobre 2026</p>
+
+  <h2>Trois notions qu’on confond</h2>
+  <p>Le mot circule beaucoup, et il recouvre trois choses différentes. Les distinguer évite d’acheter l’une en croyant obtenir l’autre.</p>
+  <div class="three">
+    <div><h3>Le corpus préparé</h3><p>Vos documents extraits, nettoyés, découpés et décrits. C’est la matière première d’un outil de recherche ou d’un agent.</p></div>
+    <div><h3>Les données de référence</h3><p>La version unique et réconciliée d’un article, d’un client, d’un prix. Une seule vérité là où trois tableurs se contredisent.</p></div>
+    <div class="ours"><h3>Le golden dataset</h3><p>Une liste de questions de votre métier, avec la réponse attendue et sa source, validée par vos experts. Il sert à juger un outil, pas à le nourrir.</p></div>
+  </div>
+  <p>Je livre les trois. Mais c’est le troisième qui mérite le mot « golden », parce que c’est le seul qui dit si une réponse est juste.</p>
+
+  <h2>Pourquoi avant tout agent</h2>
+  <p>Brancher un agent sur une matière non convertie produit des réponses plausibles et fausses. Plausibles, parce que le modèle écrit bien. Fausses, parce que rien ne lui dit quelle version du devis fait foi, ni que la cote du plan a changé en juillet.</p>
+  <p>Sans jeu de référence, personne ne peut le voir. On découvre l’erreur chez le client. Avec un jeu de référence, on la découvre avant la mise en service, en posant les questions dont on connaît déjà la réponse.</p>
+
+  <h2>À quoi il ressemble</h2>
+  <p>Chaque entrée tient en trois lignes. Exemple fictif, pour une entreprise d’agencement :</p>
+  <div class="example"><b>Question</b>   Quel jeu laisse-t-on entre deux façades de caisson haut ?<br><b>Réponse</b>    3 mm, sauf finition laquée : 4 mm.<br><b>Source</b>     Règles d’atelier, fiche « Façades », révision de mars, validée par le chef d’atelier.</div>
+  <p>La réponse vient des documents quand ils sont justes, et de vos anciens quand les documents se taisent. C’est souvent là que dort le savoir le plus précieux : dans la tête de celui qui part à la retraite dans deux ans.</p>
+
+  <h2>Comment je le construis</h2>
+  <p>C’est le palier MATIÈRE. Chaque jalon se termine par un livrable que vous gardez, et vous pouvez vous arrêter à la fin de chacun.</p>
+  <ol class="chain">
+    <li><div><strong>L’inventaire</strong><span>Où est la matière : devis, plans, fiches, e-mails, tableurs, et ce qui n’est écrit nulle part.</span></div></li>
+    <li><div><strong>Le schéma cible</strong><span>Ce qu’on veut pouvoir retrouver, et sous quelle forme, décidé avec vous.</span></div></li>
+    <li><div><strong>L’extraction</strong><span>Une chaîne d’extraction française, hébergée en Europe, convertit les documents. Les PDF scannés et les plans sont traités comme tels.</span></div></li>
+    <li><div><strong>La réconciliation</strong><span>Les articles, les clients et les prix contradictoires sont ramenés à une version unique.</span></div></li>
+    <li><div><strong>Le jeu de référence</strong><span>20 à 50 questions écrites avec vos équipes, chaque réponse sourcée et validée.</span></div></li>
+    <li><div><strong>La recette</strong><span>Tout outil futur, le mien ou un autre, passe ce jeu avant d’entrer en service.</span></div></li>
+  </ol>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Ce que vous obtenez</th><th>Sous quelle forme</th></tr></thead>
+    <tbody>
+      <tr><td>Vos documents extraits et décrits</td><td>Fichiers ouverts (JSON, Markdown)</td></tr>
+      <tr><td>Vos référentiels réconciliés</td><td>Tableaux ouverts (CSV, Parquet)</td></tr>
+      <tr><td>Le jeu de référence</td><td>Un fichier lisible par un humain et par une machine</td></tr>
+      <tr><td>La méthode pour l’enrichir</td><td>Une procédure écrite, pour vos équipes</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tout reste à vous, hors de tout outil. Le jeu de référence ne vit pas chez le prestataire d’extraction : c’est lui qui sert à juger ce prestataire.</p>
+
+  <h2>Ce que ce n’est pas</h2>
+  <ul>
+    <li><strong>Ce n’est pas un entraînement de modèle.</strong> Aucun modèle n’apprend sur vos données.</li>
+    <li><strong>Ce n’est pas un audit sur papier.</strong> Le livrable tourne : on peut poser les questions et vérifier les réponses.</li>
+    <li><strong>Ce n’est pas un projet de deux ans.</strong> De 8 à 20 jours d’intervention, sur quatre à huit semaines.</li>
+  </ul>
+
+  <h2>Les trois chantiers ont commencé par là</h2>
+  <p>Wood Maker est parti des devis, des plans et des relevés d’une entreprise d’agencement. Marcel, le copilote d’atelier de carrosserie, est parti des photos et des notes des peintres. HALF, la plateforme robotique, est partie des fiches techniques et des hypothèses de coût. Trois métiers, la même première étape.</p>
+  <p>Le cas détaillé : <a href="cas-wood-maker.html">Wood Maker, du souhait du client au fichier machine</a>.</p>
+
+  <h2>Questions des dirigeants</h2>
+  <details><summary>Combien de questions contient un golden dataset ?</summary><p>Pour une PME, 20 à 50 questions de votre métier suffisent pour démarrer, chacune avec sa réponse attendue et sa source exacte. On en ajoute à mesure que les usages s’étendent.</p></details>
+<details><summary>Faut-il des données propres au départ ?</summary><p>Non. C’est justement le travail : partir de vos documents tels qu’ils sont, scannés, dispersés, contradictoires, et en tirer un socle vérifié.</p></details>
+<details><summary>Mes documents sortent-ils de l’entreprise ?</summary><p>L’extraction passe par une chaîne française hébergée en Europe, avec une option sur vos propres serveurs pour les documents sensibles. Le choix se fait au départ, par écrit.</p></details>
+<details><summary>Est-ce un entraînement de modèle d’IA ?</summary><p>Non. Aucun modèle n’est entraîné sur vos données. Le golden dataset sert à vérifier les réponses d’un outil, pas à le fabriquer.</p></details>
+<details><summary>Combien cela coûte-t-il ?</summary><p>Le palier MATIÈRE va de 9 600 à 24 000 € HT selon le volume de documents et la nature des sources, soit 8 à 20 jours d’intervention. L’outil d’extraction est refacturé au réel. Le configurateur donne une fourchette pour votre cas.</p></details>
+
+  <section class="cta">
+    <h2>Partir d’un de vos documents</h2>
+    <p>Envoyez un devis, un plan ou une fiche avant l’appel. En 45 minutes, je vous dis ce que votre matière vaut et par quoi commencer. Le compte rendu vous reste, que vous alliez plus loin ou non.</p>
+    <div class="btns"><a class="btn primary" href="index.html#contact">Réserver 45 minutes</a><a class="btn ghost" href="configurateur.html">Chiffrer avec le configurateur</a></div>
+  </section>
+</article>
+
+</main>
+<footer class="site"><div class="wrap"><span>AgentShift, une marque de 4e OEIL · Antibes et Turin</span><span><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a> · <a href="cgv.html">CGV</a></span></div></footer>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurateur | AgentShift</title>
+<meta name="description" content="Choisissez votre ambition, décrivez votre matière et obtenez le palier, le prix, le délai et la condition d’arrêt. Sans e-mail. Le diagnostic est joint à votre rendez-vous.">
+<link rel="canonical" href="https://agentshift.pro/configurateur.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Mise en page : formulaire en quatre blocs à gauche, devis vivant collé à droite (une colonne sous 900 px).
+   Jetons repris du site agentshift.pro : charbon, or, Manrope. Sombre, comme le site. */
+:root {
+  --bg: #1E1E20; --surface: #252527; --surface-2: #2B2B2D;
+  --fg: #F2EFE8; --fg-2: #B3AEA3; --fg-3: #8C877C;
+  --gold: #C9A84C; --gold-2: #DBBF6A; --on-gold: #1E1E20;
+  --line: rgba(242,239,232,0.09); --line-gold: rgba(201,168,76,0.32); --glow: rgba(201,168,76,0.10);
+  --ok: #7FB38A; --warn: #D9A35B;
+  --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; }
+header.top { display: grid; gap: 10px; margin-bottom: 32px; max-width: 46rem; }
+.eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+h1 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.15; font-weight: 800; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.lede { color: var(--fg-2); margin: 0; max-width: 40rem; }
+.proto { font-family: var(--mono); font-size: 0.74rem; color: var(--fg-3); border: 1px dashed var(--line-gold); border-radius: 6px; padding: 6px 10px; justify-self: start; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 28px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+form { display: grid; gap: 18px; }
+fieldset { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 20px; margin: 0; display: grid; gap: 14px; min-width: 0; }
+legend { padding: 0 6px; font-weight: 700; font-size: 1rem; }
+legend .step { font-family: var(--mono); color: var(--gold); font-weight: 500; margin-right: 8px; font-size: 0.85rem; }
+.hint { color: var(--fg-3); font-size: 0.84rem; margin: -6px 0 0; }
+
+.choices { display: grid; gap: 8px; }
+.choices.two { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.choice { position: relative; display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 8px; padding: 11px 14px 11px 40px; cursor: pointer; background: var(--surface-2); transition: border-color .2s, background .2s; }
+.choice input { position: absolute; left: 14px; top: 14px; accent-color: var(--gold); width: 16px; height: 16px; margin: 0; }
+.choice strong { font-weight: 600; font-size: 0.93rem; }
+.choice span { color: var(--fg-3); font-size: 0.82rem; line-height: 1.45; }
+.choice:has(input:checked) { border-color: var(--line-gold); background: var(--glow); }
+.choice:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+label.field { display: grid; gap: 6px; font-size: 0.86rem; font-weight: 600; min-width: 0; }
+label.field small { color: var(--fg-3); font-weight: 400; }
+select, input[type=number] { font: inherit; font-weight: 500; color: var(--fg); background: var(--surface-2); border: 1px solid var(--line); border-radius: 7px; padding: 9px 11px; width: 100%; font-variant-numeric: tabular-nums; }
+select:focus-visible, input[type=number]:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.range { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: center; }
+input[type=range] { width: 100%; accent-color: var(--gold); }
+.range output { font-family: var(--mono); font-size: 0.9rem; color: var(--gold); min-width: 3.5em; text-align: right; }
+
+/* Devis vivant */
+aside.result { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 14px; }
+@media (max-width: 900px) { aside.result { position: static; } }
+.card { border: 1px solid var(--line-gold); border-radius: 10px; background: var(--surface); padding: 20px; display: grid; gap: 12px; min-width: 0; }
+.card h2 { margin: 0; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+.palier-name { font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
+.palier-why { color: var(--fg-2); font-size: 0.9rem; margin: 0; }
+.price { font-family: var(--mono); font-size: 1.35rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; vertical-align: middle; margin-left: 6px; border: 1px solid currentColor; }
+.badge.publie { color: var(--ok); } .badge.cible { color: var(--warn); }
+dl.facts { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 6px 14px; margin: 0; font-size: 0.86rem; }
+dl.facts dt { color: var(--fg-3); }
+dl.facts dd { margin: 0; color: var(--fg); }
+.pre { border-top: 1px solid var(--line); padding-top: 12px; font-size: 0.86rem; color: var(--fg-2); }
+.pre strong { color: var(--fg); }
+.cost { display: grid; gap: 4px; }
+.cost .big { font-family: var(--mono); font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.cost p { margin: 0; font-size: 0.84rem; color: var(--fg-2); }
+.case { display: grid; gap: 6px; font-size: 0.86rem; }
+.case .name { font-weight: 800; font-size: 1.05rem; }
+.case ul { margin: 0; padding-left: 1.1em; color: var(--fg-2); display: grid; gap: 3px; }
+.case .todo { color: var(--warn); }
+.actions { display: grid; gap: 8px; }
+.btn { font: inherit; font-weight: 700; font-size: 0.92rem; text-align: center; text-decoration: none; border-radius: 8px; padding: 12px 16px; cursor: pointer; border: 1px solid var(--gold); }
+.btn.primary { background: var(--gold); color: var(--on-gold); }
+.btn.ghost { background: transparent; color: var(--gold); }
+.btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.copied { font-size: 0.8rem; color: var(--ok); min-height: 1.2em; margin: 0; }
+textarea#brief { width: 100%; min-height: 9em; font-family: var(--mono); font-size: 0.78rem; color: var(--fg-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: 7px; padding: 10px; resize: vertical; }
+footer.note { margin-top: 36px; color: var(--fg-3); font-size: 0.8rem; max-width: 46rem; display: grid; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.sitebar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.sitebar a { color: var(--fg-2); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+.sitebar a:hover, .sitebar a:focus-visible { color: var(--gold); }
+.sitebar .logo { color: var(--fg); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; }
+.sitebar .logo span { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap" style="padding-block: 0;"><div class="sitebar"><a class="logo" href="index.html">Agent<span>Shift</span></a><a href="index.html">Retour au site</a></div></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">AgentShift · configurateur</div>
+    <h1>Votre ambition, votre matière, votre prix</h1>
+    <p class="lede">Quatre questions sur ce que vous voulez obtenir et sur ce que votre entreprise a déjà entre les mains. Vous voyez le palier, le prix, le délai et la condition d’arrêt avant de nous parler. Aucune adresse e-mail demandée.</p>
+    <div class="proto">Formulaire prérempli avec un exemple : remplacez-le par vos chiffres.</div>
+  </header>
+
+  <div class="layout">
+    <form id="cfg" autocomplete="off">
+      <fieldset>
+        <legend><span class="step">1/4</span>Ce que vous voulez obtenir</legend>
+        <div class="choices" id="ambitions"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="step">2/4</span>Votre entreprise</legend>
+        <div class="row">
+          <label class="field" for="secteur">Votre métier
+            <select id="secteur">
+              <option value="atelier">Atelier, artisanat, réparation</option>
+              <option value="agencement">Agencement, menuiserie, cuisine</option>
+              <option value="industrie">Industrie, logistique, sites</option>
+              <option value="services">Services, bureau d’études, négoce</option>
+            </select>
+          </label>
+          <label class="field" for="effectif">Effectif
+            <select id="effectif">
+              <option value="tpe">Moins de 10 personnes</option>
+              <option value="pe">10 à 49 personnes</option>
+              <option value="me">50 à 249 personnes</option>
+              <option value="eti">250 personnes et plus</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="step">3/4</span>Votre matière</legend>
+        <p class="hint">Ce que l’entreprise sait déjà, mais qui dort dans des fichiers, des classeurs ou des têtes.</p>
+        <label class="field" for="volume">Documents à reprendre <small>devis, plans, fiches, comptes rendus</small>
+          <select id="volume">
+            <option value="petit">Moins de 1 000</option>
+            <option value="moyen">De 1 000 à 10 000</option>
+            <option value="grand">Plus de 10 000</option>
+          </select>
+        </label>
+        <div class="choices two" id="sources"></div>
+        <label class="choice"><input type="checkbox" id="socle"><strong>Nous avons déjà un socle propre</strong><span>Une base structurée et à jour, sur laquelle un copilote peut s’appuyer sans reprise.</span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="step">4/4</span>Vos chiffres</legend>
+        <p class="hint">Le calcul se fait avec vos chiffres, pas avec les nôtres.</p>
+        <div class="row">
+          <label class="field" for="personnes">Personnes concernées
+            <input type="number" id="personnes" min="1" max="500" step="1" value="4">
+          </label>
+          <label class="field" for="heures">Heures par semaine et par personne <small>à chercher, recopier, ressaisir</small>
+            <input type="number" id="heures" min="0" max="40" step="0.5" value="5">
+          </label>
+          <label class="field" for="taux">Coût horaire chargé, en € <small>salaire et charges</small>
+            <input type="number" id="taux" min="10" max="300" step="1" value="42">
+          </label>
+        </div>
+        <label class="field" for="part">Part que vous jugez récupérable
+          <span class="range"><input type="range" id="part" min="0" max="80" step="5" value="30"><output id="partOut" for="part">30 %</output></span>
+        </label>
+      </fieldset>
+    </form>
+
+    <aside class="result" aria-live="polite">
+      <section class="card">
+        <h2>Palier recommandé</h2>
+        <div class="palier-name" id="rName"></div>
+        <p class="palier-why" id="rWhy"></p>
+        <div><span class="price" id="rPrice"></span></div>
+        <dl class="facts">
+          <dt>Délai</dt><dd id="rDelai"></dd>
+          <dt>Vous obtenez</dt><dd id="rSortie"></dd>
+          <dt>Arrêt</dt><dd id="rArret"></dd>
+          <dt>À vous</dt><dd>Vos données, le code et le jeu de référence, en formats ouverts.</dd>
+        </dl>
+        <div class="pre" id="rPre" hidden></div>
+      </section>
+
+      <section class="card cost">
+        <h2>Ce que votre matière vous coûte</h2>
+        <div class="big" id="rCost"></div>
+        <p id="rCostLine"></p>
+        <p id="rPayback"></p>
+      </section>
+
+      <section class="card case">
+        <h2>Le chantier le plus proche du vôtre</h2>
+        <div class="name" id="cName"></div>
+        <div id="cPitch"></div>
+        <ul id="cFacts"></ul>
+        <div class="todo" id="cTodo"></div>
+      </section>
+
+      <section class="card actions">
+        <h2>Votre diagnostic</h2>
+        <textarea id="brief" readonly aria-label="Diagnostic joint au rendez-vous"></textarea>
+        <button type="button" class="btn primary" id="book">Réserver 30 minutes, diagnostic joint</button>
+        <button type="button" class="btn ghost" id="copy">Copier le diagnostic</button>
+        <p class="copied" id="copied"></p>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="note">
+    <div>Les prix sont hors taxes, au taux journalier de 1 200 € HT pour MATIÈRE, COPILOTE et SAUT.</div>
+    <div>Le coût affiché est celui de votre matière non structurée, calculé sur 46 semaines avec vos chiffres. Ce n’est pas une promesse de gain : c’est le problème, chiffré par vous.</div>
+  </footer>
+</div>
+
+<script>
+/* ======================================================================
+   CONFIGURATION : la seule partie à modifier pour ajuster la grille.
+   statut : "publie" (déjà sur la page Tarifs) ou "cible" (proposition).
+   ====================================================================== */
+const CONFIG = {
+  tjm: 1200,
+  semainesParAn: 46,
+  outilExtraction: "Outil d’extraction refacturé au réel, de 89 à 249 € par mois selon le volume (tarif public de l’éditeur).",
+  paliers: {
+    diagnostic: { nom: "Diagnostic", statut: "publie", prixFixe: 0,
+      pourquoi: "Savoir ce que vaut votre matière avant d’engager quoi que ce soit.",
+      delai: "30 minutes, compte rendu écrit sous 48 heures",
+      sortie: "Un avis écrit sur un document réel que vous nous envoyez avant l’appel.",
+      arret: "Rien n’est engagé. Le compte rendu vous reste." },
+    move: { nom: "MOVE", statut: "publie", prixFixe: 4500,
+      pourquoi: "Voir un premier résultat fabriqué sur votre propre matière.",
+      delai: "Deux jours d’observation, puis deux jours de fabrication",
+      sortie: "Un premier outil qui tourne sur vos documents, et le plan de la suite.",
+      arret: "Forfait fermé. Vous gardez ce qui est fabriqué, sans suite obligatoire." },
+    matiere: { nom: "MATIÈRE", statut: "publie", joursBase: 8, joursMax: 20,
+      volume: { petit: 0, moyen: 4, grand: 8 },
+      sources: { scans: 1, plans: 2, oral: 2, mails: 1, excel: 0 },
+      pourquoi: "Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses.",
+      sortie: "Vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens, qui servira à juger tout outil futur.",
+      arret: "À la fin de chaque jalon (inventaire, extraction, jeu de référence). Vous gardez ce qui est livré." },
+    copilote: { nom: "COPILOTE", statut: "publie", jours: 18,
+      pourquoi: "Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.",
+      delai: "Douze semaines, trois jours toutes les deux semaines",
+      sortie: "Un copilote en service dans une équipe, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous.",
+      arret: "Toutes les deux semaines. Vous gardez le copilote et sa mesure." },
+    saut: { nom: "SAUT", statut: "publie", prixApprox: 100000,
+      pourquoi: "Transformer l’organisation, service après service, sur l’année.",
+      delai: "Trois jours toutes les deux semaines, sur un an",
+      sortie: "Une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous.",
+      arret: "Toutes les deux semaines. Vous gardez tout ce qui est livré." }
+  },
+  ambitions: [
+    { id: "savoir",     titre: "Savoir ce que vaut ma matière",         detail: "Avant d’engager quoi que ce soit.",                  palier: "diagnostic" },
+    { id: "voir",       titre: "Voir un premier résultat",               detail: "Quelque chose qui tourne, sur mes documents.",       palier: "move" },
+    { id: "socle",      titre: "Un socle propre avant tout agent",       detail: "Mes devis, plans et fiches, structurés et vérifiés.", palier: "matiere" },
+    { id: "copilote",   titre: "Un copilote dans une équipe",            detail: "Sur un service précis, avec une mesure.",            palier: "copilote" },
+    { id: "transformer",titre: "Transformer l’organisation",             detail: "Plusieurs services, sur l’année.",                    palier: "saut" }
+  ],
+  sources: [
+    { id: "scans",  titre: "PDF scannés, papier" },
+    { id: "plans",  titre: "Plans, dessins techniques" },
+    { id: "excel",  titre: "Tableurs Excel" },
+    { id: "mails",  titre: "E-mails, comptes rendus" },
+    { id: "oral",   titre: "Savoir oral des anciens" }
+  ],
+  cas: {
+    atelier: { nom: "Marcel, copilote d’atelier",
+      pitch: "Vos clients veulent voir où en est leur véhicule. Marcel tient un fil par véhicule, avec photos et notes vocales, et trois états lisibles de loin.",
+      faits: ["Trois tranches sur six construites, 113 tests au vert (relevé le 31/08)", "Preuve des photos vérifiée par empreinte (relevé)", "Essai en atelier le 14/09 : le premier besoin du carrossier était le dossier photo client, pas la rentabilité (déclaré)"],
+      todo: "Pas encore mesuré : le temps gagné pour constituer un dossier client." },
+    agencement: { nom: "Wood Maker",
+      pitch: "Du souhait du client au fichier machine, sans ressaisie entre le relevé, le plan, le devis et le débit. Cuisine, dressing, bibliothèque.",
+      faits: ["Un seul modèle jusqu’au fichier d’usinage CNC, 207 tests au vert (relevé le 02/10)", "Trois cuisines configurées, usinées et livrées sur un même chantier (déclaré)", "Calage d’un scan à 1 mm près, sur scan synthétique (relevé)"],
+      todo: "Pas encore mesuré : le temps de devis gagné, et le calage sur un vrai scan de chantier." },
+    industrie: { nom: "HALF, décider sur simulation",
+      pitch: "Avant d’investir dans une flotte, vous la faites rouler une journée sur votre site, en simulation, chaque hypothèse affichée.",
+      faits: ["Plateforme électrique légère bâtie sur ROS2", "Simulateurs qui distinguent ce qui est déclaré, calculé, relevé et cible", "Prototypes existants (niveau de maturité à préciser)"],
+      todo: "Pas encore mesuré : consommations et coûts, qui sont aujourd’hui des calculs et des hypothèses." },
+    services: { nom: "Le fil commun aux trois chantiers",
+      pitch: "HALF, Marcel et Wood Maker ont commencé par la même étape : convertir une matière dispersée en un socle structuré. C’est le palier MATIÈRE.",
+      faits: ["Photos et notes d’atelier, pour Marcel", "Plans, relevés et devis, pour Wood Maker", "Fiches techniques et hypothèses de coût, pour HALF"],
+      todo: "Votre métier n’a pas encore de cas publié : le diagnostic part d’un de vos documents." }
+  }
+};
+
+/* ====================================================================== */
+const $ = id => document.getElementById(id);
+const eur = n => new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(Math.round(n)) + " €";
+const nbLettres = ["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf"];
+const enLettres = n => (n >= 0 && n < 10 && Number.isInteger(n)) ? nbLettres[n] : String(n);
+
+function buildChoices() {
+  $("ambitions").innerHTML = CONFIG.ambitions.map((a, i) =>
+    `<label class="choice"><input type="radio" name="ambition" id="amb-${a.id}" value="${a.id}" ${i === 3 ? "checked" : ""}><strong>${a.titre}</strong><span>${a.detail}</span></label>`).join("");
+  const preset = ["scans", "plans", "oral"];
+  $("sources").innerHTML = CONFIG.sources.map(s =>
+    `<label class="choice"><input type="checkbox" name="source" id="src-${s.id}" value="${s.id}" ${preset.includes(s.id) ? "checked" : ""}><strong>${s.titre}</strong></label>`).join("");
+}
+
+function joursMatiere(volume, sources) {
+  const m = CONFIG.paliers.matiere;
+  let j = m.joursBase + (m.volume[volume] || 0);
+  sources.forEach(s => { j += m.sources[s] || 0; });
+  return Math.min(j, m.joursMax);
+}
+
+function prixPalier(id, ctx) {
+  const p = CONFIG.paliers[id];
+  if (id === "matiere") { const j = joursMatiere(ctx.volume, ctx.sources); return { prix: j * CONFIG.tjm, label: eur(j * CONFIG.tjm) + " HT", jours: j }; }
+  if (id === "copilote") return { prix: p.jours * CONFIG.tjm, label: eur(p.jours * CONFIG.tjm) + " HT", jours: p.jours };
+  if (id === "saut") return { prix: p.prixApprox, label: "environ " + eur(p.prixApprox) + " HT par an" };
+  if (p.prixFixe === 0) return { prix: 0, label: "Offert" };
+  return { prix: p.prixFixe, label: eur(p.prixFixe) + " HT, forfait" };
+}
+
+function render() {
+  const ambition = (document.querySelector('input[name="ambition"]:checked') || {}).value || "savoir";
+  const sources = [...document.querySelectorAll('input[name="source"]:checked')].map(i => i.value);
+  const ctx = { volume: $("volume").value, sources, socle: $("socle").checked, secteur: $("secteur").value };
+  const amb = CONFIG.ambitions.find(a => a.id === ambition);
+  const id = amb.palier, p = CONFIG.paliers[id];
+  const pr = prixPalier(id, ctx);
+
+  $("rName").textContent = p.nom;
+  $("rWhy").textContent = p.pourquoi;
+  $("rPrice").textContent = pr.label;
+  $("rDelai").textContent = id === "matiere" ? `${enLettres(pr.jours)} jours d’intervention, sur quatre à huit semaines` : p.delai;
+  $("rSortie").textContent = p.sortie + (id === "matiere" ? " " + CONFIG.outilExtraction : "");
+  $("rArret").textContent = p.arret;
+
+  // Prérequis : pas de copilote ni de transformation sans socle.
+  let total = pr.prix, preTxt = "";
+  if ((id === "copilote" || id === "saut") && !ctx.socle) {
+    const pm = prixPalier("matiere", ctx);
+    total += pm.prix;
+    preTxt = `<strong>D’abord MATIÈRE</strong>, ${pm.label} (${enLettres(pm.jours)} jours). Vous n’avez pas indiqué de socle propre : sans lui, un copilote répond de façon plausible et fausse. Total des deux paliers : ${eur(total)} HT${id === "saut" ? " environ" : ""}.`;
+  }
+  $("rPre").hidden = !preTxt;
+  $("rPre").innerHTML = preTxt;
+
+  // Coût de la matière, avec les chiffres du prospect.
+  const pers = Math.max(0, +$("personnes").value || 0), h = Math.max(0, +$("heures").value || 0), t = Math.max(0, +$("taux").value || 0), part = +$("part").value;
+  $("partOut").textContent = part + " %";
+  const heuresAn = pers * h * CONFIG.semainesParAn, cout = heuresAn * t, recup = cout * part / 100;
+  $("rCost").textContent = eur(cout) + " par an";
+  $("rCostLine").textContent = `${new Intl.NumberFormat("fr-FR").format(Math.round(heuresAn))} heures par an à chercher ou ressaisir. La part que vous jugez récupérable représente ${eur(recup)} par an.`;
+  if (total > 0 && recup > 0) {
+    const mois = total / (recup / 12);
+    $("rPayback").textContent = mois <= 36
+      ? `À ce rythme, l’investissement total équivaut à ${mois < 10 ? enLettres(Math.ceil(mois)) : Math.ceil(mois)} mois de cette part récupérable. Calcul indicatif sur vos chiffres, à vérifier ensemble.`
+      : `Sur vos chiffres, l’investissement dépasse trois ans de la part récupérable. Le diagnostic dira si un périmètre plus étroit a du sens.`;
+  } else {
+    $("rPayback").textContent = total === 0 ? "Le diagnostic n’engage aucun budget." : "Indiquez des heures et une part récupérable pour comparer.";
+  }
+
+  // Cas le plus proche.
+  const c = CONFIG.cas[ctx.secteur];
+  $("cName").textContent = c.nom;
+  $("cPitch").textContent = c.pitch;
+  $("cFacts").innerHTML = c.faits.map(f => `<li>${f}</li>`).join("");
+  $("cTodo").textContent = c.todo;
+
+  // Brief à copier.
+  const sel = id => { const o = $(id); return o.options[o.selectedIndex].text; };
+  const srcTxt = sources.length ? CONFIG.sources.filter(s => sources.includes(s.id)).map(s => s.titre.toLowerCase()).join(", ") : "non précisées";
+  $("brief").value = [
+    `Diagnostic du configurateur AgentShift`,
+    `Ambition : ${amb.titre}`,
+    `Palier recommandé : ${p.nom} (${pr.label})${preTxt ? " après MATIÈRE" : ""}`,
+    `Métier : ${sel("secteur")} · Effectif : ${sel("effectif")}`,
+    `Matière : ${sel("volume").toLowerCase()} documents · sources : ${srcTxt} · socle existant : ${ctx.socle ? "oui" : "non"}`,
+    `Mes chiffres : ${pers} personnes × ${h} h par semaine × ${t} € de l’heure = ${eur(cout)} par an ; part récupérable estimée ${part} %`
+  ].join("\n");
+}
+
+buildChoices();
+$("cfg").addEventListener("input", render);
+$("cfg").addEventListener("change", render);
+$("cfg").addEventListener("submit", e => e.preventDefault());
+$("book").addEventListener("click", () => {
+  try { localStorage.setItem("agentshift-diagnostic", $("brief").value); } catch (e) {}
+  window.location.href = "index.html#contact";
+});
+$("copy").addEventListener("click", () => {
+  const txt = $("brief").value;
+  const done = () => { $("copied").textContent = "Diagnostic copié."; };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done).catch(() => { $("brief").select(); $("copied").textContent = "Texte sélectionné : copiez-le avec Cmd ou Ctrl + C."; });
+  } else { $("brief").select(); $("copied").textContent = "Texte sélectionné : copiez-le avec Cmd ou Ctrl + C."; }
+});
+render();
+</script>
+</body>
+</html>

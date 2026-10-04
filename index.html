@@ -1254,6 +1254,12 @@
     if (e.target && e.target.id === 'bookingForm') { try { localStorage.removeItem(KEY); } catch (x) {} }
   }, true);
   fill();
+  // Le site revient en haut au chargement : on descend au formulaire une fois la page prête.
+  if (location.hash === '#contact') {
+    window.addEventListener('load', function () {
+      setTimeout(function () { var c = document.getElementById('contact'); if (c) c.scrollIntoView({ behavior: 'smooth' }); }, 400);
+    });
+  }
 })();
 </script>
 </body>

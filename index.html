@@ -639,6 +639,7 @@
     <li><a href="#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
     <li><a href="#about" data-fr="Parcours" data-en="About">Parcours</a></li>
     <li><a href="#testimonials" data-fr="Questions" data-en="Questions">Questions</a></li>
+    <li><a href="configurateur.html" data-fr="Configurateur" data-en="Configurator">Configurateur</a></li>
     <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
   </ul>
   <div class="nav-right">
@@ -1099,6 +1100,31 @@
 
     init();
   })();
+</script>
+<script>
+/* Diagnostic du configurateur : joint au champ message du formulaire de rendez-vous. */
+(function () {
+  var KEY = 'agentshift-diagnostic', diag = null;
+  try { diag = localStorage.getItem(KEY); } catch (e) {}
+  if (!diag) return;
+  function fill() {
+    var t = document.getElementById('bkMessage');
+    if (!t || t.getAttribute('data-diag')) return;
+    t.value = diag + (t.value ? '\n\n' + t.value : '');
+    t.rows = 7;
+    t.setAttribute('data-diag', '1');
+    var n = document.createElement('p');
+    n.textContent = 'Votre diagnostic du configurateur est joint à la demande. Vous pouvez le compléter.';
+    n.style.cssText = 'margin:6px 0 0;font-size:0.8rem;color:var(--gold, #C9A84C);';
+    t.parentNode.appendChild(n);
+  }
+  var b = document.getElementById('bookingBody');
+  if (b && window.MutationObserver) new MutationObserver(fill).observe(b, { childList: true, subtree: true });
+  document.addEventListener('submit', function (e) {
+    if (e.target && e.target.id === 'bookingForm') { try { localStorage.removeItem(KEY); } catch (x) {} }
+  }, true);
+  fill();
+})();
 </script>
 </body>
 </html>

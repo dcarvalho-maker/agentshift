@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wood Maker, du souhait client au fichier CNC | AgentShift</title>
+<meta name="description" content="Cas Wood Maker : un seul modèle du relevé au fichier d’usinage, pour l’agencement et la menuiserie. Ce qui est prouvé, ce qui ne l’est pas encore, et ce que ça change pour votre atelier.">
+<link rel="canonical" href="https://agentshift.pro/cas-wood-maker.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wood Maker, du souhait client au fichier CNC | AgentShift">
+<meta property="og:description" content="Cas Wood Maker : un seul modèle du relevé au fichier d’usinage, pour l’agencement et la menuiserie. Ce qui est prouvé, ce qui ne l’est pas encore, et ce que ça change pour votre atelier.">
+<meta property="og:url" content="https://agentshift.pro/cas-wood-maker.html">
+<meta property="og:image" content="https://agentshift.pro/hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Wood Maker : du souhait du client au fichier machine, sans ressaisie", "datePublished": "2026-10-04", "inLanguage": "fr", "author": {"@type": "Person", "name": "David Carvalho", "url": "https://agentshift.pro/", "sameAs": ["https://www.linkedin.com/in/davcarvalho/"]}, "publisher": {"@type": "Organization", "name": "AgentShift", "legalName": "4e OEIL", "url": "https://agentshift.pro/"}, "about": ["agencement", "menuiserie", "devis cuisine sur mesure", "fichiers d’usinage CNC"], "mainEntityOfPage": "https://agentshift.pro/cas-wood-maker.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Wood Maker remplace-t-il le logiciel de conception de l’atelier ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Il tient le modèle unique entre la vente et l’atelier, et il exporte vers les formats que l’atelier utilise déjà : plans techniques, fichiers DXF et programmes d’usinage."}}, {"@type": "Question", "name": "Faut-il une commande numérique pour l’utiliser ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Le devis illustré et les plans d’atelier servent sans machine. Les fichiers d’usinage sont un débouché de plus, pas une condition."}}, {"@type": "Question", "name": "Combien de temps fait-il gagner ?", "acceptedAnswer": {"@type": "Answer", "text": "Je ne le sais pas encore, et je ne l’écris pas tant que ce n’est pas mesuré. La première mesure portera sur le temps de devis des trois cuisines déjà livrées."}}, {"@type": "Question", "name": "Peut-on commencer sans changer d’outils ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. On commence par votre matière : vos devis, vos plans et vos relevés existants. C’est le palier MATIÈRE, décrit sur la page golden dataset."}}]}</script>
+<style>
+:root {
+  --bg: #1E1E20; --surface: #252527; --surface-2: #2B2B2D;
+  --fg: #F2EFE8; --fg-2: #B3AEA3; --fg-3: #8C877C;
+  --gold: #C9A84C; --on-gold: #1E1E20; --warn: #D9A35B; --ok: #7FB38A;
+  --line: rgba(242,239,232,0.09); --line-gold: rgba(201,168,76,0.32); --glow: rgba(201,168,76,0.08);
+  --font: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --measure: 44rem;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16.5px; line-height: 1.7; }
+a { color: var(--gold); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; }
+.sitebar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.sitebar a { color: var(--fg-2); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+.sitebar a:hover, .sitebar a:focus-visible { color: var(--gold); }
+.sitebar .logo { color: var(--fg); font-weight: 800; font-size: 1.15rem; }
+.sitebar .logo span { color: var(--gold); }
+.sitebar nav { display: flex; gap: 20px; flex-wrap: wrap; }
+article { max-width: var(--measure); margin: 0 auto; padding-block: 48px 72px; }
+.eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.12; font-weight: 800; margin: 0 0 18px; letter-spacing: -0.015em; text-wrap: balance; }
+.lede { font-size: 1.12rem; color: var(--fg-2); margin: 0 0 12px; }
+.meta { font-family: var(--mono); font-size: 0.76rem; color: var(--fg-3); margin: 0 0 40px; }
+h2 { font-size: 1.4rem; line-height: 1.25; font-weight: 800; margin: 52px 0 14px; text-wrap: balance; }
+h3 { font-size: 1.05rem; font-weight: 700; margin: 28px 0 8px; }
+p { margin: 0 0 16px; }
+ul, ol { margin: 0 0 18px; padding-left: 1.2em; display: grid; gap: 6px; }
+strong { color: var(--fg); }
+.muted { color: var(--fg-2); }
+.chain { list-style: none; padding: 0; margin: 20px 0 24px; display: grid; gap: 0; counter-reset: etape; }
+.chain li { counter-increment: etape; display: grid; grid-template-columns: 2.4rem minmax(0,1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.chain li:last-child { border-bottom: 1px solid var(--line); }
+.chain li::before { content: counter(etape, decimal-leading-zero); font-family: var(--mono); color: var(--gold); font-size: 0.85rem; padding-top: 3px; }
+.chain strong { display: block; }
+.chain span { color: var(--fg-2); font-size: 0.95rem; }
+.proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 26px; }
+.proof { border: 1px solid var(--line-gold); border-radius: 10px; background: var(--surface); padding: 16px; display: grid; gap: 6px; align-content: start; }
+.proof .v { font-size: 1.5rem; font-weight: 800; line-height: 1.15; }
+.proof .l { font-size: 0.9rem; color: var(--fg-2); line-height: 1.45; }
+.status { justify-self: start; font-family: var(--mono); font-size: 0.7rem; padding: 1px 7px; border-radius: 4px; border: 1px solid currentColor; }
+.status.releve { color: var(--ok); } .status.declare { color: var(--fg-2); } .status.cible { color: var(--warn); }
+.limit { border-left: 2px solid var(--warn); background: var(--surface); padding: 16px 18px; border-radius: 0 8px 8px 0; margin: 22px 0; }
+.limit h2 { margin-top: 0; font-size: 1.1rem; }
+.limit ul { margin-bottom: 0; }
+.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 18px 0 24px; }
+.three > div { border: 1px solid var(--line); border-radius: 10px; padding: 16px; background: var(--surface); }
+.three h3 { margin: 0 0 6px; font-size: 0.98rem; }
+.three p { margin: 0; font-size: 0.92rem; color: var(--fg-2); }
+.three .ours { border-color: var(--line-gold); background: var(--glow); }
+.example { font-family: var(--mono); font-size: 0.82rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin: 16px 0 22px; overflow-x: auto; color: var(--fg-2); }
+.example b { color: var(--fg); font-weight: 500; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 14px 0 22px; }
+th, td { text-align: left; padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); font-weight: 700; }
+.tablewrap { overflow-x: auto; }
+details { border-top: 1px solid var(--line); padding: 14px 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; }
+details p { margin: 10px 0 0; color: var(--fg-2); }
+.cta { margin-top: 56px; border: 1px solid var(--line-gold); border-radius: 12px; background: var(--surface); padding: 26px; display: grid; gap: 12px; }
+.cta h2 { margin: 0; }
+.cta p { margin: 0; color: var(--fg-2); }
+.cta .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn { font-weight: 700; font-size: 0.92rem; text-decoration: none; border-radius: 8px; padding: 12px 18px; border: 1px solid var(--gold); }
+.btn.primary { background: var(--gold); color: var(--on-gold); }
+.btn.ghost { color: var(--gold); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+footer.site { border-top: 1px solid var(--line); padding-block: 22px 40px; color: var(--fg-3); font-size: 0.82rem; }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+footer.site a { color: var(--fg-3); }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="sitebar"><a class="logo" href="index.html">Agent<span>Shift</span></a><nav><a href="golden-dataset-pme.html">Golden dataset</a><a href="cas-wood-maker.html">Wood Maker</a><a href="configurateur.html">Configurateur</a><a href="index.html#contact">Contact</a></nav></div></div>
+<main class="wrap">
+
+<article>
+  <p class="eyebrow">Cas · agencement, menuiserie, cuisine</p>
+  <h1>Wood Maker : du souhait du client au fichier machine, sans ressaisie</h1>
+  <p class="lede">Une cuisine sur mesure passe de main en main : le relevé, le plan, le devis, le débit. À chaque passage, l’information se recopie et l’écart s’installe. Wood Maker tient un seul modèle de bout en bout.</p>
+  <p class="meta">David Carvalho · publié le 4 octobre 2026 · cuisine, dressing, bibliothèque</p>
+
+  <h2>Le problème, vu de la direction</h2>
+  <p>Dans une entreprise d’agencement, la même cuisine existe quatre fois : dans le carnet du relevé, dans le logiciel de plan, dans le tableur du devis, dans la liste de débit de l’atelier. Personne ne ment. Mais une cote corrigée sur le plan n’atteint pas toujours le devis, et une option ajoutée au devis n’atteint pas toujours l’atelier.</p>
+  <p>Le coût ne se voit pas sur une ligne de compte. Il se voit en reprises, en panneaux recoupés, en devis refaits, et en heures de bureau d’études passées à recopier plutôt qu’à concevoir.</p>
+
+  <h2>Ce que j’ai construit</h2>
+  <p>Un seul modèle, qui sert chacun dans sa langue.</p>
+  <ol class="chain">
+    <li><div><strong>Le relevé</strong><span>Les cotes du chantier, saisies ou issues d’un scan de la pièce.</span></div></li>
+    <li><div><strong>La conception paramétrique</strong><span>Les caissons se calculent à partir des cotes et des règles de l’atelier : épaisseurs, jeux, quincaillerie.</span></div></li>
+    <li><div><strong>Le débit</strong><span>La liste des panneaux sort du même modèle, sans recopie.</span></div></li>
+    <li><div><strong>Le chiffrage</strong><span>En kit, monté ou posé, à partir des mêmes quantités.</span></div></li>
+    <li><div><strong>L’export</strong><span>Un devis illustré pour le client, des plans techniques pour l’atelier, des fichiers d’usinage pour une commande numérique cinq axes.</span></div></li>
+  </ol>
+  <p>La cuisine est la première famille couverte. Le dressing suit, puis la bibliothèque et le meuble entertainment : même modèle, autres règles de construction.</p>
+
+  <h2>Ce qui est prouvé</h2>
+  <div class="proofs">
+    <div class="proof"><span class="v">3 cuisines</span><span class="l">configurées, usinées et livrées sur un même chantier</span><span class="status declare">déclaré</span></div>
+    <div class="proof"><span class="v">207 tests</span><span class="l">automatiques au vert sur la chaîne de calcul, le 2 octobre 2026</span><span class="status releve">relevé</span></div>
+    <div class="proof"><span class="v">1 mm</span><span class="l">d’écart au calage d’un scan, sur un scan de synthèse</span><span class="status releve">relevé</span></div>
+  </div>
+
+  <div class="limit">
+    <h2>Ce qui n’est pas encore mesuré</h2>
+    <ul>
+      <li><strong>Le temps de devis gagné.</strong> Aucune mesure à ce jour. La première sera une reconstitution, avec l’atelier, du temps passé sur les trois cuisines livrées.</li>
+      <li><strong>Le calage sur un vrai scan de chantier.</strong> Il tient sur un scan de synthèse ; il reste à l’éprouver sur une pièce réelle.</li>
+      <li><strong>L’usage à plusieurs.</strong> L’outil est aujourd’hui utilisé par une seule personne.</li>
+      <li><strong>Le dressing, la bibliothèque et le meuble entertainment</strong> sont prévus, pas livrés.</li>
+    </ul>
+  </div>
+
+  <h2>Ce qu’il ne fait pas</h2>
+  <p>Il ne remplace ni le menuisier ni le bureau d’études. Il retire la recopie entre eux. Les règles de construction restent celles de l’atelier : c’est le tour de main de vos équipes qui est encodé, pas une bibliothèque générique.</p>
+
+  <h2>Ce que ça change pour vous</h2>
+  <p>Le cas parle d’agencement, mais le mécanisme est général : toute entreprise qui recopie l’information d’un document à l’autre entre la vente et l’atelier paie le même écart. Menuiserie, métallerie, fabrication de mobilier, aménagement de véhicules.</p>
+  <p>Avant de parler d’outil, chiffrez ce que la recopie vous coûte. Le <a href="configurateur.html">configurateur</a> fait le calcul avec vos chiffres, pas avec les miens.</p>
+  <p>Et si vous voulez savoir par où Wood Maker a commencé : par la matière. Les devis, les plans et les relevés existants ont d’abord été structurés en un socle propre. C’est ce que décrit la page <a href="golden-dataset-pme.html">golden dataset pour PME</a>.</p>
+
+  <h2>Questions des dirigeants</h2>
+  <details><summary>Wood Maker remplace-t-il le logiciel de conception de l’atelier ?</summary><p>Non. Il tient le modèle unique entre la vente et l’atelier, et il exporte vers les formats que l’atelier utilise déjà : plans techniques, fichiers DXF et programmes d’usinage.</p></details>
+<details><summary>Faut-il une commande numérique pour l’utiliser ?</summary><p>Non. Le devis illustré et les plans d’atelier servent sans machine. Les fichiers d’usinage sont un débouché de plus, pas une condition.</p></details>
+<details><summary>Combien de temps fait-il gagner ?</summary><p>Je ne le sais pas encore, et je ne l’écris pas tant que ce n’est pas mesuré. La première mesure portera sur le temps de devis des trois cuisines déjà livrées.</p></details>
+<details><summary>Peut-on commencer sans changer d’outils ?</summary><p>Oui. On commence par votre matière : vos devis, vos plans et vos relevés existants. C’est le palier MATIÈRE, décrit sur la page golden dataset.</p></details>
+
+  <section class="cta">
+    <h2>Partir d’un de vos devis</h2>
+    <p>Envoyez un devis, un plan ou un relevé avant l’appel. En 45 minutes, je vous dis ce qu’on peut en tirer et dans quel ordre. Le compte rendu vous reste, que vous alliez plus loin ou non.</p>
+    <div class="btns"><a class="btn primary" href="index.html#contact">Réserver 45 minutes</a><a class="btn ghost" href="configurateur.html">Chiffrer avec le configurateur</a></div>
+  </section>
+</article>
+
+</main>
+<footer class="site"><div class="wrap"><span>AgentShift, une marque de 4e OEIL · Antibes et Turin</span><span><a href="mentions-legales.html">Mentions légales</a> · <a href="politique-confidentialite.html">Confidentialité</a> · <a href="cgv.html">CGV</a></span></div></footer>
+</body>
+</html>

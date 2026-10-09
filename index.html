@@ -308,13 +308,21 @@
 
   .about-text p { color: var(--text-secondary); margin-bottom: 1.15rem; font-size: 0.93rem; }
 
-  .timeline { margin-top: 2rem; position: relative; }
-  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--border)); }
-  .tl-item { padding-left: 1.8rem; margin-bottom: 1.3rem; position: relative; }
-  .tl-item::before { content: ''; position: absolute; left: -5px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
-  .tl-year { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
-  .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
-  .tl-co { color: var(--text-secondary); font-size: 0.82rem; }
+  .timeline { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .tl-item { position: relative; padding: 1.4rem 1.2rem 0 0; border-top: 2px solid var(--border-gold); }
+  .tl-item::before { content: ''; position: absolute; left: 0; top: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
+  .tl-item.tl-now { border-top-color: var(--gold); }
+  .tl-item.tl-now::before { width: 16px; height: 16px; top: -9px; box-shadow: 0 0 0 4px var(--gold-glow); }
+  .tl-year { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
+  .tl-co { color: var(--text-secondary); font-size: 0.82rem; margin-top: 0.2rem; }
+  @media (max-width: 760px) {
+    .timeline { grid-template-columns: repeat(5, 72%); overflow-x: auto; scroll-snap-type: x mandatory; padding-top: 10px; scrollbar-width: thin; }
+    .tl-item { scroll-snap-align: start; }
+  }
+  .li-bronze { margin-left: auto; display: inline-flex; align-self: center; line-height: 0; border-radius: 4px; transition: transform .2s ease, filter .2s ease; }
+  .li-bronze:hover, .li-bronze:focus-visible { transform: translateY(-2px); filter: brightness(1.15); }
+  .li-bronze:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
   .brand-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
   .brand-chip {
@@ -648,7 +656,6 @@
     <li><a href="#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
     <li><a href="#about" data-fr="Parcours" data-en="About">Parcours</a></li>
     <li><a href="#testimonials" data-fr="Questions" data-en="Questions">Questions</a></li>
-    <li><a href="cas-wood-maker.html" data-fr="Wood Maker" data-en="Wood Maker">Wood Maker</a></li>
     <li><a href="golden-dataset-pme.html" data-fr="Golden dataset" data-en="Golden dataset">Golden dataset</a></li>
     <li><a href="configurateur.html" data-fr="Configurateur" data-en="Configurator">Configurateur</a></li>
     <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
@@ -732,21 +739,22 @@
         <h2 class="section-title" data-fr="Du design industriel à l'intelligence organisationnelle" data-en="From industrial design to organizational intelligence">Du design industriel à l'intelligence organisationnelle</h2>
         <p data-fr="Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable." data-en="For 25 years, I designed complex systems at Pininfarina, Orange, Dassault Systèmes, and Philips. From automotive interfaces to digital platforms, my job has always been the same: making the invisible readable and innovation adoptable.">Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable.</p>
         <p data-fr="Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont la meilleure architecture humain-machine." data-en="Today, that discipline applies to agentic transformation. The organizations that succeed with AI won't have the best models. They'll have the best human-machine architecture.">Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont la meilleure architecture humain-machine.</p>
-        <div class="timeline">
-          <div class="tl-item"><div class="tl-year" data-fr="Aujourd'hui" data-en="Present">Aujourd'hui</div><div class="tl-role" data-fr="Coaching Transformation Agentique" data-en="Agentic Transformation Coaching">Coaching Transformation Agentique</div><div class="tl-co">AgentShift · 4E</div></div>
-          <div class="tl-item"><div class="tl-year">2018 – 2024</div><div class="tl-role">SVP Experience Design</div><div class="tl-co">Pininfarina</div></div>
-          <div class="tl-item"><div class="tl-year">2014 – 2018</div><div class="tl-role" data-fr="Directeur Vision & Design" data-en="Vision & Design Director">Directeur Vision & Design</div><div class="tl-co">Orange Group</div></div>
-          <div class="tl-item"><div class="tl-year">2008 – 2014</div><div class="tl-role" data-fr="Directeur Design Studio" data-en="Design Studio Director">Directeur Design Studio</div><div class="tl-co">Dassault Systèmes</div></div>
-          <div class="tl-item"><div class="tl-year">2000 – 2008</div><div class="tl-role">Senior Designer</div><div class="tl-co">Philips Design</div></div>
-        </div>
         <div class="brand-row">
           <span class="brand-chip">Pininfarina</span>
           <span class="brand-chip">Orange</span>
           <span class="brand-chip">Dassault Systèmes</span>
           <span class="brand-chip">Philips</span>
           <span class="brand-chip">L2 Concept</span>
+          <a class="li-bronze" href="https://www.linkedin.com/in/davcarvalho" target="_blank" rel="noopener" aria-label="David Carvalho sur LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><defs><linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E3A867"/><stop offset=".5" stop-color="#B07034"/><stop offset="1" stop-color="#7C4A22"/></linearGradient></defs><path fill="url(#bronze)" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
         </div>
       </div>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item"><div class="tl-year">2000 – 2008</div><div class="tl-role">Senior Designer</div><div class="tl-co">Philips Design</div></div>
+      <div class="tl-item"><div class="tl-year">2008 – 2014</div><div class="tl-role" data-fr="Directeur Design Studio" data-en="Design Studio Director">Directeur Design Studio</div><div class="tl-co">Dassault Systèmes</div></div>
+      <div class="tl-item"><div class="tl-year">2014 – 2018</div><div class="tl-role" data-fr="Directeur Vision & Design" data-en="Vision & Design Director">Directeur Vision & Design</div><div class="tl-co">Orange Group</div></div>
+      <div class="tl-item"><div class="tl-year">2018 – 2024</div><div class="tl-role">SVP Experience Design</div><div class="tl-co">Pininfarina</div></div>
+      <div class="tl-item tl-now"><div class="tl-year" data-fr="Aujourd'hui" data-en="Present">Aujourd'hui</div><div class="tl-role" data-fr="Coaching Transformation Agentique" data-en="Agentic Transformation Coaching">Coaching Transformation Agentique</div><div class="tl-co">AgentShift · 4E</div></div>
     </div>
   </div>
 </section>

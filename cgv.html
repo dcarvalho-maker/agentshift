@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CGV — Prestations AgentShift</title>
   <meta name="description" content="Conditions générales de vente (prestations de services) — AgentShift." />
-  <!-- SITE:COMMUN:DEBUT --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"><style id="site-commun">
+  
+<!-- SITE:COMMUN:DEBUT --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"><style id="site-commun">
   :root {
     --gold: #C9A84C;
     --gold-light: #DBBF6A;
@@ -115,6 +116,10 @@
     display: block;
   }
 
+  /* Pluie de chiffres en code, par-dessus la photo et sous le titre. */
+  .hero-pluie { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+  @media (prefers-reduced-motion: reduce) { .hero-pluie { display: none; } }
+
   .hero-title-overlay {
     position: absolute;
     inset: 0;
@@ -141,6 +146,11 @@
   .hero-title-overlay h1 span {
     color: #56524b;
   }
+
+  /* Bouton vers le configurateur, sous l'accroche : le calque est inerte aux clics, pas le bouton. */
+  .hero-title-overlay .hero-config-btn { pointer-events: auto; margin-top: 1.5rem; padding: 0.95rem 1.7rem; font-size: 0.85rem;
+    background: var(--charcoal-deep); color: var(--gold); border: 1px solid var(--charcoal-deep); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+  .hero-title-overlay .hero-config-btn:hover, .hero-title-overlay .hero-config-btn:focus-visible { background: var(--charcoal); color: var(--gold-light); }
 
   /* CTA bar floating at bottom of hero */
   .hero-cta-bar {
@@ -296,13 +306,21 @@
 
   .about-text p { color: var(--text-secondary); margin-bottom: 1.15rem; font-size: 0.93rem; }
 
-  .timeline { margin-top: 2rem; position: relative; }
-  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--border)); }
-  .tl-item { padding-left: 1.8rem; margin-bottom: 1.3rem; position: relative; }
-  .tl-item::before { content: ''; position: absolute; left: -5px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
-  .tl-year { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
-  .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; }
-  .tl-co { color: var(--text-secondary); font-size: 0.82rem; }
+  .timeline { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .tl-item { position: relative; padding: 1.4rem 1.2rem 0 0; border-top: 2px solid var(--border-gold); }
+  .tl-item::before { content: ''; position: absolute; left: 0; top: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
+  .tl-item.tl-now { border-top-color: var(--gold); }
+  .tl-item.tl-now::before { width: 16px; height: 16px; top: -9px; box-shadow: 0 0 0 4px var(--gold-glow); }
+  .tl-year { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; line-height: 1.35; }
+  .tl-co { color: var(--text-secondary); font-size: 0.82rem; margin-top: 0.2rem; }
+  @media (max-width: 760px) {
+    .timeline { grid-template-columns: repeat(5, 72%); overflow-x: auto; scroll-snap-type: x mandatory; padding-top: 10px; scrollbar-width: thin; }
+    .tl-item { scroll-snap-align: start; }
+  }
+  .li-bronze { margin-left: auto; display: inline-flex; align-self: center; line-height: 0; border-radius: 4px; transition: transform .2s ease, filter .2s ease; }
+  .li-bronze:hover, .li-bronze:focus-visible { transform: translateY(-2px); filter: brightness(1.15); }
+  .li-bronze:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
   .brand-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
   .brand-chip {
@@ -650,7 +668,6 @@
     <li><a href="index.html#pillars" data-fr="Approche" data-en="Approach">Approche</a></li>
     <li><a href="index.html#about" data-fr="Parcours" data-en="About">Parcours</a></li>
     <li><a href="index.html#testimonials" data-fr="Questions" data-en="Questions">Questions</a></li>
-    <li><a href="cas-wood-maker.html" data-fr="Wood Maker" data-en="Wood Maker">Wood Maker</a></li>
     <li><a href="golden-dataset-pme.html" data-fr="Golden dataset" data-en="Golden dataset">Golden dataset</a></li>
     <li><a href="configurateur.html" data-fr="Configurateur" data-en="Configurator">Configurateur</a></li>
     <li><a href="index.html#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
@@ -726,8 +743,10 @@
     </div>
   </main>
 
+
+
 <!-- SITE:COMMUN:DEBUT --><footer>
-  <p>&copy; 2026 AgentShift · David Carvalho — <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
+  <p>&copy; 2026 AgentShift · David Carvalho · <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
   <div class="footer-meta" data-fr="2026 // Metacognition Design" data-en="2026 // Metacognition Design">2026 // Metacognition Design</div>
 </footer><!-- SITE:COMMUN:FIN -->
 <!-- SITE:COMMUN:DEBUT --><script>

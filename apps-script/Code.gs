@@ -20,9 +20,11 @@
 
 const CONFIG = {
   // Agendas CONSULTÉS pour détecter les indisponibilités.
-  // Y mettre TOUS les agendas où l'on peut être occupé, sinon des
-  // créneaux déjà pris seront proposés aux prospects.
-  BUSY_CALENDAR_IDS: ['primary'],
+  // Un créneau n'est proposé que s'il est libre dans TOUS ces agendas.
+  // Les adresses à ne pas publier (le dépôt est public) se mettent dans la
+  // propriété de script AGENDAS_OCCUPES, séparées par des virgules : elles
+  // s'ajoutent à cette liste. Voir getBusyCalendarIds().
+  BUSY_CALENDAR_IDS: ['primary', 'contact@agentshift.pro'],
 
   // Agenda où le rendez-vous est CRÉÉ.
   // Peut différer des précédents : on lit les occupations partout,
@@ -94,15 +96,72 @@ function doPost(e) {
 // LOGIQUE MÉTIER
 // ============================================
 
-/** Événements de tous les agendas surveillés, sur une plage donnée. */
-function getBusyEvents(from, to) {
-  var events = [];
-  CONFIG.BUSY_CALENDAR_IDS.forEach(function (id) {
-    var cal = CalendarApp.getCalendarById(id);
-    if (!cal) { Logger.log('Agenda introuvable : ' + id); return; }
-    events = events.concat(cal.getEvents(from, to));
+/**
+ * Agendas surveillés : CONFIG + propriété de script AGENDAS_OCCUPES,
+ * dédoublonnés. Exemple de propriété : "agentshiftpro@gmail.com".
+ */
+function getBusyCalendarIds() {
+  var extra = PropertiesService.getScriptProperties().getProperty('AGENDAS_OCCUPES') || '';
+  var ids = CONFIG.BUSY_CALENDAR_IDS.concat(extra.split(','));
+  var seen = {}, out = [];
+  ids.forEach(function (id) {
+    id = String(id).trim();
+    if (id && !seen[id.toLowerCase()]) { seen[id.toLowerCase()] = true; out.push(id); }
   });
-  return events;
+  return out;
+}
+
+/**
+ * Plages occupées, tous agendas confondus, entre from et to : [{start, end}].
+ *
+ * Passe par l'API Freebusy (service avancé « Google Calendar API », à activer
+ * dans l'éditeur) : elle suffit d'un partage « disponibilités uniquement » et
+ * ignore les événements marqués « disponible ». Sans le service avancé, repli
+ * sur CalendarApp, qui exige un accès en lecture aux événements.
+ *
+ * Fermé par défaut : si UN agenda ne peut pas être lu, on lève une erreur
+ * plutôt que de proposer des créneaux qui ignorent cet agenda.
+ */
+function getBusyIntervals(from, to, onlyIds) {
+  var ids = onlyIds || getBusyCalendarIds();
+  var busy = [];
+
+  if (typeof Calendar !== 'undefined' && Calendar.Freebusy) {
+    var resp = Calendar.Freebusy.query({
+      timeMin: from.toISOString(),
+      timeMax: to.toISOString(),
+      timeZone: CONFIG.TIMEZONE,
+      items: ids.map(function (id) { return { id: id }; })
+    });
+    ids.forEach(function (id) {
+      var cal = resp.calendars && resp.calendars[id];
+      if (!cal || (cal.errors && cal.errors.length)) {
+        throw new Error('Agenda illisible : ' + id + ' ('
+          + (cal && cal.errors ? cal.errors.map(function (e) { return e.reason; }).join(', ') : 'absent')
+          + '). Partager ses disponibilités avec le compte qui exécute le script.');
+      }
+      (cal.busy || []).forEach(function (b) {
+        busy.push({ start: new Date(b.start), end: new Date(b.end) });
+      });
+    });
+    return busy;
+  }
+
+  ids.forEach(function (id) {
+    var cal = CalendarApp.getCalendarById(id);
+    if (!cal) {
+      throw new Error('Agenda illisible : ' + id
+        + '. Activer le service avancé « Google Calendar API », ou partager cet agenda en lecture.');
+    }
+    cal.getEvents(from, to).forEach(function (ev) {
+      busy.push({ start: ev.getStartTime(), end: ev.getEndTime() });
+    });
+  });
+  return busy;
+}
+
+function overlaps(start, end, busy) {
+  return busy.some(function (b) { return start < b.end && end > b.start; });
 }
 
 function getAvailableSlots() {
@@ -110,6 +169,11 @@ function getAvailableSlots() {
   const minBookingTime = new Date(now.getTime() + CONFIG.MIN_NOTICE_HOURS * 3600 * 1000);
   const slots = [];
   const totalSlotMinutes = CONFIG.SLOT_DURATION + CONFIG.BUFFER;
+
+  // Une seule lecture des agendas pour toute la période.
+  const rangeEnd = new Date(now);
+  rangeEnd.setDate(rangeEnd.getDate() + CONFIG.DAYS_AHEAD + 1);
+  const busy = getBusyIntervals(now, rangeEnd);
 
   for (let d = 0; d < CONFIG.DAYS_AHEAD; d++) {
     const date = new Date(now);
@@ -121,7 +185,6 @@ function getAvailableSlots() {
     const dayEnd = new Date(date);
     dayEnd.setHours(CONFIG.AVAILABLE_HOURS.end, 0, 0, 0);
 
-    const events = getBusyEvents(dayStart, dayEnd);
     const daySlotsCount = Math.floor(
       (CONFIG.AVAILABLE_HOURS.end - CONFIG.AVAILABLE_HOURS.start) * 60 / totalSlotMinutes
     );
@@ -134,11 +197,7 @@ function getAvailableSlots() {
 
       if (slotStart < minBookingTime) continue;
 
-      const hasConflict = events.some(function (event) {
-        return (slotStart < event.getEndTime() && slotEnd > event.getStartTime());
-      });
-
-      if (!hasConflict) {
+      if (!overlaps(slotStart, slotEnd, busy)) {
         daySlots.push({
           start: slotStart.toISOString(),
           end: slotEnd.toISOString(),
@@ -212,7 +271,7 @@ function bookSlot(data) {
   const slotEnd = new Date(slotStart.getTime() + CONFIG.SLOT_DURATION * 60000);
 
   // Double-vérification anti-collision, sur tous les agendas surveillés.
-  if (getBusyEvents(slotStart, slotEnd).length > 0) {
+  if (overlaps(slotStart, slotEnd, getBusyIntervals(slotStart, slotEnd))) {
     return {
       success: false,
       error: 'Ce créneau vient d\'être réservé. Veuillez en choisir un autre.'
@@ -298,6 +357,16 @@ function jsonResponse(data) {
 // ============================================
 // TESTS (à exécuter manuellement dans l'éditeur)
 // ============================================
+
+/** Dit, agenda par agenda, si le script le lit, et combien de plages occupées il y voit sur 7 jours. */
+function testAgendas() {
+  var from = new Date(), to = new Date(from.getTime() + 7 * 86400000);
+  Logger.log('Mode : ' + ((typeof Calendar !== 'undefined' && Calendar.Freebusy) ? 'Freebusy (service avancé)' : 'CalendarApp (repli)'));
+  getBusyCalendarIds().forEach(function (id) {
+    try { Logger.log('OK    ' + id + ' : ' + getBusyIntervals(from, to, [id]).length + ' plage(s) occupée(s) sur 7 jours'); }
+    catch (e) { Logger.log('ÉCHEC ' + id + ' : ' + e.message); }
+  });
+}
 
 function testGetSlots() {
   Logger.log(JSON.stringify(getAvailableSlots(), null, 2));

@@ -661,7 +661,10 @@
 
 <!-- HERO = THE IMAGE, AS-IS -->
 <section class="hero">
-  <img class="hero-img" src="hero.png" alt="David Carvalho — 4E Metacognition Design — Organisation Cognitive 2026">
+  <video class="hero-img" autoplay muted loop playsinline preload="auto" poster="hero-affiche.jpg" width="1280" height="720" aria-label="David Carvalho regarde le logo 4E, puis pointe du doigt vers vous">
+    <source src="hero-boucle.mp4" type="video/mp4">
+    <img src="hero-affiche.jpg" alt="David Carvalho, 4E Metacognition Design">
+  </video>
   <canvas class="hero-pluie" aria-hidden="true"></canvas>
   <div class="hero-title-overlay">
     <h1 data-fr="Que ferait un agent<br>avec ce que<br><span>vous savez déjà ?</span>" data-en="What would an agent<br>do with what<br><span>you already know?</span>">Que ferait un agent<br>avec ce que<br><span>vous savez déjà ?</span></h1>
@@ -1150,6 +1153,8 @@
    Concentrée au centre, discrète, en pause hors écran et onglet caché, absente si l'animation est désactivée. */
 (function () {
   var c = document.querySelector('.hero-pluie');
+  var vid = document.querySelector('video.hero-img');
+  if (vid && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { vid.removeAttribute('autoplay'); vid.pause(); }
   if (!c || !c.getContext || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   // Sur téléphone, la photo est recadrée : la silhouette n'est plus à la même place, on garde la pluie de la photo seule.
   if (window.matchMedia('(max-width: 680px)').matches) { c.style.display = 'none'; return; }
@@ -1169,9 +1174,10 @@
   // Silhouette du portrait, en proportions de la photo : la pluie passe derrière, jamais devant.
   function devant(px, py) {
     var u = px / W, v = py / H;
-    var dx = (u - 0.503) / 0.062, dy = (v - 0.215) / 0.135;
+    var dx = (u - 0.498) / 0.05, dy = (v - 0.16) / 0.11;
     if (dx * dx + dy * dy < 1) return true;            // tête
-    if (v > 0.28 && u > 0.375 && u < 0.625) return true; // buste et jambes
+    if (v > 0.23 && u > 0.36 && u < 0.64) return true;  // buste, bras et jambes
+    if (v > 0.23 && v < 0.5 && u > 0.24 && u < 0.76) return true; // bras ouverts
     return false;
   }
   function dimensionner() {

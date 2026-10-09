@@ -700,6 +700,35 @@
   }
 
 </style>
+<!-- SITE:RECHERCHE:CSS --><style id="recherche-css">
+  .recherche { background: var(--charcoal-deep); }
+  .rc-grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+  .rc-carte { perspective: 1400px; min-height: 30rem; cursor: pointer; }
+  .rc-interieur { position: relative; height: 100%; min-height: 30rem; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.4,.2,.2,1); }
+  .rc-carte.retournee .rc-interieur { transform: rotateY(180deg); }
+  .rc-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 12px; border: 1px solid var(--border); background: var(--charcoal); overflow: hidden; display: flex; flex-direction: column; }
+  .rc-carte:hover .rc-face { border-color: var(--border-gold); }
+  .rc-recto img { width: 100%; aspect-ratio: 8 / 5; height: auto; object-fit: cover; display: block; }
+  .rc-titres { padding: 1.4rem 1.5rem 0; flex: 1; }
+  .rc-nom { font-family: var(--font-display); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .rc-titre { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.3; }
+  .rc-retourner, .rc-revenir { font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--gold); background: none; border: 0; padding: 0; cursor: pointer; }
+  .rc-retourner { align-self: flex-start; margin: 1rem 1.5rem 1.4rem; }
+  .rc-retourner:focus-visible, .rc-revenir:focus-visible, .rc-lien:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .rc-verso { transform: rotateY(180deg); padding: 1.5rem; gap: 0.7rem; overflow-y: auto; background: linear-gradient(160deg, var(--charcoal), var(--charcoal-deep)); border-color: var(--border-gold); }
+  .rc-texte { font-size: 0.9rem; line-height: 1.65; color: var(--text-primary); }
+  .rc-etiquette { font-family: var(--font-display); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-top: 0.3rem; }
+  .rc-valeur { font-size: 0.88rem; line-height: 1.6; color: var(--text-secondary); }
+  .rc-etat { font-size: 0.78rem; line-height: 1.5; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 0.7rem; margin-top: auto; }
+  .rc-pied { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .rc-lien { font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; color: var(--gold); text-decoration: none; }
+  .rc-lien:hover { color: var(--gold-light); }
+  .rc-lien-attente { color: var(--text-muted); font-weight: 600; }
+  @media (max-width: 900px) { .rc-grille { grid-template-columns: 1fr; max-width: 30rem; margin-inline: auto; } }
+  @media (prefers-reduced-motion: reduce) {
+    .rc-interieur { transition: none; }
+  }
+</style>
 </head>
 <body>
 
@@ -813,6 +842,87 @@
     </div>
   </div>
 </section>
+
+<!-- SITE:RECHERCHE:DEBUT -->
+<section class="recherche" id="recherche">
+  <div class="container">
+    <div class="section-tag" data-fr="Recherche action agentique" data-en="Agentic action research">Recherche action agentique</div>
+    <h2 class="section-title reveal" data-fr="Trois projets où je mets l’agentique à l’épreuve" data-en="Three projects where I put agentic AI to the test">Trois projets où je mets l’agentique à l’épreuve</h2>
+    <p class="section-desc reveal" data-fr="Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’agent, ce que l’entreprise y gagne, où en est le projet." data-en="I test on my own projects what I offer my clients. Each card flips over: what the agent does, what the business gains, where the project stands.">Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’agent, ce que l’entreprise y gagne, où en est le projet.</p>
+    <div class="rc-grille">
+      <article class="rc-carte reveal" id="rc-marcel">
+        <div class="rc-interieur">
+          <div class="rc-face rc-recto">
+            <img src="recherche-marcel.jpg" alt="Atelier de carrosserie, véhicules en cours de réparation" data-alt-en="Body shop, vehicles being repaired" width="800" height="500" loading="lazy">
+            <div class="rc-titres">
+              <div class="rc-nom">Marcel</div>
+              <h3 class="rc-titre" data-fr="L’agent en messagerie pour les TPE" data-en="The messaging agent for small businesses">L’agent en messagerie pour les TPE</h3>
+            </div>
+            <button class="rc-retourner" type="button" aria-expanded="false" aria-controls="rc-marcel-verso" data-fr="Découvrir le projet →" data-en="Discover the project →">Découvrir le projet →</button>
+          </div>
+          <div class="rc-face rc-verso" id="rc-marcel-verso" aria-hidden="true">
+            <div class="rc-nom">Marcel</div>
+            <p class="rc-texte" data-fr="Le peintre photographie, Marcel fait le reste : il reconnaît le véhicule, range chaque photo dans le fil du chantier et impute les coûts. Une conversation, pas un logiciel à apprendre." data-en="The painter takes a photo, Marcel does the rest: it recognises the vehicle, files each photo in the job thread and allocates costs. A conversation, not software to learn.">Le peintre photographie, Marcel fait le reste : il reconnaît le véhicule, range chaque photo dans le fil du chantier et impute les coûts. Une conversation, pas un logiciel à apprendre.</p>
+            <div class="rc-etiquette" data-fr="Pour l’entreprise" data-en="For the business">Pour l’entreprise</div>
+            <p class="rc-valeur" data-fr="Le dirigeant voit, véhicule par véhicule, ce qui produit de la marge et ce qui en consomme. Ses clients reçoivent un dossier photo de leur véhicule." data-en="The owner sees, vehicle by vehicle, what makes a margin and what eats it. Customers get a photo file of their vehicle.">Le dirigeant voit, véhicule par véhicule, ce qui produit de la marge et ce qui en consomme. Ses clients reçoivent un dossier photo de leur véhicule.</p>
+            <p class="rc-etat" data-fr="Essai en atelier depuis le 14 septembre 2026 (observé)." data-en="Workshop trial since 14 September 2026 (observed).">Essai en atelier depuis le 14 septembre 2026 (observé).</p>
+            <div class="rc-pied">
+              <a class="rc-lien" href="https://pitlane-three.vercel.app" target="_blank" rel="noopener" data-fr="Voir le site de Marcel →" data-en="See Marcel’s site →">Voir le site de Marcel →</a>
+              <button class="rc-revenir" type="button" data-fr="← Retour" data-en="← Back">← Retour</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="rc-carte reveal" id="rc-woodmaker">
+        <div class="rc-interieur">
+          <div class="rc-face rc-recto">
+            <img src="recherche-woodmaker.jpg" alt="Cuisine sur mesure bleue conçue avec Wood Maker" data-alt-en="Blue custom kitchen designed with Wood Maker" width="800" height="500" loading="lazy">
+            <div class="rc-titres">
+              <div class="rc-nom">Wood Maker</div>
+              <h3 class="rc-titre" data-fr="Du dessin à la fabrication, en passant par la vente" data-en="From drawing to manufacturing, by way of the sale">Du dessin à la fabrication, en passant par la vente</h3>
+            </div>
+            <button class="rc-retourner" type="button" aria-expanded="false" aria-controls="rc-woodmaker-verso" data-fr="Découvrir le projet →" data-en="Discover the project →">Découvrir le projet →</button>
+          </div>
+          <div class="rc-face rc-verso" id="rc-woodmaker-verso" aria-hidden="true">
+            <div class="rc-nom">Wood Maker</div>
+            <p class="rc-texte" data-fr="Cuisine, dressing, bibliothèque : un seul modèle tient le projet de bout en bout. Le relevé, la conception, le devis, le débit et les fichiers d’usinage en sortent sans ressaisie." data-en="Kitchens, wardrobes, bookcases: one model carries the project end to end. Survey, design, quote, cutting list and machining files all come from it, with no re-keying.">Cuisine, dressing, bibliothèque : un seul modèle tient le projet de bout en bout. Le relevé, la conception, le devis, le débit et les fichiers d’usinage en sortent sans ressaisie.</p>
+            <div class="rc-etiquette" data-fr="Pour l’entreprise" data-en="For the business">Pour l’entreprise</div>
+            <p class="rc-valeur" data-fr="Le client reçoit un devis illustré, l’atelier ses plans, la machine ses fichiers. Ce qui a été vendu est ce qui est fabriqué." data-en="The customer gets an illustrated quote, the workshop its drawings, the machine its files. What was sold is what gets built.">Le client reçoit un devis illustré, l’atelier ses plans, la machine ses fichiers. Ce qui a été vendu est ce qui est fabriqué.</p>
+            <p class="rc-etat" data-fr="Prototype logiciel avancé, utilisé par un seul opérateur (relevé). Site en cours." data-en="Advanced software prototype, used by a single operator (measured). Website in progress.">Prototype logiciel avancé, utilisé par un seul opérateur (relevé). Site en cours.</p>
+            <div class="rc-pied">
+              <span class="rc-lien rc-lien-attente" data-fr="Site en préparation" data-en="Website in preparation">Site en préparation</span>
+              <button class="rc-revenir" type="button" data-fr="← Retour" data-en="← Back">← Retour</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="rc-carte reveal" id="rc-half">
+        <div class="rc-interieur">
+          <div class="rc-face rc-recto">
+            <img src="recherche-half.jpg" alt="Plateforme mobile HALF chargée, aux côtés d’une randonneuse" data-alt-en="Loaded HALF mobile platform walking beside a hiker" width="800" height="500" loading="lazy">
+            <div class="rc-titres">
+              <div class="rc-nom">HALF</div>
+              <h3 class="rc-titre" data-fr="L’intelligence coopérative sur le terrain" data-en="Cooperative intelligence in the field">L’intelligence coopérative sur le terrain</h3>
+            </div>
+            <button class="rc-retourner" type="button" aria-expanded="false" aria-controls="rc-half-verso" data-fr="Découvrir le projet →" data-en="Discover the project →">Découvrir le projet →</button>
+          </div>
+          <div class="rc-face rc-verso" id="rc-half-verso" aria-hidden="true">
+            <div class="rc-nom">HALF</div>
+            <p class="rc-texte" data-fr="Une base mobile électrique et open source, pilotée sous ROS2, qui se décline en variantes métiers. Les unités travaillent avec les équipes et entre elles, en essaim." data-en="An open-source electric mobile base, running on ROS2, that comes in trade-specific variants. Units work with crews and with each other, as a swarm.">Une base mobile électrique et open source, pilotée sous ROS2, qui se décline en variantes métiers. Les unités travaillent avec les équipes et entre elles, en essaim.</p>
+            <div class="rc-etiquette" data-fr="Pour l’entreprise" data-en="For the business">Pour l’entreprise</div>
+            <p class="rc-valeur" data-fr="Une même plateforme sert plusieurs métiers. Avant d’acheter, vous la faites rouler dans un simulateur sur votre propre site." data-en="One platform serves several trades. Before buying, you run it in a simulator on your own site.">Une même plateforme sert plusieurs métiers. Avant d’acheter, vous la faites rouler dans un simulateur sur votre propre site.</p>
+            <p class="rc-etat" data-fr="Deux prototypes au niveau TRL 7 (déclaré). Démonstration en essaim de trois unités en préparation." data-en="Two prototypes at TRL 7 (declared). A three-unit swarm demonstration is being prepared.">Deux prototypes au niveau TRL 7 (déclaré). Démonstration en essaim de trois unités en préparation.</p>
+            <div class="rc-pied">
+              <a class="rc-lien" href="https://www.halfplatform.com" target="_blank" rel="noopener" data-fr="Voir le site de HALF →" data-en="See the HALF site →">Voir le site de HALF →</a>
+              <button class="rc-revenir" type="button" data-fr="← Retour" data-en="← Back">← Retour</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<!-- SITE:RECHERCHE:FIN -->
 
 <!-- QUESTIONS -->
 <section class="testimonials-section" id="testimonials">
@@ -1351,6 +1461,35 @@
   if (window.IntersectionObserver) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(c);
   requestAnimationFrame(image);
 })();
+</script>
+<!-- SITE:RECHERCHE:JS --><script>
+  // Cartes de la recherche action : un clic retourne la carte, sauf sur un lien.
+  document.querySelectorAll('.rc-carte').forEach(function (carte) {
+    var recto = carte.querySelector('.rc-recto'), verso = carte.querySelector('.rc-verso');
+    var bouton = carte.querySelector('.rc-retourner');
+    function poser(r) {
+      carte.classList.toggle('retournee', r);
+      bouton.setAttribute('aria-expanded', r ? 'true' : 'false');
+      verso.setAttribute('aria-hidden', r ? 'false' : 'true');
+      recto.setAttribute('aria-hidden', r ? 'true' : 'false');
+      verso.querySelectorAll('a, button').forEach(function (el) { el.tabIndex = r ? 0 : -1; });
+      bouton.tabIndex = r ? -1 : 0;
+    }
+    poser(false);
+    carte.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      var r = !carte.classList.contains('retournee');
+      poser(r);
+      (r ? carte.querySelector('.rc-revenir') : bouton).focus({ preventScroll: true });
+    });
+  });
+  // Textes alternatifs des images, suivis par le bouton de langue.
+  document.getElementById('langToggle').addEventListener('click', function () {
+    document.querySelectorAll('.rc-recto img').forEach(function (img) {
+      if (!img.dataset.altFr) img.dataset.altFr = img.alt;
+      img.alt = document.documentElement.lang === 'en' ? img.dataset.altEn : img.dataset.altFr;
+    });
+  });
 </script>
 </body>
 </html>

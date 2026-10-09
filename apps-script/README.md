@@ -35,6 +35,11 @@ Plus une **propriété de script** `AGENDAS_OCCUPES` (Paramètres du projet →
 Propriétés du script), qui ajoute des agendas sans publier leur adresse dans
 le dépôt public. Valeur actuelle attendue : `agentshiftpro@gmail.com`.
 
+**État déployé.** Le script s'exécute sous `contact@agentshift.pro` (relevé le
+27/08/2026) : `primary` désigne l'agenda principal de ce compte, où atterrissent
+les rendez-vous du site et ceux créés par Bob. Un agenda principal ne peut pas
+être orphelin, contrairement à un agenda secondaire qui meurt avec son compte.
+
 **Un créneau n'est proposé que s'il est libre dans tous les agendas listés**,
 CONFIG et propriété réunis.
 

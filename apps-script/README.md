@@ -27,20 +27,37 @@ C'est exactement le risque en cours : le script vit historiquement sous
 ## Configuration
 
 ```js
-BUSY_CALENDAR_IDS: ['primary', '<id-agenda-agentshift>'],
-BOOKING_CALENDAR_ID: '<id-agenda-agentshift>',
+BUSY_CALENDAR_IDS: ['primary', 'contact@agentshift.pro'],
+BOOKING_CALENDAR_ID: 'primary',
 ```
 
-**Les deux listes sont distinctes et c'est volontaire.**
+Plus une **propriété de script** `AGENDAS_OCCUPES` (Paramètres du projet →
+Propriétés du script), qui ajoute des agendas sans publier leur adresse dans
+le dépôt public. Valeur actuelle attendue : `agentshiftpro@gmail.com`.
 
-`BUSY_CALENDAR_IDS` — tous les agendas consultés pour savoir quand vous êtes
-occupé. En oublier un fait proposer aux prospects des créneaux déjà pris.
+**Un créneau n'est proposé que s'il est libre dans tous les agendas listés**,
+CONFIG et propriété réunis.
 
-`BOOKING_CALENDAR_ID` — l'unique agenda où le rendez-vous est créé.
+`BOOKING_CALENDAR_ID` est l'unique agenda où le rendez-vous est créé.
 
-🔴 **L'agenda de réservation doit figurer aussi dans `BUSY_CALENDAR_IDS`.**
+🔴 **L'agenda de réservation doit figurer aussi dans les agendas surveillés.**
 Sans cela le script ne voit pas les rendez-vous qu'il a lui-même créés, et deux
-prospects peuvent réserver le même créneau.
+prospects peuvent réserver le même créneau. `'primary'` y est pour cette raison.
+
+### Lire un agenda d'un autre compte
+
+Le script lit les disponibilités par l'API Freebusy. Deux conditions :
+
+1. **Activer le service avancé** dans l'éditeur : Services → ➕ →
+   *Google Calendar API* → Ajouter.
+2. **Partager chaque agenda extérieur** avec le compte qui exécute le script,
+   au niveau *Voir uniquement les disponibilités* au minimum (Google Agenda →
+   Paramètres de l'agenda → Partager avec des personnes).
+
+**Fermé par défaut** : si un agenda ne peut pas être lu, le script refuse de
+proposer des créneaux plutôt que d'en proposer qui l'ignorent. Le widget
+affiche alors une erreur. La fonction `testAgendas` de l'éditeur dit, agenda
+par agenda, ce que le script arrive à lire.
 
 ---
 
@@ -66,8 +83,8 @@ prospects peuvent réserver le même créneau.
    par un réglage de l'agenda. Sur un agenda neuf, contrôler qu'il est actif —
    sinon les invitations partent sans lien de connexion.
 
-7. **Tester** avant de communiquer l'adresse : `?action=slots` doit renvoyer du
-   JSON, et les fonctions `testRefusePasse` / `testRefuseHorsGrille` de
+7. **Tester** avant de communiquer l'adresse : `testAgendas` doit afficher OK
+   pour chaque agenda, `?action=slots` doit renvoyer du JSON, et les fonctions `testRefusePasse` / `testRefuseHorsGrille` de
    l'éditeur doivent toutes deux échouer proprement.
 
 ---

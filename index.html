@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentShift : L'expérience de vos équipes, démultipliée · Organisation Cognitive</title>
-<meta name="description" content="David Carvalho, 25 ans de leadership design. Coaching en transformation agentique et organisation cognitive pour PME et startups.">
+<title>AgentShift · Votre matière, avant vos outils IA</title>
+<meta name="description" content="Je ne déploie pas des outils IA. Je conçois l’organisation cognitive qui les rend utiles. Elle part de votre matière : ce qui se fait et se dit chez vous.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -284,6 +284,11 @@
   }
   .pillar-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
   .pillar-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+  .pillar-card p + p { margin-top: 0.55rem; }
+  .pillar-card p strong { color: var(--text-primary); font-weight: 600; }
+  .pillar-card .palier-lien { color: var(--gold); text-decoration: none; font-weight: 600; }
+  .pillar-card .palier-lien:hover { color: var(--gold-light); }
+  .paliers-sortie { margin-top: 2rem; text-align: center; }
 
   /* ============ ABOUT ============ */
   .about-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3.5rem; align-items: start; }
@@ -697,17 +702,17 @@
 
 <!-- HERO = THE IMAGE, AS-IS -->
 <section class="hero">
-  <video class="hero-img" autoplay muted loop playsinline preload="auto" poster="hero-affiche.jpg" width="1280" height="720" aria-label="David Carvalho regarde le logo 4E, puis pointe du doigt vers vous">
+  <video class="hero-img" autoplay muted loop playsinline preload="auto" poster="hero-affiche.jpg" width="1280" height="720" aria-label="David Carvalho lève les yeux, pointe du doigt vers vous, puis ouvre les bras">
     <source src="hero-boucle.mp4" type="video/mp4">
-    <img src="hero-affiche.jpg" alt="David Carvalho, 4E Metacognition Design">
+    <img src="hero-affiche.jpg" alt="David Carvalho">
   </video>
   <canvas class="hero-pluie" aria-hidden="true"></canvas>
   <div class="hero-title-overlay">
-    <h1 data-fr="Que ferait un agent<br>avec ce que<br><span>vous savez déjà ?</span>" data-en="What would an agent<br>do with what<br><span>you already know?</span>">Que ferait un agent<br>avec ce que<br><span>vous savez déjà ?</span></h1>
+    <h1 data-fr="Un modèle public<br>connaît le résultat.<br><span>Votre entreprise connaît la manière.</span>" data-en="A public model<br>knows the result.<br><span>Your company knows the way.</span>">Un modèle public<br>connaît le résultat.<br><span>Votre entreprise connaît la manière.</span></h1>
     <a href="configurateur.html" class="btn-gold hero-config-btn" data-fr="Évaluer ma matière →" data-en="Assess my material →">Évaluer ma matière →</a>
   </div>
   <div class="hero-cta-bar">
-    <div class="hero-cta-text" data-fr="<strong>David Carvalho</strong> a 25 ans d'expérience en transformations et Innovations sur 4 industries pour vous accompagner dans votre <strong>transformation agentique</strong>." data-en="<strong>David Carvalho</strong> has 25 years of experience in transformations and innovations across 4 industries to guide your <strong>agentic transformation</strong>."><strong>David Carvalho</strong> a 25 ans d'expérience en transformations et Innovations sur 4 industries pour vous accompagner dans votre <strong>transformation agentique</strong>.</div>
+    <div class="hero-cta-text" data-fr="Je capte ce que vos équipes savent faire, je le structure en un <strong>jeu de référence</strong>, et je branche dessus des <strong>copilotes</strong> qui le respectent." data-en="I capture what your teams know how to do, structure it into a <strong>reference set</strong>, and connect <strong>copilots</strong> that respect it.">Je capte ce que vos équipes savent faire, je le structure en un <strong>jeu de référence</strong>, et je branche dessus des <strong>copilotes</strong> qui le respectent.</div>
     <div class="hero-cta-buttons">
       <a href="#contact" class="btn-gold" data-fr="Réserver un appel →" data-en="Book a call →">Réserver un appel →</a>
     </div>
@@ -717,33 +722,50 @@
 <!-- INTRO STRIP -->
 <div class="intro-strip">
   <div class="intro-inner reveal">
-    <p data-fr="Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche, le <strong>4E Framework</strong>, transforme votre entreprise de l'intérieur." data-en="I don't deploy AI tools. I design the <em>cognitive organization</em> that makes them useful. My approach, the <strong>4E Framework</strong>, transforms your company from within.">Je ne déploie pas des outils IA. Je conçois l'<em>organisation cognitive</em> qui les rend utiles. Mon approche, le <strong>4E Framework</strong>, transforme votre entreprise de l'intérieur.</p>
+    <p data-fr="Je ne déploie pas des outils IA. Je conçois l’<em>organisation cognitive</em> qui les rend utiles. Elle part de votre matière : ce qui se fait et se dit chaque jour chez vous, et nulle part ailleurs." data-en="I don’t deploy AI tools. I design the <em>cognitive organization</em> that makes them useful. It starts from your material: what is done and said every day in your company, and nowhere else.">Je ne déploie pas des outils IA. Je conçois l’<em>organisation cognitive</em> qui les rend utiles. Elle part de votre matière : ce qui se fait et se dit chaque jour chez vous, et nulle part ailleurs.</p>
   </div>
 </div>
 
-<!-- PILLARS -->
+<!-- PALIERS -->
 <section class="pillars" id="pillars">
   <div class="container">
-    <div class="section-tag" data-fr="Méthode 4E" data-en="4E Method">Méthode 4E</div>
-    <h2 class="section-title reveal" data-fr="Trois piliers de la transformation agentique" data-en="Three pillars of agentic transformation">Trois piliers de la transformation agentique</h2>
-    <p class="section-desc reveal" data-fr="La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes." data-en="Most AI transformations fail because they focus on technology. My approach starts with humans and systems.">La plupart des transformations IA échouent car elles se focalisent sur la technologie. Mon approche commence par les humains et les systèmes.</p>
+    <div class="section-tag" data-fr="Approche" data-en="Approach">Approche</div>
+    <h2 class="section-title reveal" data-fr="Trois paliers, chacun avec sa condition d’arrêt" data-en="Three tiers, each with its own stop condition">Trois paliers, chacun avec sa condition d’arrêt</h2>
+    <p class="section-desc reveal" data-fr="Chaque palier remet une chose que vous pouvez ouvrir. Vous n’engagez que le suivant." data-en="Each tier hands over something you can open. You only commit to the next one.">Chaque palier remet une chose que vous pouvez ouvrir. Vous n’engagez que le suivant.</p>
     <div class="pillar-grid">
       <div class="pillar-card reveal">
         <div class="pillar-num">01</div>
-        <h3 data-fr="Diagnostic Agentique" data-en="Agentic Diagnostic">Diagnostic Agentique</h3>
-        <p data-fr="Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur, pas un gadget." data-en="Mapping your decision and operational flows. Identifying where an AI agent creates real value, not a gimmick.">Cartographie de vos flux décisionnels et opérationnels. Identification des points où un agent IA crée une vraie valeur, pas un gadget.</p>
+        <h3 data-fr="MATIÈRE" data-en="MATIÈRE">MATIÈRE</h3>
+        <p data-fr="Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses." data-en="A clean, verified foundation, before any agent. Plugging an agent into unconverted material gives plausible and wrong answers.">Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses.</p>
+        <p data-fr="<strong>Vous obtenez :</strong> vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens, qui servira à juger tout outil futur." data-en="<strong>You get:</strong> your sources inventoried and extracted, your reference data reconciled, and a set of 20 to 50 questions validated by your senior staff, used to judge any future tool."><strong>Vous obtenez :</strong> vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens, qui servira à juger tout outil futur.</p>
+        <p data-fr="<strong>Délai :</strong> de huit à vingt jours d’intervention, sur quatre à huit semaines." data-en="<strong>Timeframe:</strong> eight to twenty days of work, over four to eight weeks."><strong>Délai :</strong> de huit à vingt jours d’intervention, sur quatre à huit semaines.</p>
+        <p data-fr="<strong>Ce que ça consomme :</strong> de 9 600 à 24 000 € HT selon le volume et les sources, au taux de 1 200 € HT par jour. L’outil d’extraction est refacturé au réel, de 89 à 249 € par mois." data-en="<strong>What it takes:</strong> €9,600 to €24,000 excl. VAT depending on volume and sources, at €1,200 excl. VAT per day. The extraction tool is passed on at cost, €89 to €249 per month."><strong>Ce que ça consomme :</strong> de 9 600 à 24 000 € HT selon le volume et les sources, au taux de 1 200 € HT par jour. L’outil d’extraction est refacturé au réel, de 89 à 249 € par mois.</p>
+        <!-- À COMPLÉTER : le temps que ce palier demande à vos équipes (personnes, demi-journées). Le configurateur ne donne que le prix. -->
+        <p data-fr="<strong>Condition d’arrêt :</strong> à la fin de chaque jalon (inventaire, extraction, jeu de référence). Vous gardez ce qui est livré." data-en="<strong>Stop condition:</strong> at the end of each milestone (inventory, extraction, reference set). You keep what has been delivered."><strong>Condition d’arrêt :</strong> à la fin de chaque jalon (inventaire, extraction, jeu de référence). Vous gardez ce qui est livré.</p>
+        <p><a href="golden-dataset-pme.html" class="palier-lien" data-fr="Le jeu de référence, en détail →" data-en="The reference set, in detail →">Le jeu de référence, en détail →</a></p>
       </div>
       <div class="pillar-card reveal">
         <div class="pillar-num">02</div>
-        <h3 data-fr="Architecture Cognitive" data-en="Cognitive Architecture">Architecture Cognitive</h3>
-        <p data-fr="Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé." data-en="Designing the target organization: human roles, agent roles, collaboration interfaces. Systemic design, not an isolated PoC.">Conception de l'organisation cible : rôles humains, rôles agents, interfaces de collaboration. Design systémique, pas un PoC isolé.</p>
+        <h3 data-fr="COPILOTE" data-en="COPILOT">COPILOTE</h3>
+        <p data-fr="Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ." data-en="A copilot in one team, on one department, with a target metric written down at the start.">Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.</p>
+        <p data-fr="<strong>Vous obtenez :</strong> un copilote en service dans une équipe, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous." data-en="<strong>You get:</strong> a copilot in service in one team, the measurement before and after, and what it takes for it to run without us."><strong>Vous obtenez :</strong> un copilote en service dans une équipe, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous.</p>
+        <p data-fr="<strong>Délai :</strong> douze semaines, trois jours toutes les deux semaines." data-en="<strong>Timeframe:</strong> twelve weeks, three days every two weeks."><strong>Délai :</strong> douze semaines, trois jours toutes les deux semaines.</p>
+        <p data-fr="<strong>Ce que ça consomme :</strong> 18 jours, soit 21 600 € HT. Sans socle propre, MATIÈRE passe d’abord." data-en="<strong>What it takes:</strong> 18 days, i.e. €21,600 excl. VAT. Without a clean foundation, MATIÈRE comes first."><strong>Ce que ça consomme :</strong> 18 jours, soit 21 600 € HT. Sans socle propre, MATIÈRE passe d’abord.</p>
+        <!-- À COMPLÉTER : le temps que ce palier demande à vos équipes (personnes, demi-journées). Le configurateur ne donne que le prix. -->
+        <p data-fr="<strong>Condition d’arrêt :</strong> toutes les deux semaines. Vous gardez le copilote et sa mesure." data-en="<strong>Stop condition:</strong> every two weeks. You keep the copilot and its measurement."><strong>Condition d’arrêt :</strong> toutes les deux semaines. Vous gardez le copilote et sa mesure.</p>
       </div>
       <div class="pillar-card reveal">
         <div class="pillar-num">03</div>
-        <h3 data-fr="Adoption & Échelle" data-en="Adoption & Scale">Adoption & Échelle</h3>
-        <p data-fr="Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent." data-en="Supporting teams through change. Training, iterations, impact measurement. AI only works if humans adopt it.">Accompagnement des équipes dans le changement. Formation, itérations, mesure d'impact. L'IA ne marche que si les humains l'adoptent.</p>
+        <h3 data-fr="SAUT" data-en="LEAP">SAUT</h3>
+        <p data-fr="Transformer l’organisation, service après service, sur l’année." data-en="Transforming the organization, department by department, over the year.">Transformer l’organisation, service après service, sur l’année.</p>
+        <p data-fr="<strong>Vous obtenez :</strong> une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous." data-en="<strong>You get:</strong> an organization where knowledge is captured, structured and used by copilots that run without us."><strong>Vous obtenez :</strong> une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous.</p>
+        <p data-fr="<strong>Délai :</strong> trois jours toutes les deux semaines, sur un an." data-en="<strong>Timeframe:</strong> three days every two weeks, over one year."><strong>Délai :</strong> trois jours toutes les deux semaines, sur un an.</p>
+        <p data-fr="<strong>Ce que ça consomme :</strong> environ 100 000 € HT par an. Sans socle propre, MATIÈRE passe d’abord." data-en="<strong>What it takes:</strong> about €100,000 excl. VAT per year. Without a clean foundation, MATIÈRE comes first."><strong>Ce que ça consomme :</strong> environ 100 000 € HT par an. Sans socle propre, MATIÈRE passe d’abord.</p>
+        <!-- À COMPLÉTER : le temps que ce palier demande à vos équipes (personnes, demi-journées). Le configurateur ne donne que le prix. -->
+        <p data-fr="<strong>Condition d’arrêt :</strong> toutes les deux semaines. Vous gardez tout ce qui est livré." data-en="<strong>Stop condition:</strong> every two weeks. You keep everything that has been delivered."><strong>Condition d’arrêt :</strong> toutes les deux semaines. Vous gardez tout ce qui est livré.</p>
       </div>
     </div>
+    <p class="paliers-sortie reveal"><a href="configurateur.html" class="btn-ghost" data-fr="Trouver mon palier dans le configurateur →" data-en="Find my tier in the configurator →">Trouver mon palier dans le configurateur →</a></p>
   </div>
 </section>
 
@@ -753,21 +775,18 @@
     <div class="about-layout">
       <div class="about-visual reveal">
         <div class="about-stats">
-          <div class="stat-box"><div class="stat-num">25+</div><div class="stat-lbl" data-fr="Ans d'expérience" data-en="Years experience">Ans d'expérience</div></div>
-          <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl" data-fr="Grands groupes" data-en="Major corps">Grands groupes</div></div>
-          <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl" data-fr="Pays" data-en="Countries">Pays</div></div>
-          <div class="stat-box"><div class="stat-num">&#8734;</div><div class="stat-lbl" data-fr="Curiosité" data-en="Curiosity">Curiosité</div></div>
+          <div class="stat-box" style="grid-column: 1 / -1;"><div class="stat-num">25</div><div class="stat-lbl" data-fr="Ans d’expérience" data-en="Years of experience">Ans d’expérience</div></div>
         </div>
         <div class="method-badge">
-          <div class="method-badge-tag" data-fr="Méthodologie" data-en="Methodology">Méthodologie</div>
-          <div class="method-badge-val" data-fr="Metacognition Design · 4E" data-en="Metacognition Design · 4E">Metacognition Design · 4E</div>
+          <div class="method-badge-tag" data-fr="Chez" data-en="At">Chez</div>
+          <div class="method-badge-val">Philips · Dassault Systèmes · Orange · Pininfarina</div>
         </div>
       </div>
       <div class="about-text reveal">
         <div class="section-tag" data-fr="Parcours" data-en="About">Parcours</div>
-        <h2 class="section-title" data-fr="Du design industriel à l'intelligence organisationnelle" data-en="From industrial design to organizational intelligence">Du design industriel à l'intelligence organisationnelle</h2>
-        <p data-fr="Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable." data-en="For 25 years, I designed complex systems at Pininfarina, Orange, Dassault Systèmes, and Philips. From automotive interfaces to digital platforms, my job has always been the same: making the invisible readable and innovation adoptable.">Pendant 25 ans, j'ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l'invisible lisible et l'innovant adoptable.</p>
-        <p data-fr="Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont la meilleure architecture humain-machine." data-en="Today, that discipline applies to agentic transformation. The organizations that succeed with AI won't have the best models. They'll have the best human-machine architecture.">Aujourd'hui, cette discipline s'applique à la transformation agentique. Les organisations qui réussiront avec l'IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont la meilleure architecture humain-machine.</p>
+        <h2 class="section-title" data-fr="Du design industriel à l’intelligence organisationnelle" data-en="From industrial design to organizational intelligence">Du design industriel à l’intelligence organisationnelle</h2>
+        <p data-fr="Pendant 25 ans, j’ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l’invisible lisible et l’innovant adoptable." data-en="For 25 years, I designed complex systems at Pininfarina, Orange, Dassault Systèmes, and Philips. From automotive interfaces to digital platforms, my job has always been the same: making the invisible readable and innovation adoptable.">Pendant 25 ans, j’ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l’invisible lisible et l’innovant adoptable.</p>
+        <p data-fr="Aujourd’hui, cette discipline s’applique à la transformation agentique. Les organisations qui réussiront avec l’IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont capté leur propre matière." data-en="Today, that discipline applies to agentic transformation. The organizations that succeed with AI won’t have the best models. They’ll be the ones that have captured their own material.">Aujourd’hui, cette discipline s’applique à la transformation agentique. Les organisations qui réussiront avec l’IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont capté leur propre matière.</p>
         <div class="brand-row">
           <span class="brand-chip">Pininfarina</span>
           <span class="brand-chip">Orange</span>
@@ -783,7 +802,7 @@
       <div class="tl-item"><div class="tl-year">2008 – 2014</div><div class="tl-role" data-fr="Directeur Design Studio" data-en="Design Studio Director">Directeur Design Studio</div><div class="tl-co">Dassault Systèmes</div></div>
       <div class="tl-item"><div class="tl-year">2014 – 2018</div><div class="tl-role" data-fr="Directeur Vision & Design" data-en="Vision & Design Director">Directeur Vision & Design</div><div class="tl-co">Orange Group</div></div>
       <div class="tl-item"><div class="tl-year">2018 – 2024</div><div class="tl-role">SVP Experience Design</div><div class="tl-co">Pininfarina</div></div>
-      <div class="tl-item tl-now"><div class="tl-year" data-fr="Aujourd'hui" data-en="Present">Aujourd'hui</div><div class="tl-role" data-fr="Coaching Transformation Agentique" data-en="Agentic Transformation Coaching">Coaching Transformation Agentique</div><div class="tl-co">AgentShift · 4E</div></div>
+      <div class="tl-item tl-now"><div class="tl-year" data-fr="Aujourd’hui" data-en="Present">Aujourd’hui</div><div class="tl-role" data-fr="Organisation cognitive, en tranches livrées" data-en="Cognitive organization, in delivered stages">Organisation cognitive, en tranches livrées</div><div class="tl-co">AgentShift</div></div>
     </div>
   </div>
 </section>
@@ -795,7 +814,7 @@
   <div class="container">
     <div class="section-tag" data-fr="Recherche action agentique" data-en="Agentic action research">Recherche action agentique</div>
     <h2 class="section-title reveal" data-fr="Trois projets où je mets l’agentique à l’épreuve" data-en="Three projects where I put agentic AI to the test">Trois projets où je mets l’agentique à l’épreuve</h2>
-    <p class="section-desc reveal" data-fr="Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’agent, ce que l’entreprise y gagne, où en est le projet." data-en="I test on my own projects what I offer my clients. Each card flips over: what the agent does, what the business gains, where the project stands.">Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’agent, ce que l’entreprise y gagne, où en est le projet.</p>
+    <p class="section-desc reveal" data-fr="Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’outil, ce que l’entreprise y gagne, où en est le projet." data-en="I test on my own projects what I offer my clients. Each card flips over: what the tool does, what the business gains, where the project stands.">Je teste sur mes propres projets ce que je propose à mes clients. Chaque carte se retourne : ce que fait l’outil, ce que l’entreprise y gagne, où en est le projet.</p>
     <div class="rc-grille">
       <article class="rc-carte reveal" id="rc-marcel">
         <div class="rc-interieur">
@@ -803,7 +822,7 @@
             <img src="recherche-marcel.jpg" alt="Atelier de carrosserie, véhicules en cours de réparation" data-alt-en="Body shop, vehicles being repaired" width="800" height="500" loading="lazy">
             <div class="rc-titres">
               <div class="rc-nom">Marcel</div>
-              <h3 class="rc-titre" data-fr="L’agent en messagerie pour les TPE" data-en="The messaging agent for small businesses">L’agent en messagerie pour les TPE</h3>
+              <h3 class="rc-titre" data-fr="Le copilote d’atelier, en messagerie" data-en="The workshop copilot, in messaging">Le copilote d’atelier, en messagerie</h3>
             </div>
             <button class="rc-retourner" type="button" aria-expanded="false" aria-controls="rc-marcel-verso" data-fr="Découvrir le projet →" data-en="Discover the project →">Découvrir le projet →</button>
           </div>
@@ -835,7 +854,7 @@
             <p class="rc-texte" data-fr="Cuisine, dressing, bibliothèque : un seul modèle tient le projet de bout en bout. Le relevé, la conception, le devis, le débit et les fichiers d’usinage en sortent sans ressaisie." data-en="Kitchens, wardrobes, bookcases: one model carries the project end to end. Survey, design, quote, cutting list and machining files all come from it, with no re-keying.">Cuisine, dressing, bibliothèque : un seul modèle tient le projet de bout en bout. Le relevé, la conception, le devis, le débit et les fichiers d’usinage en sortent sans ressaisie.</p>
             <div class="rc-etiquette" data-fr="Pour l’entreprise" data-en="For the business">Pour l’entreprise</div>
             <p class="rc-valeur" data-fr="Le client reçoit un devis illustré, l’atelier ses plans, la machine ses fichiers. Ce qui a été vendu est ce qui est fabriqué." data-en="The customer gets an illustrated quote, the workshop its drawings, the machine its files. What was sold is what gets built.">Le client reçoit un devis illustré, l’atelier ses plans, la machine ses fichiers. Ce qui a été vendu est ce qui est fabriqué.</p>
-            <p class="rc-etat" data-fr="Prototype logiciel avancé, utilisé par un seul opérateur (relevé). Site en cours." data-en="Advanced software prototype, used by a single operator (measured). Website in progress.">Prototype logiciel avancé, utilisé par un seul opérateur (relevé). Site en cours.</p>
+            <p class="rc-etat" data-fr="Prototype logiciel avancé, utilisé par une seule personne (relevé). Site en cours." data-en="Advanced software prototype, used by a single person (measured). Website in progress.">Prototype logiciel avancé, utilisé par une seule personne (relevé). Site en cours.</p>
             <div class="rc-pied">
               <span class="rc-lien rc-lien-attente" data-fr="Site en préparation" data-en="Website in preparation">Site en préparation</span>
               <button class="rc-revenir" type="button" data-fr="← Retour" data-en="← Back">← Retour</button>
@@ -879,23 +898,23 @@
     <p class="section-desc reveal" data-fr="Ces questions reviennent dans presque tous mes échanges. Voici comment je les aborde." data-en="These come up in almost every conversation I have. Here is how I approach them.">Ces questions reviennent dans presque tous mes échanges. Voici comment je les aborde.</p>
     <div class="test-grid">
       <div class="test-card reveal">
-        <div class="test-quote" data-fr="Mon chef d'atelier part à la retraite dans deux ans. Trente ans de tour de main : comment est-ce qu'on garde ça vivant ?" data-en="My workshop manager retires in two years. Thirty years of craft: how do we keep that alive?">Mon chef d'atelier part à la retraite dans deux ans. Trente ans de tour de main : comment est-ce qu'on garde ça vivant ?</div>
+        <div class="test-quote" data-fr="Mon chef d’atelier part à la retraite dans deux ans. Trente ans de tour de main : comment est-ce qu’on garde ça vivant ?" data-en="My workshop manager retires in two years. Thirty years of craft: how do we keep that alive?">Mon chef d’atelier part à la retraite dans deux ans. Trente ans de tour de main : comment est-ce qu’on garde ça vivant ?</div>
         <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="Atelier de fabrication" data-en="Manufacturing workshop">Atelier de fabrication</div><div class="test-role" data-fr="12 personnes" data-en="12 people">12 personnes</div></div></div>
       </div>
       <div class="test-card reveal">
-        <div class="test-quote" data-fr="Ce que mes équipes savent n'est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?" data-en="What my teams know isn't written down anywhere. Can that become a real asset?">Ce que mes équipes savent n'est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?</div>
+        <div class="test-quote" data-fr="Ce que mes équipes savent n’est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?" data-en="What my teams know isn’t written down anywhere. Can that become a real asset?">Ce que mes équipes savent n’est écrit nulle part. Est-ce que ça peut devenir une vraie ressource ?</div>
         <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="PME de services" data-en="Service SMB">PME de services</div><div class="test-role" data-fr="40 personnes" data-en="40 people">40 personnes</div></div></div>
       </div>
       <div class="test-card reveal">
-        <div class="test-quote" data-fr="Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu'on peut leur rendre le goût du métier ?" data-en="My teams spend their days on draining tasks. Can we give them back the joy of their work?">Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu'on peut leur rendre le goût du métier ?</div>
+        <div class="test-quote" data-fr="Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu’on peut leur rendre le goût du métier ?" data-en="My teams spend their days on draining tasks. Can we give them back the joy of their work?">Mes équipes passent leurs journées sur des tâches qui les épuisent. Est-ce qu’on peut leur rendre le goût du métier ?</div>
         <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="PME industrielle" data-en="Industrial SMB">PME industrielle</div><div class="test-role" data-fr="80 personnes" data-en="80 people">80 personnes</div></div></div>
       </div>
       <div class="test-card reveal">
-        <div class="test-quote" data-fr="On est six. Est-ce qu'on peut vraiment s'y mettre sans DSI ni budget de grand groupe ?" data-en="There are six of us. Can we really get started without an IT department or a big budget?">On est six. Est-ce qu'on peut vraiment s'y mettre sans DSI ni budget de grand groupe ?</div>
+        <div class="test-quote" data-fr="On est six. Est-ce qu’on peut vraiment s’y mettre sans DSI ni budget de grand groupe ?" data-en="There are six of us. Can we really get started without an IT department or a big budget?">On est six. Est-ce qu’on peut vraiment s’y mettre sans DSI ni budget de grand groupe ?</div>
         <div class="test-author"><div class="test-av">?</div><div><div class="test-name" data-fr="TPE" data-en="Small business">TPE</div><div class="test-role" data-fr="6 personnes" data-en="6 people">6 personnes</div></div></div>
       </div>
     </div>
-    <div class="test-closing reveal" data-fr="Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n'a pu capter. Des années d'expérience, des gestes, des intuitions, une matière précieuse qui disparaît sans avoir jamais été écrite.<br><br>Une organisation cognitive, c'est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu'il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d'activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d'avance. Je travaille cette question depuis plusieurs années, et j'ouvre quelques accompagnements à des dirigeants curieux d'explorer ce terrain." data-en="Every retirement, every reorganisation carries away knowledge no one was able to capture. Years of experience, instincts, know-how, precious material that vanishes without ever having been written down.<br><br>A cognitive organisation is a more sensitive setup, closer to people: capturing that knowledge while it is still here, freeing teams from what wears them down, and giving them back the pleasure of their craft.<br><br>Many new ventures will emerge in the coming years. Those who have prepared their material will start with a head start. I have been working on this question for several years, and I am opening a few engagements to leaders curious to explore this ground.">Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n'a pu capter. Des années d'expérience, des gestes, des intuitions, une matière précieuse qui disparaît sans avoir jamais été écrite.<br><br>Une organisation cognitive, c'est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu'il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d'activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d'avance. Je travaille cette question depuis plusieurs années, et j'ouvre quelques accompagnements à des dirigeants curieux d'explorer ce terrain.</div>
+    <div class="test-closing reveal" data-fr="Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n’a pu capter. Des années d’expérience, des gestes, des intuitions, une matière précieuse qui disparaît sans avoir jamais été écrite. Ce savoir ne se trouve dans aucun modèle public. C’est ce qui le rend précieux.<br><br>Une organisation cognitive, c’est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu’il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d’activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d’avance. Je travaille cette question depuis plusieurs années, et j’ouvre quelques accompagnements à des dirigeants curieux d’explorer ce terrain." data-en="Every retirement, every reorganisation carries away knowledge no one was able to capture. Years of experience, instincts, know-how, precious material that vanishes without ever having been written down. That knowledge is in no public model. That is what makes it valuable.<br><br>A cognitive organisation is a more sensitive setup, closer to people: capturing that knowledge while it is still here, freeing teams from what wears them down, and giving them back the pleasure of their craft.<br><br>Many new ventures will emerge in the coming years. Those who have prepared their material will start with a head start. I have been working on this question for several years, and I am opening a few engagements to leaders curious to explore this ground.">Chaque départ en retraite, chaque réorganisation emporte un savoir que personne n’a pu capter. Des années d’expérience, des gestes, des intuitions, une matière précieuse qui disparaît sans avoir jamais été écrite. Ce savoir ne se trouve dans aucun modèle public. C’est ce qui le rend précieux.<br><br>Une organisation cognitive, c’est un dispositif plus sensible, au plus près des humains : capter ce savoir tant qu’il est là, libérer les équipes de ce qui les use, et leur rendre le plaisir de leur métier.<br><br>Beaucoup d’activités vont naître dans les prochaines années. Celles qui auront préparé leur matière partiront avec une longueur d’avance. Je travaille cette question depuis plusieurs années, et j’ouvre quelques accompagnements à des dirigeants curieux d’explorer ce terrain.</div>
   </div>
 </section>
 
@@ -904,19 +923,19 @@
   <div class="container">
     <div class="contact-layout">
       <div class="contact-info reveal">
-        <div class="section-tag" data-fr="Parlons-en" data-en="Let's talk">Parlons-en</div>
-        <h2 class="section-title" data-fr="Prêt à concevoir votre organisation cognitive ?" data-en="Ready to design your cognitive organization?">Prêt à concevoir votre organisation cognitive ?</h2>
-        <p data-fr="Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise." data-en="A 30-minute intro call, no commitment. Let's identify together if agentic transformation is the right lever for your business.">Un premier appel de 30 minutes, sans engagement. Identifions ensemble si la transformation agentique est le bon levier pour votre entreprise.</p>
-        <div class="c-row"><div class="c-icon">&#128205;</div><span data-fr="Turin, Italie · Antibes, France" data-en="Turin, Italy · Antibes, France">Turin, Italie · Antibes, France</span></div>
-        <div class="c-row"><div class="c-icon">&#127760;</div><span data-fr="Coaching à distance : toute l'Europe" data-en="Remote coaching: all across Europe">Coaching à distance : toute l'Europe</span></div>
-        <div class="c-row"><div class="c-icon">&#9993;&#65039;</div><span>contact@agentshift.pro</span></div>
+        <div class="section-tag" data-fr="Parlons-en" data-en="Let’s talk">Parlons-en</div>
+        <h2 class="section-title" data-fr="Partir d’un de vos documents" data-en="Start from one of your documents">Partir d’un de vos documents</h2>
+        <p data-fr="45 minutes. Envoyez un devis, un plan ou une fiche avant l’appel, je vous dis ce que votre matière vaut. Le compte rendu vous reste." data-en="45 minutes. Send a quote, a drawing or a spec sheet before the call, and I’ll tell you what your material is worth. You keep the written summary.">45 minutes. Envoyez un devis, un plan ou une fiche avant l’appel, je vous dis ce que votre matière vaut. Le compte rendu vous reste.</p>
+        <div class="c-row"><span data-fr="Turin, Italie · Antibes, France" data-en="Turin, Italy · Antibes, France">Turin, Italie · Antibes, France</span></div>
+        <div class="c-row"><span data-fr="À distance : toute l’Europe" data-en="Remote: all across Europe">À distance : toute l’Europe</span></div>
+        <div class="c-row"><span>contact@agentshift.pro</span></div>
         <a href="https://www.linkedin.com/in/davcarvalho/" target="_blank" class="btn-ghost" style="margin-top:1.25rem;" data-fr="LinkedIn →" data-en="LinkedIn →">LinkedIn →</a>
       </div>
       <div class="cal-box reveal">
         <div class="booking-widget" id="bookingWidget">
           <div class="booking-header">
             <h3 data-fr="Diagnostic Agentique" data-en="AI Diagnostic">Diagnostic Agentique</h3>
-            <p data-fr="Choisissez un créneau pour votre session gratuite avec David Carvalho." data-en="Pick a slot for your free session with David Carvalho.">Choisissez un créneau pour votre session gratuite avec David Carvalho.</p>
+            <p data-fr="Choisissez un créneau pour votre premier appel avec David Carvalho." data-en="Pick a slot for your first call with David Carvalho.">Choisissez un créneau pour votre premier appel avec David Carvalho.</p>
             <span class="booking-duration">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               45 min
@@ -945,7 +964,6 @@
 
 <footer>
   <p>&copy; 2026 AgentShift · David Carvalho · <a href="mailto:contact@agentshift.pro">contact@agentshift.pro</a></p>
-  <div class="footer-meta" data-fr="2026 // Metacognition Design" data-en="2026 // Metacognition Design">2026 // Metacognition Design</div>
 </footer>
 
 <script>
@@ -1151,7 +1169,6 @@
 
       body.innerHTML =
         '<div class="booking-recap">' +
-          '<span class="booking-recap-icon">&#128197;</span>' +
           '<span class="booking-recap-text"><strong>' + dateStr + '</strong> ' + L().recapAt + ' <strong>' + selectedSlot.display + '</strong></span>' +
         '</div>' +
         '<form class="booking-form" id="bookingForm" autocomplete="on">' +

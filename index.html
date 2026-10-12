@@ -181,6 +181,7 @@
   .hero-cta-buttons {
     display: flex; gap: 0.75rem; flex-shrink: 0;
   }
+  .hero-cta-buttons .hero-config-mobile { display: none; }
 
   .btn-gold {
     display: inline-flex; align-items: center; gap: 0.4rem;
@@ -280,8 +281,10 @@
 
   .pillar-num {
     font-family: var(--font-display); font-weight: 800; font-size: 2.8rem;
-    color: var(--gold); opacity: 0.12; line-height: 1; margin-bottom: 0.6rem;
+    color: var(--gold); opacity: 0.55; line-height: 1; margin-bottom: 0.6rem;
+    transition: opacity 0.5s;
   }
+  .pillar-card:hover .pillar-num { opacity: 1; }
   .pillar-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
   .pillar-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
   .pillar-card p + p { margin-top: 0.55rem; }
@@ -300,6 +303,8 @@
     text-align: center; transition: border-color 0.3s;
   }
   .stat-box:hover { border-color: var(--border-gold); }
+  .stat-sous { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--border); }
+  .stat-sous .stat-num { font-size: 1.35rem; }
   .stat-num { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--gold); line-height: 1; }
   .stat-lbl { font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
 
@@ -577,44 +582,47 @@
     .hero-cta-text { max-width: 100%; }
   }
   @media (max-width: 680px) {
+    /* Sur téléphone, le hero s'empile : titre pleine largeur, photo en dessous, puis texte et boutons. */
     .hero {
-      min-height: 100svh;
-      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
       background: var(--bg);
       overflow: clip;
     }
+    .hero-title-overlay {
+      position: static;
+      order: 1;
+      padding: 4.6rem 1.25rem 1.25rem;
+      background: none;
+    }
+    .hero-title-overlay h1 {
+      font-size: clamp(1.5rem, 9vw, 2.6rem);
+      line-height: 1.08;
+      max-width: none;
+      margin: 0;
+      text-align: left;
+      letter-spacing: -0.02em;
+      text-shadow: none;
+    }
+    .hero-title-overlay h1 span { color: var(--gold); }
+    .hero-title-overlay .hero-config-btn { display: none; }
     .hero-img {
+      order: 2;
       width: 100%;
-      height: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       object-position: 54% center;
       filter: none;
     }
-    .hero-title-overlay {
-      inset: 0;
-      padding: 5.15rem 1rem 0.35rem;
-      display: flex;
-      justify-content: flex-start;
-      background: linear-gradient(to bottom, rgba(30,30,32,0.42) 0%, rgba(30,30,32,0.12) 22%, rgba(30,30,32,0.02) 40%, transparent 58%);
-    }
-    .hero-title-overlay h1 {
-      font-size: clamp(1.15rem, 4.7vw, 1.42rem);
-      line-height: 1.08;
-      max-width: 26ch;
-      margin: 0;
-      text-wrap: balance;
-      text-align: left;
-      letter-spacing: -0.01em;
-      text-shadow: 0 4px 16px rgba(0,0,0,0.34);
-    }
     .hero-cta-bar {
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: static;
+      order: 3;
       width: 100%;
-      padding: 0.95rem 1rem 1.25rem;
-      background: linear-gradient(to top, rgba(30,30,32,0.88) 0%, rgba(30,30,32,0.34) 52%, rgba(30,30,32,0.04) 100%);
-      gap: 0.8rem;
+      padding: 1.25rem 1.25rem 1.75rem;
+      background: none;
+      gap: 1rem;
       align-items: center;
       text-align: center;
     }
@@ -637,6 +645,7 @@
       justify-content: center;
       text-align: center;
     }
+    .hero-cta-buttons .hero-config-mobile { display: inline-flex; color: var(--gold); border-color: var(--border-gold); }
     nav { padding: 0.8rem 1rem; }
     .nav-links { display: none; }
     .nav-links.open {
@@ -714,6 +723,7 @@
   <div class="hero-cta-bar">
     <div class="hero-cta-text" data-fr="Je capte ce que vos équipes savent faire, je le structure en un <strong>jeu de référence</strong>, et je branche dessus des <strong>copilotes</strong> qui le respectent." data-en="I capture what your teams know how to do, structure it into a <strong>reference set</strong>, and connect <strong>copilots</strong> that respect it.">Je capte ce que vos équipes savent faire, je le structure en un <strong>jeu de référence</strong>, et je branche dessus des <strong>copilotes</strong> qui le respectent.</div>
     <div class="hero-cta-buttons">
+      <a href="configurateur.html" class="btn-ghost hero-config-mobile" data-fr="Évaluer ma matière →" data-en="Assess my material →">Évaluer ma matière →</a>
       <a href="#contact" class="btn-gold" data-fr="Réserver un appel →" data-en="Book a call →">Réserver un appel →</a>
     </div>
   </div>
@@ -775,7 +785,13 @@
     <div class="about-layout">
       <div class="about-visual reveal">
         <div class="about-stats">
-          <div class="stat-box" style="grid-column: 1 / -1;"><div class="stat-num">25</div><div class="stat-lbl" data-fr="Ans d’expérience" data-en="Years of experience">Ans d’expérience</div></div>
+          <div class="stat-box" style="grid-column: 1 / -1;">
+            <div class="stat-num">25</div><div class="stat-lbl" data-fr="Ans d’expérience" data-en="Years of experience">Ans d’expérience</div>
+            <div class="stat-sous">
+              <div><div class="stat-num">4</div><div class="stat-lbl" data-fr="Industries" data-en="Industries">Industries</div></div>
+              <div><div class="stat-num">50/50</div><div class="stat-lbl" data-fr="R&amp;D en entreprise et entrepreneur" data-en="Corporate R&amp;D and entrepreneur">R&amp;D en entreprise et entrepreneur</div></div>
+            </div>
+          </div>
         </div>
         <div class="method-badge">
           <div class="method-badge-tag" data-fr="Chez" data-en="At">Chez</div>

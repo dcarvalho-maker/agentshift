@@ -69,7 +69,8 @@ function doGet(e) {
         company: e.parameter.company || '',
         size:    e.parameter.size || '',
         message: e.parameter.message || '',
-        guests:  e.parameter.guests || ''
+        guests:  e.parameter.guests || '',
+        origin:  e.parameter.origin || ''
       }));
     }
 
@@ -250,6 +251,18 @@ function normalizeGuests(primaryEmail, extra) {
   return out;
 }
 
+// Site d'où vient la réservation. Le même script sert agentshift.pro et
+// halfplatform.com : le widget HALF envoie origin=https://www.halfplatform.com
+// et préfixe son message par « [HALF] » (repli pour les aperçus Lovable).
+// Sans l'un ni l'autre, tout reste comme avant pour agentshift.pro.
+function bookingSource(data) {
+  const host = String(data.origin || '').replace(/^https?:\/\//i, '').split(/[\/:]/)[0].toLowerCase();
+  const half = /(^|\.)halfplatform\.com$/.test(host) || /^\[HALF\]/.test(String(data.message || ''));
+  return half
+    ? { title: 'HALF platform · ', header: '--- Rendez-vous HALF platform ---', footer: 'Réservé via le site halfplatform.com', subject: 'Nouveau RDV HALF platform · ' }
+    : { title: CONFIG.EVENT_TITLE_PREFIX + ' ', header: '--- Diagnostic AgentShift ---', footer: 'Réservé via le site agentshift.pro', subject: 'Nouveau RDV AgentShift — ' };
+}
+
 function bookSlot(data) {
   if (!data.start || !data.name || !data.email) {
     return { success: false, error: 'Champs requis : start, name, email' };
@@ -285,8 +298,9 @@ function bookSlot(data) {
     return { success: false, error: 'Agenda de réservation introuvable.' };
   }
 
+  const source = bookingSource(data);
   const description = [
-    '--- Diagnostic AgentShift ---',
+    source.header,
     '',
     'Nom : ' + data.name,
     'Email : ' + data.email,
@@ -296,11 +310,11 @@ function bookSlot(data) {
     guests.length > 1 ? 'Participants : ' + guests.join(', ') : '',
     '',
     '---',
-    'Réservé via le site agentshift.pro'
+    source.footer
   ].filter(String).join('\n');
 
   const event = bookingCal.createEvent(
-    CONFIG.EVENT_TITLE_PREFIX + ' ' + data.name,
+    source.title + data.name,
     slotStart, slotEnd,
     { description: description, guests: guests.join(','), sendInvites: true }
   );
@@ -335,7 +349,7 @@ function sendNotificationEmail(data, start, end, guests) {
 
   MailApp.sendEmail({
     to: CONFIG.NOTIFICATION_EMAIL,
-    subject: 'Nouveau RDV AgentShift — ' + data.name,
+    subject: bookingSource(data).subject + data.name,
     body: body
   });
 }

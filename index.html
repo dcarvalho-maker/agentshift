@@ -515,6 +515,9 @@
     background-repeat: no-repeat; background-position: right 0.85rem center; padding-right: 2.2rem;
   }
   .booking-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .booking-tz { margin-bottom: 1rem; }
+  .booking-tz-note { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.15rem; }
+  .booking-tz-nice { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.3rem; }
   .booking-recap {
     display: flex; align-items: center; gap: 0.75rem;
     padding: 0.75rem 1rem; background: var(--gold-glow);
@@ -1150,6 +1153,191 @@
     let step = 1;
 
     const L = () => LABELS[lang];
+
+    // ---- Fuseau du visiteur ----
+    // Les créneaux arrivent en heure universelle (start, end). On les regroupe
+    // et on les affiche dans le fuseau de la ville choisie ; le serveur garde
+    // ses horaires (heure de Nice) et vérifie le créneau à la réservation.
+    const TZ_NICE = 'Europe/Paris';
+    const TZ_HEURE_MIN = 7, TZ_HEURE_MAX = 21;   // plage décente chez le visiteur
+    const TZ_LABELS = {
+      fr: {
+        city: 'Votre ville la plus proche',
+        same: 'Même heure qu’à Nice, où je suis.',
+        shown: 'Heures affichées pour {v}. Je suis à Nice.',
+        atNice: 'À Nice : ',
+        none: 'Aucun créneau entre 7 h et 21 h à votre heure dans les quatre prochaines semaines. Écrivez-moi à contact@agentshift.pro.'
+      },
+      en: {
+        city: 'Your nearest city',
+        same: 'Same time as Nice, where I am based.',
+        shown: 'Times shown for {v}. I am based in Nice.',
+        atNice: 'In Nice: ',
+        none: 'No slot between 7am and 9pm your time in the next four weeks. Write to me at contact@agentshift.pro.'
+      }
+    };
+    const TZ_VILLES = [
+      ['Nice', 'Nice', 'Europe/Paris'],
+      ['Paris', 'Paris', 'Europe/Paris'],
+      ['Monaco', 'Monaco', 'Europe/Monaco'],
+      ['Turin', 'Turin', 'Europe/Rome'],
+      ['Milan', 'Milan', 'Europe/Rome'],
+      ['Rome', 'Rome', 'Europe/Rome'],
+      ['Genève', 'Geneva', 'Europe/Zurich'],
+      ['Zurich', 'Zurich', 'Europe/Zurich'],
+      ['Bruxelles', 'Brussels', 'Europe/Brussels'],
+      ['Luxembourg', 'Luxembourg', 'Europe/Luxembourg'],
+      ['Amsterdam', 'Amsterdam', 'Europe/Amsterdam'],
+      ['Berlin', 'Berlin', 'Europe/Berlin'],
+      ['Munich', 'Munich', 'Europe/Berlin'],
+      ['Vienne', 'Vienna', 'Europe/Vienna'],
+      ['Madrid', 'Madrid', 'Europe/Madrid'],
+      ['Barcelone', 'Barcelona', 'Europe/Madrid'],
+      ['Lisbonne', 'Lisbon', 'Europe/Lisbon'],
+      ['Londres', 'London', 'Europe/London'],
+      ['Dublin', 'Dublin', 'Europe/Dublin'],
+      ['Copenhague', 'Copenhagen', 'Europe/Copenhagen'],
+      ['Stockholm', 'Stockholm', 'Europe/Stockholm'],
+      ['Oslo', 'Oslo', 'Europe/Oslo'],
+      ['Varsovie', 'Warsaw', 'Europe/Warsaw'],
+      ['Prague', 'Prague', 'Europe/Prague'],
+      ['Helsinki', 'Helsinki', 'Europe/Helsinki'],
+      ['Athènes', 'Athens', 'Europe/Athens'],
+      ['Bucarest', 'Bucharest', 'Europe/Bucharest'],
+      ['Istanbul', 'Istanbul', 'Europe/Istanbul'],
+      ['Casablanca', 'Casablanca', 'Africa/Casablanca'],
+      ['Alger', 'Algiers', 'Africa/Algiers'],
+      ['Tunis', 'Tunis', 'Africa/Tunis'],
+      ['Dakar', 'Dakar', 'Africa/Dakar'],
+      ['Abidjan', 'Abidjan', 'Africa/Abidjan'],
+      ['Le Caire', 'Cairo', 'Africa/Cairo'],
+      ['Johannesburg', 'Johannesburg', 'Africa/Johannesburg'],
+      ['Dubaï', 'Dubai', 'Asia/Dubai'],
+      ['Riyad', 'Riyadh', 'Asia/Riyadh'],
+      ['Mumbai', 'Mumbai', 'Asia/Kolkata'],
+      ['Singapour', 'Singapore', 'Asia/Singapore'],
+      ['Hong Kong', 'Hong Kong', 'Asia/Hong_Kong'],
+      ['Shanghai', 'Shanghai', 'Asia/Shanghai'],
+      ['Tokyo', 'Tokyo', 'Asia/Tokyo'],
+      ['Sydney', 'Sydney', 'Australia/Sydney'],
+      ['Montréal', 'Montreal', 'America/Toronto'],
+      ['Toronto', 'Toronto', 'America/Toronto'],
+      ['New York', 'New York', 'America/New_York'],
+      ['Chicago', 'Chicago', 'America/Chicago'],
+      ['Mexico', 'Mexico City', 'America/Mexico_City'],
+      ['Los Angeles', 'Los Angeles', 'America/Los_Angeles'],
+      ['São Paulo', 'São Paulo', 'America/Sao_Paulo']
+    ];
+    const TL = () => TZ_LABELS[lang];
+    const loc = () => (lang === 'fr' ? 'fr-FR' : 'en-US');
+
+    function tzValide(tz) {
+      try { new Intl.DateTimeFormat('en-US', { timeZone: tz }); return true; } catch (e) { return false; }
+    }
+    // Décalage en minutes d'un fuseau par rapport à l'heure universelle, à une date donnée.
+    function tzDecalage(tz, date) {
+      var p = {};
+      new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23',
+        year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+        .formatToParts(date).forEach(function(x) { p[x.type] = x.value; });
+      return (Date.UTC(+p.year, p.month - 1, +p.day, +p.hour, +p.minute) - Math.floor(date.getTime() / 60000) * 60000) / 60000;
+    }
+    function tzParts(date, tz) {
+      var p = {};
+      new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23',
+        year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+        .formatToParts(date).forEach(function(x) { p[x.type] = x.value; });
+      return { jour: p.year + '-' + p.month + '-' + p.day, minutes: (+p.hour) * 60 + (+p.minute) };
+    }
+    function tzHeure(date, tz) {
+      return date.toLocaleTimeString(loc(), { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    }
+    function tzPlage(s, tz) {
+      return tzHeure(new Date(s.start), tz) + ' – ' + tzHeure(new Date(s.end), tz);
+    }
+    function tzDate(date, tz, opts) {
+      return date.toLocaleDateString(loc(), Object.assign({ timeZone: tz }, opts)).replace('.', '');
+    }
+
+    // Ville de départ : choix mémorisé, sinon fuseau du navigateur, sinon Nice.
+    function tzVilleDepart() {
+      try {
+        var m = localStorage.getItem('agentshift_ville');
+        var memo = TZ_VILLES.findIndex(function(v) { return v[0] === m; });
+        if (memo >= 0) return memo;
+      } catch (e) {}
+      var nav = '';
+      try { nav = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+      if (!nav || !tzValide(nav)) return 0;
+      var exact = TZ_VILLES.findIndex(function(v) { return v[2] === nav; });
+      if (exact >= 0) return exact;
+      // Fuseau absent de la liste : ville du même continent et du même décalage,
+      // sinon n'importe quelle ville du même décalage, sinon le fuseau lui-même.
+      var maintenant = new Date(), dec = tzDecalage(nav, maintenant), cont = nav.split('/')[0];
+      var meme = TZ_VILLES.map(function(v, i) { return i; })
+        .filter(function(i) { return tzDecalage(TZ_VILLES[i][2], maintenant) === dec; });
+      var proche = meme.find(function(i) { return TZ_VILLES[i][2].split('/')[0] === cont; });
+      if (proche !== undefined) return proche;
+      if (meme.length) return meme[0];
+      var nom = nav.split('/').pop().replace(/_/g, ' ');
+      TZ_VILLES.push([nom, nom, nav]);
+      return TZ_VILLES.length - 1;
+    }
+    let villeIdx = tzVilleDepart();
+    const tzCourant = () => TZ_VILLES[villeIdx][2];
+
+    // Créneaux regroupés par jour du visiteur, nuit du visiteur retirée.
+    function vueCreneaux() {
+      var tz = tzCourant(), jours = [], parJour = {};
+      slotsData.forEach(function(d) {
+        d.slots.forEach(function(s) {
+          var a = tzParts(new Date(s.start), tz), b = tzParts(new Date(s.end), tz);
+          if (a.minutes < TZ_HEURE_MIN * 60 || b.jour !== a.jour || b.minutes > TZ_HEURE_MAX * 60) return;
+          if (!parJour[a.jour]) { parJour[a.jour] = []; jours.push(a.jour); }
+          parJour[a.jour].push({ start: s.start, end: s.end, display: tzPlage(s, tz) });
+        });
+      });
+      jours.sort();
+      return jours.map(function(j) { return { jour: j, slots: parJour[j] }; });
+    }
+
+    function memeHeureQueNice(date) {
+      return tzDecalage(tzCourant(), date) === tzDecalage(TZ_NICE, date);
+    }
+
+    function champVilleHTML() {
+      var options = TZ_VILLES.map(function(v, i) {
+        return '<option value="' + i + '"' + (i === villeIdx ? ' selected' : '') + '>' + (lang === 'fr' ? v[0] : v[1]) + '</option>';
+      }).join('');
+      var nom = TZ_VILLES[villeIdx][lang === 'fr' ? 0 : 1];
+      var note = memeHeureQueNice(new Date()) ? TL().same : TL().shown.replace('{v}', nom);
+      return '<div class="booking-field booking-tz"><label for="bkVille">' + TL().city + '</label>' +
+        '<select id="bkVille" autocomplete="off">' + options + '</select>' +
+        '<span class="booking-tz-note">' + note + '</span></div>';
+    }
+
+    function brancherChampVille() {
+      var sel = document.getElementById('bkVille');
+      if (!sel) return;
+      sel.addEventListener('change', function() {
+        villeIdx = +sel.value;
+        try { localStorage.setItem('agentshift_ville', TZ_VILLES[villeIdx][0]); } catch (e) {}
+        selectedDateIdx = 0;
+        renderStep1();
+      });
+    }
+
+    // Date et heure du créneau à l'heure du visiteur, plus l'heure de Nice si elle diffère.
+    function resumeCreneau(s) {
+      var d = new Date(s.start), tz = tzCourant();
+      var html = '<strong>' + tzDate(d, tz, { weekday: 'long', day: 'numeric', month: 'long' }) + '</strong> ' +
+        L().recapAt + ' <strong>' + tzPlage(s, tz) + '</strong>';
+      if (!memeHeureQueNice(d)) {
+        html += '<span class="booking-tz-nice">' + TL().atNice +
+          tzDate(d, TZ_NICE, { weekday: 'long', day: 'numeric', month: 'long' }) + ', ' + tzPlage(s, TZ_NICE) + '</span>';
+      }
+      return html;
+    }
     const body = document.getElementById('bookingBody');
     const actions = document.getElementById('bookingActions');
     const btnNext = document.getElementById('btnNext');
@@ -1205,27 +1393,33 @@
         body.innerHTML = '<div class="booking-no-slots">' + L().noDays + '</div>';
         actions.style.display = 'none'; return;
       }
-      if (selectedDateIdx === null) selectedDateIdx = 0;
+      var vue = vueCreneaux();
+      if (!vue.length) {
+        body.innerHTML = champVilleHTML() + '<div class="booking-no-slots">' + TL().none + '</div>';
+        brancherChampVille();
+        actions.style.display = 'none'; return;
+      }
+      if (selectedDateIdx === null || selectedDateIdx >= vue.length) selectedDateIdx = 0;
+      var tz = tzCourant();
 
-      var datesHTML = slotsData.map(function(d, i) {
-        var date = new Date(d.dateISO);
-        var weekday = date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {weekday:'short'}).replace('.','');
-        var month = date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {month:'short'}).replace('.','');
+      var datesHTML = vue.map(function(d, i) {
+        var date = new Date(d.slots[0].start);
         var sel = i === selectedDateIdx ? 'selected' : '';
         return '<button class="booking-date-btn ' + sel + '" data-idx="' + i + '">' +
-          '<span class="weekday">' + weekday + '</span>' +
-          '<span class="day">' + date.getDate() + '</span>' +
-          '<span class="month">' + month + '</span></button>';
+          '<span class="weekday">' + tzDate(date, tz, {weekday:'short'}) + '</span>' +
+          '<span class="day">' + tzDate(date, tz, {day:'numeric'}) + '</span>' +
+          '<span class="month">' + tzDate(date, tz, {month:'short'}) + '</span></button>';
       }).join('');
 
-      var daySlots = slotsData[selectedDateIdx].slots;
+      var daySlots = vue[selectedDateIdx].slots;
       var timesHTML = daySlots.length > 0
         ? daySlots.map(function(s) {
             return '<button class="booking-time-btn" data-start="' + s.start + '">' + s.display + '</button>';
           }).join('')
         : '<div class="booking-no-slots">' + L().noSlots + '</div>';
 
-      body.innerHTML = '<div class="booking-dates">' + datesHTML + '</div><div class="booking-times">' + timesHTML + '</div>';
+      body.innerHTML = champVilleHTML() + '<div class="booking-dates">' + datesHTML + '</div><div class="booking-times">' + timesHTML + '</div>';
+      brancherChampVille();
 
       body.querySelectorAll('.booking-date-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -1249,12 +1443,9 @@
 
     function renderStep2() {
       step = 2; updateSteps();
-      var d = new Date(selectedSlot.start);
-      var dateStr = d.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', {weekday:'long', day:'numeric', month:'long'});
-
       body.innerHTML =
         '<div class="booking-recap">' +
-          '<span class="booking-recap-text"><strong>' + dateStr + '</strong> ' + L().recapAt + ' <strong>' + selectedSlot.display + '</strong></span>' +
+          '<span class="booking-recap-text">' + resumeCreneau(selectedSlot) + '</span>' +
         '</div>' +
         '<form class="booking-form" id="bookingForm" autocomplete="on">' +
           '<div class="booking-row">' +
@@ -1322,17 +1513,11 @@
       step = 3; updateSteps();
       // Le créneau vient du client, pas de la réponse : /api/rdv renvoie
       // {ok, id, creneau}, pas les {date, time} de l'ancien contrat Apps Script.
-      var cd = selectedSlot ? new Date(selectedSlot.start) : null;
-      var confDate = cd
-        ? cd.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US',
-            { weekday: 'long', day: 'numeric', month: 'long' })
-        : '';
-      var confTime = selectedSlot ? selectedSlot.display : '';
       body.innerHTML =
         '<div class="booking-confirmation">' +
           '<div class="booking-confirmation-icon">&#10003;</div>' +
           '<h4>' + L().confirmTitle + '</h4>' +
-          '<div class="booking-conf-details">' + confDate + '<br>' + confTime + '</div>' +
+          '<div class="booking-conf-details">' + (selectedSlot ? resumeCreneau(selectedSlot) : '') + '</div>' +
           '<p>' + L().confirmText + '</p>' +
         '</div>';
       actions.style.display = 'none';

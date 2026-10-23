@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Page introuvable | AgentShift</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap">
+  <style>
+    :root { --gold:#C9A84C; --gold-light:#DBBF6A; --bg:#1E1E20; --text-primary:#F2EFE8; --text-secondary:#A09B90; --text-on-gold:#1E1E20; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--bg); color:var(--text-primary); font-family:'Manrope',sans-serif; line-height:1.7; text-align:center; -webkit-font-smoothing:antialiased; }
+    main { max-width:520px; }
+    .logo { font-weight:800; font-size:1.2rem; letter-spacing:-0.02em; margin-bottom:2.5rem; }
+    .logo span { color:var(--gold); }
+    .code { font-weight:800; font-size:clamp(3.5rem,14vw,6rem); line-height:1; color:var(--gold); }
+    h1 { font-weight:800; font-size:1.6rem; margin:1rem 0 .75rem; letter-spacing:-0.02em; }
+    p { color:var(--text-secondary); margin-bottom:2rem; }
+    a.btn { display:inline-block; padding:.8rem 1.5rem; background:var(--gold); color:var(--text-on-gold); font-weight:700; font-size:.85rem; letter-spacing:.05em; text-transform:uppercase; text-decoration:none; transition:background .3s; }
+    a.btn:hover, a.btn:focus-visible { background:var(--gold-light); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo">Agent<span>Shift</span></div>
+    <div class="code">404</div>
+    <h1 data-fr="Page introuvable" data-en="Page not found">Page introuvable</h1>
+    <p data-fr="Cette adresse n’existe pas ou a été déplacée." data-en="This address does not exist or has moved.">Cette adresse n’existe pas ou a été déplacée.</p>
+    <a class="btn" href="/" data-fr="Retour à l’accueil" data-en="Back to home">Retour à l’accueil</a>
+  </main>
+  <script>
+    (function () {
+      var lang = (navigator.language || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-fr]').forEach(function (el) { el.textContent = el.getAttribute('data-' + lang); });
+    })();
+  </script>
+</body>
+</html>

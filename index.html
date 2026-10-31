@@ -1638,6 +1638,11 @@
   if (window.matchMedia('(max-width: 680px)').matches) { c.style.display = 'none'; return; }
   var x = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
   var W, H, taille, gouttes = [], visible = true, dernier = 0;
+  // 31 octobre, à la date du visiteur : pluie orange citrouille et vert phosphorescent, chauves-souris sur le bandeau jaune, à droite du titre.
+  // ?halloween dans l'adresse force la version, pour la vérifier un autre jour.
+  var jour = new Date();
+  var halloween = (jour.getMonth() === 9 && jour.getDate() === 31) || /[?&]halloween\b/.test(location.search);
+  var chauves = [];
   function nouvelleGoutte(g, depart) {
     // davantage de colonnes au centre, autour du portrait, et peu sur les bords (le titre reste lisible)
     var u = (Math.random() + Math.random() + Math.random()) / 3;
@@ -1647,7 +1652,41 @@
     g.n = 6 + Math.floor(Math.random() * 12);
     g.a = 0.18 + Math.random() * 0.32;
     g.car = []; for (var k = 0; k < g.n; k++) g.car.push(Math.random() < 0.5 ? '0' : '1');
+    g.vert = halloween && Math.random() < 0.35;
     return g;
+  }
+  function couleur(g, tete, a) {
+    if (!halloween) return tete ? 'rgba(190, 255, 205, ' + a + ')' : 'rgba(70, 205, 115, ' + a + ')';
+    if (g.vert) return tete ? 'rgba(225, 255, 170, ' + a + ')' : 'rgba(130, 235, 60, ' + a + ')';
+    return tete ? 'rgba(255, 215, 150, ' + a + ')' : 'rgba(240, 120, 20, ' + a + ')';
+  }
+  // Chauves-souris : traversent le bandeau jaune, sous le menu, et passent derrière le titre et la tête.
+  function nouvelleChauve(b, depart) {
+    b.dir = Math.random() < 0.5 ? 1 : -1;
+    b.s = taille * (1.2 + Math.random() * 0.9);
+    b.x = depart ? Math.random() * W : (b.dir > 0 ? -b.s * 2 : W + b.s * 2);
+    b.y = H * (0.13 + Math.random() * 0.24);
+    b.v = taille * (0.12 + Math.random() * 0.12);
+    b.p = Math.random() * 6.28;
+    return b;
+  }
+  function dessinerChauve(b, t) {
+    var s = b.s, ail = Math.sin(t / 85 + b.p) * 0.55, yy = b.y + Math.sin(t / 420 + b.p) * s * 0.4;
+    if (devant(b.x, yy) || b.x < W * 0.42) return;
+    x.save(); x.translate(b.x, yy);
+    x.fillStyle = 'rgba(24, 18, 14, 0.82)';
+    for (var c2 = -1; c2 <= 1; c2 += 2) {
+      x.beginPath(); x.moveTo(0, -s * 0.15);
+      x.quadraticCurveTo(c2 * s * 0.7, -s * (0.55 + ail), c2 * s * 1.5, -s * ail * 0.9);
+      x.quadraticCurveTo(c2 * s * 1.05, s * 0.05, c2 * s * 0.75, s * 0.25);
+      x.quadraticCurveTo(c2 * s * 0.5, s * 0.05, c2 * s * 0.3, s * 0.3);
+      x.quadraticCurveTo(c2 * s * 0.15, s * 0.1, 0, s * 0.25);
+      x.closePath(); x.fill();
+    }
+    x.beginPath(); x.ellipse(0, 0, s * 0.18, s * 0.3, 0, 0, 6.29); x.fill();
+    x.beginPath(); x.moveTo(-s * 0.14, -s * 0.2); x.lineTo(-s * 0.1, -s * 0.45); x.lineTo(-s * 0.02, -s * 0.24);
+    x.lineTo(s * 0.02, -s * 0.24); x.lineTo(s * 0.1, -s * 0.45); x.lineTo(s * 0.14, -s * 0.2); x.fill();
+    x.restore();
   }
   // Silhouette du portrait, en proportions de la photo : la pluie passe derrière, jamais devant.
   function devant(px, py) {
@@ -1664,6 +1703,7 @@
     taille = Math.max(10, Math.round(W / 110));
     var nb = Math.round(W / taille * 0.32);
     gouttes = []; for (var i = 0; i < nb; i++) gouttes.push(nouvelleGoutte({}, true));
+    chauves = []; if (halloween) for (var j = 0; j < 4; j++) chauves.push(nouvelleChauve({}, true));
     x.font = '500 ' + taille + 'px "IBM Plex Mono", ui-monospace, Menlo, monospace';
     x.textAlign = 'center';
   }
@@ -1680,10 +1720,16 @@
         var yy = g.y - k * taille * 1.05;
         if (yy < -taille || yy > H + taille || devant(g.x, yy)) continue;
         var alpha = g.a * (1 - k / g.n);
-        x.fillStyle = k === 0 ? 'rgba(190, 255, 205, ' + Math.min(1, alpha * 1.6) + ')' : 'rgba(70, 205, 115, ' + alpha + ')';
+        x.fillStyle = couleur(g, k === 0, k === 0 ? Math.min(1, alpha * 1.6) : alpha);
         x.fillText(g.car[k], g.x, yy);
       }
       if (g.y - g.n * taille > H) nouvelleGoutte(g, false);
+    }
+    for (var b = 0; b < chauves.length; b++) {
+      var ch = chauves[b];
+      ch.x += ch.v * ch.dir;
+      dessinerChauve(ch, t);
+      if (ch.x < -ch.s * 3 || ch.x > W + ch.s * 3) nouvelleChauve(ch, false);
     }
   }
   dimensionner();

@@ -1516,10 +1516,12 @@
   if (window.matchMedia('(max-width: 680px)').matches) { c.style.display = 'none'; return; }
   var x = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
   var W, H, taille, gouttes = [], visible = true, dernier = 0;
-  // 31 octobre, à la date du visiteur : pluie orange citrouille et vert phosphorescent, chauves-souris sur le bandeau jaune, à droite du titre.
+  // 31 octobre, à la date du visiteur, et cette année jusqu’au mercredi 4 novembre inclus : pluie orange citrouille et vert phosphorescent, chauves-souris sur le bandeau jaune, à droite du titre.
   // ?halloween dans l'adresse force la version, pour la vérifier un autre jour.
   var jour = new Date();
-  var halloween = (jour.getMonth() === 9 && jour.getDate() === 31) || /[?&]halloween\b/.test(location.search);
+  var halloween = (jour.getMonth() === 9 && jour.getDate() === 31)
+    || (jour.getFullYear() === 2026 && jour.getMonth() === 10 && jour.getDate() <= 4)
+    || /[?&]halloween\b/.test(location.search);
   var chauves = [];
   function nouvelleGoutte(g, depart) {
     // davantage de colonnes au centre, autour du portrait, et peu sur les bords (le titre reste lisible)

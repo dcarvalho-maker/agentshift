@@ -877,7 +877,7 @@ div.note { margin-top: 36px; color: var(--fg-3); font-size: 0.8rem; max-width: 4
             <input type="number" id="taux" min="10" max="300" step="1" value="42">
           </label>
         </div>
-        <label class="field" for="part">Part que vous jugez récupérable
+        <label class="field" for="part">Part que vous jugez récupérable <small>hypothèse de départ, à remplacer par ce que vous mesurez</small>
           <span class="range"><input type="range" id="part" min="0" max="80" step="5" value="30"><output id="partOut" for="part">30 %</output></span>
         </label>
       </fieldset>
@@ -893,7 +893,7 @@ div.note { margin-top: 36px; color: var(--fg-3); font-size: 0.8rem; max-width: 4
           <dt>Délai</dt><dd id="rDelai"></dd>
           <dt>Vous obtenez</dt><dd id="rSortie"></dd>
           <dt>Arrêt</dt><dd id="rArret"></dd>
-          <dt>À vous</dt><dd>Vos données, le code et le jeu de référence, en formats ouverts.</dd>
+          <dt>À vous</dt><dd>Votre bibliothèque de règles, construite pour votre usage, vos données, le jeu de référence et le code, en open source. Vous le faites évoluer à votre guise, avec ou sans contrat de maintenance : c’est votre choix.</dd>
         </dl>
         <div class="pre" id="rPre" hidden></div>
       </section>
@@ -953,18 +953,18 @@ const CONFIG = {
       volume: { petit: 0, moyen: 4, grand: 8 },
       sources: { scans: 1, plans: 2, oral: 2, mails: 1, excel: 0 },
       pourquoi: "Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses.",
-      sortie: "Vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens, qui servira à juger tout outil futur.",
-      arret: "À la fin de chaque jalon (inventaire, extraction, jeu de référence). Vous gardez ce qui est livré." },
+      sortie: "Vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de référence validé par ceux qui savent : vos règles, chacune avec sa source, vos affaires de référence, et 20 à 50 questions avec leur réponse attendue. Il sert à juger l’extraction de vos documents, tout RAG et tout outil futur.",
+      arret: "À la fin de chaque jalon (relevé, extraction, jeu de référence). Vous gardez ce qui est livré." },
     copilote: { nom: "COPILOTE", statut: "publie", jours: 18,
       pourquoi: "Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.",
       delai: "Douze semaines, trois jours toutes les deux semaines",
-      sortie: "Un copilote en service dans une équipe, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous.",
-      arret: "Toutes les deux semaines. Vous gardez le copilote et sa mesure." },
+      sortie: "Un copilote mis à l’épreuve dans une équipe sur des cas réels, la ligne de base des temps relevée avant, la mesure après, et ce qu’il faut pour qu’il tourne sans moi. Tant que la ligne de base n’est pas relevée, tout gain annoncé est une hypothèse, et je l’affiche comme telle.",
+      arret: "À la fin de chaque phase, après une restitution où vous décidez de la suivante, chiffrée à ce moment-là. Vous gardez le copilote et sa mesure." },
     saut: { nom: "SAUT", statut: "publie", prixApprox: 100000,
       pourquoi: "Transformer l’organisation, service après service, sur l’année.",
       delai: "Trois jours toutes les deux semaines, sur un an",
       sortie: "Une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous.",
-      arret: "Toutes les deux semaines. Vous gardez tout ce qui est livré." }
+      arret: "À la fin de chaque phase, après une restitution où vous décidez de la suivante, chiffrée à ce moment-là. Vous gardez tout ce qui est livré." }
   },
   ambitions: [
     { id: "savoir",     titre: "Savoir ce que vaut ma matière",         detail: "Avant d’engager quoi que ce soit.",                  palier: "diagnostic" },
@@ -986,7 +986,7 @@ const CONFIG = {
       faits: ["Trois tranches sur six construites, 113 tests au vert (relevé le 31/08)", "Preuve des photos vérifiée par empreinte (relevé)", "Essai en atelier le 14/09 : le premier besoin du carrossier était le dossier photo client, pas la rentabilité (déclaré)"],
       todo: "Pas encore mesuré : le temps gagné pour constituer un dossier client." },
     agencement: { nom: "Wood Maker",
-      pitch: "Du souhait du client au fichier machine, sans ressaisie entre le relevé, le plan, le devis et le débit. Cuisine, dressing, bibliothèque.",
+      pitch: "Un moteur de règles pour l’agencement et la menuiserie, du souhait du client au fichier machine. Cuisine, dressing, bibliothèque. En expérimentation : le passage sans ressaisie jusqu’à la machine reste à établir.",
       faits: ["Un seul modèle jusqu’au fichier d’usinage CNC, 207 tests au vert (relevé le 02/10)", "Trois cuisines configurées, usinées et livrées sur un même chantier (déclaré)", "Calage d’un scan à 1 mm près, sur scan synthétique (relevé)"],
       todo: "Pas encore mesuré : le temps de devis gagné, et le calage sur un vrai scan de chantier." },
     industrie: { nom: "HALF, décider sur simulation",

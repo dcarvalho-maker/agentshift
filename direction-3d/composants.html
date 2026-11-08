@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgentShift · Composants</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="lib/tokens.css">
+<link rel="stylesheet" href="lib/composants.css">
+<style>
+  /* Vitrine : une section par famille, chaque composant sur un fond qui fait jouer le verre. */
+  body { background: radial-gradient(90% 60% at 85% 10%, var(--verre-fort), transparent 60%), radial-gradient(70% 60% at 0% 90%, var(--argile), transparent 70%), var(--brume); }
+  .cadre { max-width: 1080px; margin: 0 auto; padding-block: var(--e-7); padding-left: max(var(--e-3), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); display: grid; gap: var(--e-6); }
+  section { display: grid; gap: var(--e-4); }
+  section > h2 { font-size: var(--t-xl); }
+  .rang { display: flex; flex-wrap: wrap; gap: var(--e-4); align-items: center; }
+  .nuancier { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--e-3); }
+  .teinte { display: grid; gap: var(--e-2); padding: var(--e-3); }
+  .teinte b { height: 64px; border-radius: var(--r-m); box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .teinte code { font: 400 var(--t-xs)/1.4 var(--f-code); color: var(--graphite-2); }
+  .types { display: grid; gap: var(--e-3); padding: var(--e-5); }
+  .deux { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .deux > * { min-width: 0; }
+</style>
+</head>
+<body>
+<main class="cadre">
+  <header class="types verre">
+    <span class="etiquette">Librairie · Matière sous verre</span>
+    <h1 style="font-size: var(--t-3xl)">Composants</h1>
+    <p>Chaque composant prend ses valeurs dans <code>lib/tokens.css</code>. Basculez votre système en mode sombre pour voir la seconde palette.</p>
+    <a class="bouton" href="index.html">← Les trois propositions</a>
+  </header>
+
+  <section aria-labelledby="t-couleurs">
+    <h2 id="t-couleurs">Couleurs</h2>
+    <div class="nuancier">
+      <div class="teinte verre"><b style="background: var(--brume)"></b><span>Brume</span><code>--brume · fond</code></div>
+      <div class="teinte verre"><b style="background: var(--argile)"></b><span>Argile</span><code>--argile · matière</code></div>
+      <div class="teinte verre"><b style="background: var(--mousse)"></b><span>Mousse</span><code>--mousse · vivant</code></div>
+      <div class="teinte verre"><b style="background: var(--graphite)"></b><span>Graphite</span><code>--graphite · texte</code></div>
+      <div class="teinte verre"><b style="background: var(--or)"></b><span>Or</span><code>--or · l’agent agit</code></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-type">
+    <h2 id="t-type">Typographie</h2>
+    <div class="types verre">
+      <span class="etiquette">Sora · titres</span>
+      <p style="font: 500 var(--t-2xl)/1.1 var(--f-titre); letter-spacing: -0.02em">Votre entreprise connaît la manière.</p>
+      <span class="etiquette">Hanken Grotesk · texte</span>
+      <p>Je capte ce que vos équipes savent faire, je le structure en un jeu de référence, et je branche dessus des copilotes qui le respectent.</p>
+      <span class="etiquette">JetBrains Mono · voix de la machine, états, cotes</span>
+      <p style="font: 500 var(--t-s)/1.4 var(--f-code)">CAISSON BAS · L × H × P = 1 200 × 720 × 580</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-actions">
+    <h2 id="t-actions">Actions</h2>
+    <div class="rang">
+      <a class="bouton bouton--or" href="#t-actions">Évaluer ma matière →</a>
+      <a class="bouton" href="#t-actions">Réserver un appel</a>
+      <button class="bouton" type="button" disabled>Indisponible</button>
+      <label class="interrupteur" for="i-agent"><input id="i-agent" type="checkbox" checked><span class="interrupteur__piste"></span><span>Agent actif</span></label>
+    </div>
+    <form class="commande" role="search" onsubmit="event.preventDefault()">
+      <label class="sr-only" for="i-commande">Décrire votre matière</label>
+      <input id="i-commande" type="text" placeholder="Décrivez un document : un devis, un plan, une fiche…">
+      <button class="bouton bouton--or" type="submit">Évaluer</button>
+    </form>
+  </section>
+
+  <section aria-labelledby="t-etats">
+    <h2 id="t-etats">États d’agent</h2>
+    <div class="rang">
+      <span class="etat">En veille</span>
+      <span class="etat etat--cours">En cours</span>
+      <span class="etat etat--attend">Attend votre décision</span>
+      <span class="etat etat--fait">Fait</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-cartes">
+    <h2 id="t-cartes">Palier et fil d’activité</h2>
+    <div class="deux">
+      <article class="palier verre" data-actif="true">
+        <div class="palier__tete"><h3>COPILOTE</h3><span class="etiquette">Couche 2 · une équipe</span></div>
+        <p>Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.</p>
+        <dl><dt>Délai</dt><dd>Douze semaines.</dd><dt>Consomme</dt><dd>18 jours, soit 21 600 € HT.</dd><dt>Arrêt</dt><dd>Toutes les deux semaines.</dd></dl>
+      </article>
+      <div class="fil verre" aria-label="Fil d’activité, exemple">
+        <span class="etiquette" style="padding: 0 var(--e-2)">Fil d’activité · exemple</span>
+        <div class="fil__ligne"><span class="etat etat--fait">Circuler</span><p>Relevé du chantier rangé dans le dossier.</p><time>08:02</time></div>
+        <div class="fil__ligne"><span class="etat etat--cours">Calculer</span><p>Débit du caisson bas recalculé.</p><time>08:03</time></div>
+        <div class="fil__ligne"><span class="etat etat--attend">Arbitrer</span><p>Écart de cote de 2 mm, mesuré sur le relevé.</p><time>08:05</time></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

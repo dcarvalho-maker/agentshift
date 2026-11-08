@@ -1,0 +1,81 @@
+/* ==========================================================================
+   AgentShift · Direction « Matière sous verre » · jetons de design
+   Couches : 1. matière (socle, objets) · 2. verre (interface) · 3. or (agent)
+   Clair par défaut, sombre par préférence système ou data-theme="dark".
+   ========================================================================== */
+
+:root {
+  /* Couleur : une seule chaleur, l’or. Les neutres tirent vers lui. */
+  --brume:        #E8E6E1;   /* fond, gris chaud */
+  --brume-2:      #DEDBD4;   /* fond creusé */
+  --argile:       #D8CCBA;   /* matière douce, mousse, pierre claire */
+  --mousse:       #5D7757;   /* le vivant, le savoir-faire */
+  --graphite:     #333333;   /* texte, noir à 80 % (charte) */
+  --graphite-2:   #5F5D58;   /* texte secondaire */
+  --or:           #C9A84C;   /* l’agent, l’action, la décision */
+  --or-clair:     #DBBF6A;
+  --sur-or:       #1E1E20;
+
+  --verre:        rgba(255, 255, 255, 0.46);
+  --verre-fort:   rgba(255, 255, 255, 0.68);
+  --verre-bord:   rgba(255, 255, 255, 0.75);
+  --verre-ombre:  rgba(84, 76, 60, 0.16);
+  --relief-haut:  rgba(255, 255, 255, 0.85);
+  --relief-bas:   rgba(163, 154, 136, 0.45);
+  --halo-or:      rgba(201, 168, 76, 0.38);
+
+  /* États d’agent : la couleur double toujours une forme et un mot */
+  --etat-veille:  #8C8A84;
+  --etat-cours:   #C9A84C;
+  --etat-attend:  #B4663F;
+  --etat-fait:    #5D7757;
+
+  /* Type */
+  --f-titre:  "Sora", "Avenir Next", system-ui, sans-serif;
+  --f-texte:  "Hanken Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --f-code:   "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --t-xs: 0.75rem;  --t-s: 0.875rem; --t-m: 1rem;   --t-l: 1.25rem;
+  --t-xl: 1.75rem;  --t-2xl: 2.5rem; --t-3xl: clamp(2.4rem, 5.6vw, 4.6rem);
+
+  /* Espace : rythme de 8 */
+  --e-1: 4px; --e-2: 8px; --e-3: 16px; --e-4: 24px; --e-5: 32px; --e-6: 48px; --e-7: 72px; --e-8: 120px;
+
+  /* Forme : galets, jamais d’angle vif */
+  --r-s: 12px; --r-m: 20px; --r-l: 32px; --r-pilule: 999px;
+  --flou: 22px;
+
+  /* Profondeur : trois niveaux, un par palier */
+  --z-socle:  0 1px 2px rgba(84,76,60,.08), 0 8px 24px -12px var(--verre-ombre);
+  --z-copilote: 0 2px 6px rgba(84,76,60,.08), 0 24px 48px -20px var(--verre-ombre);
+  --z-saut:   0 4px 12px rgba(84,76,60,.10), 0 40px 80px -28px var(--verre-ombre);
+  --relief:   -6px -6px 14px var(--relief-haut), 6px 6px 16px var(--relief-bas);
+  --creux:    inset -4px -4px 10px var(--relief-haut), inset 4px 4px 10px var(--relief-bas);
+
+  /* Mouvement : lent pour l’espace, vif pour la main */
+  --m-main: 160ms;  --m-panneau: 280ms;  --m-espace: 1200ms;
+  --courbe: cubic-bezier(.22, .8, .24, 1);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --brume: #17181A; --brume-2: #111214; --argile: #3A352D; --mousse: #8FAE86;
+    --graphite: #ECEAE5; --graphite-2: #A6A39B; --or: #D4B45A; --or-clair: #E2C77A; --sur-or: #17181A;
+    --verre: rgba(38, 40, 44, 0.52); --verre-fort: rgba(44, 46, 50, 0.74); --verre-bord: rgba(255,255,255,0.10);
+    --verre-ombre: rgba(0,0,0,.55); --relief-haut: rgba(255,255,255,.05); --relief-bas: rgba(0,0,0,.6);
+    --halo-or: rgba(212, 180, 90, 0.30);
+    --etat-veille: #7D7B76; --etat-cours: #D4B45A; --etat-attend: #D98A60; --etat-fait: #8FAE86;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --brume: #17181A; --brume-2: #111214; --argile: #3A352D; --mousse: #8FAE86;
+  --graphite: #ECEAE5; --graphite-2: #A6A39B; --or: #D4B45A; --or-clair: #E2C77A; --sur-or: #17181A;
+  --verre: rgba(38, 40, 44, 0.52); --verre-fort: rgba(44, 46, 50, 0.74); --verre-bord: rgba(255,255,255,0.10);
+  --verre-ombre: rgba(0,0,0,.55); --relief-haut: rgba(255,255,255,.05); --relief-bas: rgba(0,0,0,.6);
+  --halo-or: rgba(212, 180, 90, 0.30);
+  --etat-veille: #7D7B76; --etat-cours: #D4B45A; --etat-attend: #D98A60; --etat-fait: #8FAE86;
+  color-scheme: dark;
+}

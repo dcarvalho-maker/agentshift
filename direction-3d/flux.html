@@ -1,0 +1,221 @@
+<!doctype html>
+<!-- Page générée par outils/generer-pages.py : modifier gabarit.html -->
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgentShift · Salle des flux</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Direction alternative du site agentshift.pro : un environnement 3D, de la matière sous verre. Maquette d’écran, non publiée.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="lib/tokens.css">
+<link rel="stylesheet" href="lib/composants.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<style>
+  /* Mise en page : la scène 3D occupe tout l’écran, fixe ; le texte défile
+     par-dessus, dans des panneaux de verre alignés à gauche, une station par écran. */
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+  .sans-3d body { background: radial-gradient(120% 80% at 70% 20%, var(--argile), var(--brume) 60%); }
+  .sans-3d #scene { display: none; }
+
+  .entete {
+    position: fixed; z-index: 10; top: calc(var(--e-3) + env(safe-area-inset-top, 0px));
+    left: max(var(--e-3), env(safe-area-inset-left, 0px)); right: max(var(--e-3), env(safe-area-inset-right, 0px));
+    display: flex; align-items: center; justify-content: space-between; gap: var(--e-3);
+    padding: var(--e-2) var(--e-2) var(--e-2) var(--e-4); border-radius: var(--r-pilule);
+  }
+  .marque { font: 600 var(--t-m)/1 var(--f-titre); letter-spacing: -0.01em; text-decoration: none; display: flex; align-items: center; gap: var(--e-2); }
+  .marque i { width: 12px; height: 12px; border-radius: 50%; background: var(--or); box-shadow: 0 0 12px var(--halo-or); }
+  .entete nav { display: flex; gap: var(--e-4); }
+  .entete nav a { text-decoration: none; font-size: var(--t-s); color: var(--graphite-2); }
+  .entete nav a:hover { color: var(--graphite); }
+  @media (max-width: 820px) { .entete nav { display: none; } }
+
+  main { position: relative; z-index: 1; padding-left: max(var(--e-3), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); }
+  .station { min-height: 100vh; min-height: 100dvh; display: grid; align-content: center; padding-block: var(--e-8); max-width: 1240px; margin: 0 auto; }
+  .station > * { max-width: 520px; min-width: 0; }
+  .panneau { padding: var(--e-5); display: grid; gap: var(--e-4); }
+  @media (max-width: 560px) { .panneau { padding: var(--e-4); } }
+
+  .accueil h1 { font-size: clamp(2.1rem, 3.6vw, 3.3rem); font-weight: 500; }
+  .accueil h1 span { display: block; color: var(--graphite-2); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--e-3); }
+  .chapeau { font-size: var(--t-l); line-height: 1.5; }
+  .chapeau b { font-weight: 600; background: linear-gradient(transparent 62%, var(--halo-or) 62%); }
+
+  .approche { gap: var(--e-4); }
+  .pile { display: grid; gap: var(--e-4); }
+  .station h2 { font-size: var(--t-2xl); }
+
+  .projets-grille { display: grid; gap: var(--e-3); max-width: 1000px !important; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .projets .station-tete { max-width: 560px; }
+  .projets { justify-items: start; }
+
+  .contact .panneau { justify-items: start; }
+  .boucle { margin: 0; padding: 0; list-style: none; counter-reset: v; display: grid; gap: var(--e-2); }
+  .boucle li { counter-increment: v; position: relative; padding-left: 2.6em; font-size: var(--t-s); }
+  .boucle li::before { content: counter(v, decimal-leading-zero); position: absolute; left: 0; top: 0; font: 500 var(--t-xs)/1.9 var(--f-code); color: var(--graphite-2); }
+  .boucle b { font-weight: 600; }
+  .pied { position: relative; z-index: 1; text-align: center; padding: var(--e-6) var(--e-3) calc(var(--e-6) + env(safe-area-inset-bottom, 0px)); font: 400 var(--t-xs)/1.6 var(--f-code); color: var(--graphite-2); }
+  .avertissement { position: fixed; z-index: 10; bottom: calc(var(--e-3) + env(safe-area-inset-bottom, 0px)); right: max(var(--e-3), env(safe-area-inset-right, 0px)); padding: var(--e-2) var(--e-3); border-radius: var(--r-pilule); }
+</style>
+</head>
+<body>
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<header class="entete verre">
+  <a class="marque" href="index.html" aria-label="AgentShift, retour aux trois propositions"><i aria-hidden="true"></i>AgentShift</a>
+  <nav aria-label="Sections">
+    <a href="#organisation">Organisation</a>
+    <a href="#approche">Approche</a>
+    <a href="#parcours">Parcours</a>
+    <a href="#projets">Projets</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="bouton bouton--or" href="/configurateur.html">Évaluer ma matière</a>
+</header>
+
+<main id="contenu">
+  <section class="station accueil" id="accueil" data-station="accueil">
+    <div class="panneau verre verre--saut">
+      <span class="etat etat--cours">La boucle tourne : circuler, calculer, déclarer</span>
+      <h1>Un modèle public connaît le résultat. <span>Votre entreprise connaît la manière.</span></h1>
+      <p class="chapeau">Je capte ce que vos équipes savent faire, je le structure en un <b>jeu de référence</b>, et je branche dessus des copilotes qui le respectent.</p>
+      <div class="actions">
+        <a class="bouton bouton--or" href="/configurateur.html">Évaluer ma matière →</a>
+        <a class="bouton" href="#contact">Réserver un appel →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="station" id="organisation" data-station="organisation" aria-labelledby="t-organisation">
+    <div class="panneau verre">
+      <span class="etiquette">Organisation cognitive</span>
+      <h2 id="t-organisation">Vos équipes décident. Les agents font circuler le reste.</h2>
+      <p>Chaque personne travaille avec un agent à côté d’elle. Autour, des automatisations tournent en continu sur la matière de l’entreprise : le bois, le métal, la pierre, le plastique, les composites, la terre, le tissu, et ce qu’on en fait.</p>
+      <ol class="boucle">
+        <li><b>Circuler.</b> Le relevé du chantier arrive à l’atelier sans ressaisie.</li>
+        <li><b>Calculer.</b> Le débit, les quantités et le prix se tiennent à jour.</li>
+        <li><b>Déclarer.</b> Un écart remonte avec sa source : mesuré, observé ou déclaré.</li>
+        <li><b>Arbitrer.</b> Le chef d’atelier tranche. L’agent applique.</li>
+        <li><b>Commander.</b> Le fichier d’usinage part à la machine.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="station approche" id="approche" data-station="approche" aria-labelledby="t-approche">
+    <div class="panneau verre">
+      <span class="etiquette">Approche</span>
+      <h2 id="t-approche">Trois paliers, chacun avec sa condition d’arrêt</h2>
+      <p>Chaque palier remet une chose que vous pouvez ouvrir. Vous n’engagez que le suivant. Dans la scène, chaque palier est une couche de verre posée sur votre socle.</p>
+    </div>
+    <div class="pile">
+      <article class="palier verre verre--socle" data-couche="0">
+        <div class="palier__tete"><h3>MATIÈRE</h3><span class="etiquette">Couche 1 · socle</span></div>
+        <p>Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens.</dd>
+          <dt>Délai</dt><dd>De huit à vingt jours d’intervention, sur quatre à huit semaines.</dd>
+          <dt>Consomme</dt><dd>De 9 600 à 24 000 € HT selon le volume et les sources.</dd>
+          <dt>Arrêt</dt><dd>À la fin de chaque jalon. Vous gardez ce qui est livré.</dd>
+        </dl>
+      </article>
+      <article class="palier verre" data-couche="1">
+        <div class="palier__tete"><h3>COPILOTE</h3><span class="etiquette">Couche 2 · une équipe</span></div>
+        <p>Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Un copilote en service, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous.</dd>
+          <dt>Délai</dt><dd>Douze semaines, trois jours toutes les deux semaines.</dd>
+          <dt>Consomme</dt><dd>18 jours, soit 21 600 € HT. Sans socle propre, MATIÈRE passe d’abord.</dd>
+          <dt>Arrêt</dt><dd>Toutes les deux semaines. Vous gardez le copilote et sa mesure.</dd>
+        </dl>
+      </article>
+      <article class="palier verre verre--saut" data-couche="2">
+        <div class="palier__tete"><h3>SAUT</h3><span class="etiquette">Couche 3 · l’organisation</span></div>
+        <p>Transformer l’organisation, service après service, sur l’année.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous.</dd>
+          <dt>Délai</dt><dd>Trois jours toutes les deux semaines, sur un an.</dd>
+          <dt>Consomme</dt><dd>Environ 100 000 € HT par an. Sans socle propre, MATIÈRE passe d’abord.</dd>
+          <dt>Arrêt</dt><dd>Toutes les deux semaines. Vous gardez tout ce qui est livré.</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="station" id="parcours" data-station="parcours" aria-labelledby="t-parcours">
+    <div class="panneau verre">
+      <span class="etiquette">Parcours</span>
+      <h2 id="t-parcours">Du design industriel à l’intelligence organisationnelle</h2>
+      <p>Pendant 25 ans, j’ai conçu des systèmes complexes chez Pininfarina, Orange, Dassault Systèmes et Philips. Des interfaces automobiles aux plateformes digitales, mon métier a toujours été le même : rendre l’invisible lisible et l’innovant adoptable.</p>
+      <p>Aujourd’hui, cette discipline s’applique à la transformation agentique. Les organisations qui réussiront avec l’IA ne sont pas celles qui ont les meilleurs modèles : ce sont celles qui ont capté leur propre matière.</p>
+    </div>
+  </section>
+
+  <section class="station projets" id="projets" data-station="projets" aria-labelledby="t-projets">
+    <div class="panneau verre station-tete">
+      <span class="etiquette">Projets</span>
+      <h2 id="t-projets">Trois projets où je mets l’agentique à l’épreuve</h2>
+      <p>Je teste sur mes propres projets ce que je propose à mes clients.</p>
+    </div>
+    <div class="projets-grille">
+      <article class="projet verre">
+        <span class="etat etat--cours">Essai en atelier · observé</span>
+        <h3>Marcel</h3>
+        <p>Le copilote d’atelier, en messagerie. Le peintre photographie, Marcel reconnaît le véhicule, range chaque photo dans le fil du chantier et impute les coûts.</p>
+      </article>
+      <article class="projet verre">
+        <span class="etat etat--attend">Prototype · relevé</span>
+        <h3>Wood Maker</h3>
+        <p>Cuisine, dressing, bibliothèque : un seul modèle tient le projet, du relevé aux fichiers d’usinage, sans ressaisie.</p>
+      </article>
+      <article class="projet verre">
+        <span class="etat">Recherche</span>
+        <h3>HALF</h3>
+        <p>L’intelligence coopérative sur le terrain : une base mobile électrique et open source, pilotée sous ROS2.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="station contact" id="contact" data-station="contact" aria-labelledby="t-contact">
+    <div class="panneau verre verre--saut">
+      <span class="etiquette">Contact · 45 minutes</span>
+      <h2 id="t-contact">Partir d’un de vos documents</h2>
+      <p>Envoyez un devis, un plan ou une fiche avant l’appel, je vous dis ce que votre matière vaut. Le compte rendu vous reste.</p>
+      <div class="actions">
+        <a class="bouton bouton--or" href="/#contact">Réserver un appel →</a>
+        <a class="bouton" href="/configurateur.html">Trouver mon palier</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied">© 2026 AgentShift · David Carvalho · contact@agentshift.pro<br>Proposition B · Salle des flux. Maquette d’écran, le site en ligne fait foi.</footer>
+<a class="avertissement verre etiquette" href="index.html">Proposition B · voir les trois</a>
+
+<script type="module">
+  import { creerEnvironnement } from "./lib/environnement.js";
+  const env = creerEnvironnement({
+    canvas: document.getElementById("scene"),
+    stations: document.querySelectorAll("[data-station]"),
+    ambiance: "flux",
+  });
+  // Le palier lu allume sa couche de verre dans la scène
+  const paliers = [...document.querySelectorAll("[data-couche]")];
+  const io = new IntersectionObserver((entrees) => {
+    entrees.forEach((e) => e.target.dataset.actif = e.isIntersecting);
+    const actif = paliers.find((p) => p.dataset.actif === "true");
+    env.allumerCouche(actif ? Number(actif.dataset.couche) : -1);
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  paliers.forEach((p) => io.observe(p));
+</script>
+</body>
+</html>

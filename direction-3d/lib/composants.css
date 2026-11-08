@@ -1,0 +1,147 @@
+/* ==========================================================================
+   AgentShift · Direction « Matière sous verre » · composants
+   Dépend de tokens.css. Aucune couleur littérale ici : tout passe par les jetons.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--brume);
+  color: var(--graphite);
+  font: 400 var(--t-m)/1.6 var(--f-texte);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--f-titre); font-weight: 500; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; margin: 0; }
+p { margin: 0; max-width: 62ch; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--or); outline-offset: 3px; border-radius: var(--r-s); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lien-evitement { position: absolute; left: var(--e-3); top: -60px; z-index: 50; padding: var(--e-2) var(--e-3); background: var(--verre-fort); border-radius: var(--r-pilule); }
+.lien-evitement:focus { top: var(--e-3); }
+
+/* --- Étiquette : la voix de la machine, en chasse fixe ------------------ */
+.etiquette {
+  font: 500 var(--t-xs)/1 var(--f-code);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--graphite-2);
+}
+
+/* --- Verre : la couche d’interface ------------------------------------- */
+.verre {
+  background: var(--verre);
+  -webkit-backdrop-filter: blur(var(--flou)) saturate(140%);
+  backdrop-filter: blur(var(--flou)) saturate(140%);
+  border: 1px solid var(--verre-bord);
+  border-radius: var(--r-l);
+  box-shadow: var(--z-copilote);
+}
+.verre--socle    { box-shadow: var(--z-socle); }
+.verre--saut     { box-shadow: var(--z-saut); }
+.verre--fort     { background: var(--verre-fort); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .verre { background: var(--verre-fort); }
+}
+
+/* --- Boutons : des objets qu’on enfonce -------------------------------- */
+.bouton {
+  display: inline-flex; align-items: center; gap: var(--e-2);
+  min-height: 48px; padding: 0 var(--e-4);
+  border: 0; border-radius: var(--r-pilule);
+  font: 600 var(--t-s)/1 var(--f-texte); letter-spacing: 0.01em;
+  text-decoration: none; cursor: pointer;
+  background: var(--brume); color: var(--graphite);
+  box-shadow: var(--relief);
+  transition: box-shadow var(--m-main) var(--courbe), transform var(--m-main) var(--courbe);
+  touch-action: manipulation;
+}
+.bouton:hover  { transform: translateY(-1px); }
+.bouton:active { box-shadow: var(--creux); transform: translateY(0); }
+.bouton--or {
+  background: var(--or); color: var(--sur-or);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.25) inset, 0 10px 30px -8px var(--halo-or), var(--relief);
+}
+.bouton--or:active { box-shadow: inset 0 3px 8px rgba(0,0,0,.25); }
+.bouton[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* --- Barre de commande : le point d’entrée de l’OS ---------------------- */
+.commande {
+  display: flex; align-items: center; gap: var(--e-3);
+  padding: var(--e-2) var(--e-2) var(--e-2) var(--e-4);
+  min-height: 60px; border-radius: var(--r-pilule);
+  background: var(--verre-fort);
+  box-shadow: var(--relief), 0 18px 40px -18px var(--halo-or);
+  border: 1px solid var(--verre-bord);
+  position: relative;
+}
+.commande::after { /* le halo d’or sous la barre, comme une lampe posée */
+  content: ""; position: absolute; left: 18%; right: 18%; bottom: -14px; height: 18px;
+  background: radial-gradient(closest-side, var(--halo-or), transparent); pointer-events: none;
+}
+.commande input {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--graphite);
+  font: 400 var(--t-m)/1.4 var(--f-texte); outline: none;
+}
+.commande input::placeholder { color: var(--graphite-2); }
+.commande:focus-within { outline: 2px solid var(--or); outline-offset: 3px; }
+
+/* --- Interrupteur : façon lampe (Encore) ------------------------------- */
+.interrupteur { display: inline-flex; align-items: center; gap: var(--e-3); cursor: pointer; }
+.interrupteur input { position: absolute; opacity: 0; }
+.interrupteur__piste {
+  width: 64px; height: 36px; border-radius: var(--r-pilule); background: var(--brume-2);
+  box-shadow: var(--creux); position: relative; transition: background var(--m-panneau) var(--courbe);
+}
+.interrupteur__piste::after {
+  content: ""; position: absolute; top: 4px; left: 4px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brume); box-shadow: var(--relief); transition: transform var(--m-panneau) var(--courbe);
+}
+.interrupteur input:checked + .interrupteur__piste { background: var(--or); }
+.interrupteur input:checked + .interrupteur__piste::after { transform: translateX(28px); }
+.interrupteur input:focus-visible + .interrupteur__piste { outline: 2px solid var(--or); outline-offset: 3px; }
+
+/* --- État d’agent : forme + mot + couleur ------------------------------ */
+.etat {
+  display: inline-flex; align-items: center; gap: var(--e-2);
+  padding: 6px 12px 6px 10px; border-radius: var(--r-pilule);
+  background: var(--verre-fort); border: 1px solid var(--verre-bord);
+  font: 500 var(--t-xs)/1 var(--f-code); letter-spacing: .04em;
+}
+.etat::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--etat-veille); }
+.etat--cours::before  { background: var(--etat-cours); box-shadow: 0 0 0 4px var(--halo-or); animation: pouls 1.8s var(--courbe) infinite; }
+.etat--attend::before { background: var(--etat-attend); border-radius: 2px; transform: rotate(45deg); }
+.etat--fait::before   { background: var(--etat-fait); width: 10px; height: 6px; border-radius: 0; background: none;
+                        border-left: 2px solid var(--etat-fait); border-bottom: 2px solid var(--etat-fait); transform: rotate(-45deg) translateY(-2px); }
+@keyframes pouls { 50% { box-shadow: 0 0 0 7px transparent; } }
+
+/* --- Palier : trois couches empilées ----------------------------------- */
+.palier { display: grid; gap: var(--e-3); padding: var(--e-5); }
+.palier__tete { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-3); flex-wrap: wrap; }
+.palier h3 { font-size: var(--t-xl); letter-spacing: 0.02em; }
+.palier dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--e-2) var(--e-4); margin: 0; font-size: var(--t-s); }
+.palier dt { font: 500 var(--t-xs)/1.7 var(--f-code); text-transform: uppercase; letter-spacing: .06em; color: var(--graphite-2); }
+.palier dd { margin: 0; min-width: 0; }
+.palier[data-actif="true"] { border-color: var(--or); box-shadow: var(--z-saut), 0 0 0 1px var(--or); }
+@media (max-width: 560px) { .palier dl { grid-template-columns: 1fr; } .palier dd { margin-bottom: var(--e-2); } }
+
+/* --- Fil d’activité : notifications empilées --------------------------- */
+.fil { display: grid; gap: var(--e-2); padding: var(--e-3); }
+.fil__ligne { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--e-3);
+  padding: var(--e-3); border-radius: var(--r-m); background: var(--verre-fort); }
+.fil__ligne time { font: 400 var(--t-xs)/1 var(--f-code); color: var(--graphite-2); font-variant-numeric: tabular-nums; }
+.fil__ligne p { font-size: var(--t-s); }
+
+/* --- Carte projet ------------------------------------------------------ */
+.projet { display: grid; gap: var(--e-3); padding: var(--e-5); text-decoration: none;
+  transition: transform var(--m-panneau) var(--courbe); }
+.projet:hover { transform: translateY(-4px); }
+.projet h3 { font-size: var(--t-l); }
+.projet p { font-size: var(--t-s); color: var(--graphite-2); }
+
+/* --- Pas de mouvement si l’utilisateur le demande ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

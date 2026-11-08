@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgentShift · Trois propositions</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="lib/tokens.css">
+<link rel="stylesheet" href="lib/composants.css">
+<style>
+  /* Une colonne de présentation, puis trois cartes de verre côte à côte. */
+  body { background: radial-gradient(110% 70% at 80% 0%, var(--verre-fort), transparent 60%), radial-gradient(80% 60% at 0% 100%, var(--argile), transparent 70%), var(--brume); min-height: 100vh; }
+  .cadre { max-width: 1180px; margin: 0 auto; padding-block: var(--e-7); padding-left: max(var(--e-3), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); display: grid; gap: var(--e-6); }
+  .tete { display: grid; gap: var(--e-3); max-width: 640px; }
+  .tete h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+  .grille { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .prop { display: grid; gap: var(--e-3); padding: var(--e-4); text-decoration: none; transition: transform var(--m-panneau) var(--courbe); }
+  .prop:hover { transform: translateY(-4px); }
+  .prop h2 { font-size: var(--t-xl); }
+  .prop p { font-size: var(--t-s); color: var(--graphite-2); }
+  .apercu { aspect-ratio: 16 / 10; max-width: 100%; border-radius: var(--r-m); position: relative; overflow: hidden; }
+  .apercu i { position: absolute; border-radius: 10px; }
+  .a .apercu { background: linear-gradient(160deg, #F3F1EC, #DCCFBC); }
+  .a .apercu i:nth-child(1) { inset: 58% 22% 16% 22%; background: #EFE7DA; box-shadow: 0 12px 24px -10px rgba(84,76,60,.35); }
+  .a .apercu i:nth-child(2) { inset: 42% 26% 40% 26%; background: rgba(241,230,212,.75); border: 1px solid #fff; }
+  .a .apercu i:nth-child(3) { inset: 26% 26% 56% 26%; background: rgba(220,234,214,.75); border: 1px solid #fff; }
+  .a .apercu i:nth-child(4) { inset: 10% 26% 72% 26%; background: rgba(246,231,184,.8); border: 1px solid #fff; }
+  .b .apercu { background: radial-gradient(70% 70% at 70% 30%, #33404F, #14161A); }
+  .b .apercu i:nth-child(1) { inset: 60% 20% 16% 20%; background: #3A352D; }
+  .b .apercu i:nth-child(2), .b .apercu i:nth-child(3), .b .apercu i:nth-child(4) { left: 24%; right: 24%; height: 9%; background: rgba(200,210,220,.18); border: 1px solid rgba(255,255,255,.35); box-shadow: 0 0 18px rgba(212,180,90,.35); }
+  .b .apercu i:nth-child(2) { top: 46%; } .b .apercu i:nth-child(3) { top: 30%; } .b .apercu i:nth-child(4) { top: 14%; }
+  .c .apercu { background: #EDE9E1; }
+  .c .apercu i:nth-child(1) { inset: 30% 10% 14% 10%; background: #F7F3EC; transform: skewY(-12deg); box-shadow: 0 14px 20px -12px rgba(0,0,0,.25); }
+  .c .apercu i:nth-child(2) { top: 40%; left: 34%; width: 30%; height: 16%; background: rgba(159,211,214,.9); transform: skewY(-12deg); }
+  .c .apercu i:nth-child(3) { top: 30%; left: 34%; width: 30%; height: 16%; background: rgba(242,169,126,.85); transform: skewY(-12deg); }
+  .c .apercu i:nth-child(4) { top: 20%; left: 34%; width: 30%; height: 16%; background: rgba(244,217,122,.9); transform: skewY(-12deg); }
+  .liens { display: flex; flex-wrap: wrap; gap: var(--e-3); }
+</style>
+</head>
+<body>
+<main class="cadre">
+  <header class="tete">
+    <span class="etiquette">AgentShift · direction alternative · maquette d’écran</span>
+    <h1>Matière sous verre, en trois propositions</h1>
+    <p>Un même monde en 3D : la matière au socle, les agents en verre, l’or là où l’agent agit. Autour, l’établi, la fraiseuse, le pavillon, et la boucle de l’organisation cognitive. Trois façons de le regarder.</p>
+    <div class="liens">
+      <a class="bouton" href="composants.html">Voir les composants</a>
+      <a class="bouton" href="https://github.com/dcarvalho-maker/agentshift/blob/design/environnement-3d/direction-3d/DIRECTION-ARTISTIQUE.md">Lire la direction artistique</a>
+    </div>
+  </header>
+  <section class="grille" aria-label="Les trois propositions">
+    <a class="prop verre a" href="atelier.html">
+      <div class="apercu" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="etiquette">Proposition A</span>
+      <h2>Atelier sous verre</h2>
+      <p>Lumière du jour, verre laiteux, matières vraies. La caméra passe de la pile à l’établi, puis à la fraiseuse et au pavillon.</p>
+    </a>
+    <a class="prop verre b" href="flux.html">
+      <div class="apercu" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="etiquette">Proposition B</span>
+      <h2>Salle des flux</h2>
+      <p>De nuit. La boucle des agents s’allume, des panneaux flottent près des humains. L’organisation qui tourne pendant qu’on dort.</p>
+    </a>
+    <a class="prop verre c" href="maquette.html">
+      <div class="apercu" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="etiquette">Proposition C</span>
+      <h2>Maquette d’architecte</h2>
+      <p>Vue isométrique d’un plateau de maquette. Verre acrylique coloré, l’organisation entière lisible d’un coup d’œil.</p>
+    </a>
+  </section>
+</main>
+</body>
+</html>

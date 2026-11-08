@@ -66,15 +66,16 @@
 
   @media (max-width: 860px) { .entete nav { display: none; } }
 
-  /* Téléphone et tablette en portrait : la scène en haut, le texte qui passe dessous. */
+  /* Téléphone et tablette en portrait : la vidéo occupe tout l’écran et reste en
+     place ; la carte de verre passe par-dessus en remontant avec le défilement. */
   @media (max-width: 700px), (orientation: portrait) and (max-width: 900px) {
     .plan { height: auto; }
-    .scene { z-index: 3; height: 58vh; height: 58svh; box-shadow: 0 10px 24px -14px rgba(84,76,60,.35); }
+    .scene { z-index: 1; height: 100vh; height: 100svh; }
     .scene img, .scene video { object-position: var(--point-m, var(--point, 70% 50%)); }
-    .scene::after { background: linear-gradient(180deg, rgba(232,230,225,.35) 0%, transparent 22%); }
-    .texte { position: relative; z-index: 1; height: auto; margin-top: 0; display: block; pointer-events: auto;
-      padding: var(--e-4) var(--gouttiere) 26svh; padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); }
-    .panneau { max-width: none; padding: var(--e-4); gap: var(--e-3); transform: none; }
+    .scene::after { background: linear-gradient(0deg, rgba(232,230,225,.45) 0%, transparent 45%); }
+    .texte { position: relative; z-index: 2; height: auto; margin-top: -100vh; margin-top: -100svh; display: block; pointer-events: none;
+      padding: 62svh var(--gouttiere) 82svh; padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); }
+    .panneau { max-width: none; padding: var(--e-4); gap: var(--e-3); transform: none; background: var(--verre-fort); }
     h1 { font-size: 1.75rem; }
     h2 { font-size: 1.45rem; }
     .chapeau { font-size: var(--t-m); }

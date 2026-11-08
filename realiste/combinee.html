@@ -62,6 +62,14 @@
   .tete-projet { display: flex; align-items: center; justify-content: space-between; gap: var(--e-3); flex-wrap: wrap; }
   .intro { font-size: var(--t-s); color: var(--graphite-2); }
 
+  /* L’écran réel de Marcel, posé net au-dessus de la vidéo (source : sources/marcel/). */
+  .ecran { position: absolute; z-index: 1; margin: 0; left: max(540px, 42%); top: 50%;
+    height: min(70vh, 660px); aspect-ratio: 390 / 760; border-radius: 34px; overflow: hidden;
+    border: 7px solid #1b1b1f; background: #0b0b0d;
+    box-shadow: 0 30px 60px -20px rgba(30, 26, 18, .55), 0 0 0 1px rgba(255,255,255,.12), 0 0 46px var(--halo-or);
+    transform: translateY(calc(-50% + (0.5 - var(--avance, 0)) * 30px)) rotate(-2deg); }
+  .scene .ecran img { position: static; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
   .pied { text-align: center; padding: var(--e-6) var(--e-3) calc(var(--e-6) + env(safe-area-inset-bottom, 0px)); font: 400 var(--t-xs)/1.6 var(--f-code); color: var(--graphite-2); background: var(--brume); }
 
   @media (max-width: 860px) { .entete nav { display: none; } }
@@ -79,6 +87,8 @@
     h1 { font-size: 1.75rem; }
     h2 { font-size: 1.45rem; }
     .chapeau { font-size: var(--t-m); }
+    .ecran { left: 50%; top: calc(env(safe-area-inset-top, 0px) + 84px); height: 52svh; border-width: 5px; border-radius: 26px;
+      transform: translateX(-50%) rotate(-2deg); }
     .actions .bouton { flex: 1 1 auto; justify-content: center; }
     .entete { padding-left: var(--e-3); }
     .entete .bouton { font-size: var(--t-xs); }
@@ -199,8 +209,9 @@
   <!-- 7 à 9 · Les projets, un plan chacun -->
   <section class="plan" id="projets" style="--point: 66% 50%; --point-m: 66% 50%">
     <div class="scene">
-      <img src="medias/projet-marcel.webp" alt="Un atelier de carrosserie : un peintre photographie une portière apprêtée avec son téléphone ; une carte « Véhicule reconnu, photo rangée dans le fil du chantier »." loading="lazy">
+      <img src="medias/projet-marcel.webp" alt="Un atelier de carrosserie : un peintre photographie une portière apprêtée avec son téléphone." loading="lazy">
       <video data-defile data-src="medias/projet-marcel.mp4" data-src-m="medias/m/projet-marcel.mp4" muted playsinline preload="none" aria-hidden="true"></video>
+      <figure class="ecran"><img src="medias/marcel-ecran.webp" alt="L’écran de Marcel sur le téléphone du peintre : la photo de la portière, puis Marcel répond « Portière avant gauche, apprêt. Photo rangée dans le fil du chantier » et demande si la voiture part, avec les boutons « Fin de journée » et « Terminé, elle part »." loading="lazy" width="390" height="760"></figure>
     </div>
     <div class="texte"><article class="panneau verre">
       <span class="etiquette">Projets · un sur trois</span>
@@ -222,9 +233,9 @@
     </article></div>
   </section>
 
-  <section class="plan" id="half" style="--point: 66% 50%; --point-m: 42% 50%">
+  <section class="plan" id="half" style="--point: 62% 50%; --point-m: 56% 50%">
     <div class="scene">
-      <img src="medias/projet-half.webp" alt="Sur un chantier au bord d’un champ, une base mobile électrique en profilés d’aluminium transporte une caisse de bois à côté d’un ouvrier." loading="lazy">
+      <img src="medias/projet-half.webp" alt="Sur un chantier au bord d’un champ, la base mobile HALF, un plateau bas en bouleau sur quatre roues motrices et directrices, transporte une caisse de bois à côté d’un ouvrier." loading="lazy">
       <video data-defile data-src="medias/projet-half.mp4" data-src-m="medias/m/projet-half.mp4" muted playsinline preload="none" aria-hidden="true"></video>
     </div>
     <div class="texte"><article class="panneau verre">
@@ -235,9 +246,9 @@
   </section>
 
   <!-- 10 · Contact -->
-  <section class="plan" id="contact" style="--point: 70% 50%; --point-m: 66% 50%">
+  <section class="plan" id="contact" style="--point: 66% 50%; --point-m: 82% 50%">
     <div class="scene">
-      <img src="medias/contact-table.webp" alt="Une table en chêne près d’une fenêtre : un plan déroulé, un devis, un café et un téléphone ; une carte « Appel, 45 minutes, à partir d’un de vos documents »." loading="lazy">
+      <img src="medias/contact-table.webp" alt="Au premier plan, un téléphone affiche l’alerte « Visio · 45 minutes, votre appel commence ». Au fond, David Carvalho lève la tête de son ordinateur." loading="lazy">
       <video data-defile data-src="medias/contact-table.mp4" data-src-m="medias/m/contact-table.mp4" muted playsinline preload="none" aria-hidden="true"></video>
     </div>
     <div class="texte"><article class="panneau verre verre--saut">

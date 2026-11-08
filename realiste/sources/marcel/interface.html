@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Marcel · écran du peintre</title>
+<!-- Reconstitution fidèle de l’interface mobile de Marcel (captures « MARCEL mobil »),
+     avec des données fictives : aucune plaque ni aucun nom réel.
+     Rendu en PNG par Chrome sans tête, voir LISEZMOI dans ce dossier. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  :root { --fond: #0b0b0d; --bulle: #1c1c21; --bord: #2a2a30; --texte: #ecebe8; --gris: #8d8c88; --or: #d4a84b; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 390px; height: 760px; background: var(--fond); color: var(--texte); font-family: Barlow, sans-serif; overflow: hidden; }
+  .statut { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px 0 34px; font: 600 16px/1 Barlow, sans-serif; }
+  .statut i { display: inline-block; width: 24px; height: 11px; border: 1.5px solid var(--texte); border-radius: 3px; position: relative; }
+  .statut i::after { content: ""; position: absolute; inset: 1.5px; background: var(--texte); border-radius: 1px; }
+  .tete { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 12px 14px; border-bottom: 1px solid var(--bord); }
+  .tete h1 { font: 700 21px/1.1 "JetBrains Mono", monospace; letter-spacing: -.3px; }
+  .tete p { color: var(--gris); font-size: 15px; margin-top: 4px; }
+  .qui { border: 1px solid var(--bord); border-radius: 999px; padding: 7px 13px; color: var(--or); font: 500 15px/1 Barlow, sans-serif; background: #141418; }
+  .fil { padding: 10px 14px 0; display: grid; gap: 6px; }
+  .photo { justify-self: end; width: 196px; height: 170px; border-radius: 14px; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .heure { justify-self: end; display: flex; align-items: center; gap: 8px; font: 500 12px/1 "JetBrains Mono", monospace; color: var(--gris); }
+  .heure b { width: 20px; height: 20px; border-radius: 5px; background: #3fb950; color: #fff; display: grid; place-items: center; font-size: 13px; }
+  .nom { color: var(--gris); font-size: 13px; margin-top: 10px; }
+  .bulle { background: var(--bulle); border-radius: 16px; padding: 11px 14px; font-size: 16px; line-height: 1.35; max-width: 300px; }
+  .choix { border: 1px solid var(--bord); border-radius: 16px; padding: 15px 22px; max-width: 300px; display: flex; gap: 26px; font: 700 15.5px/1 "JetBrains Mono", monospace; }
+  .bas { position: absolute; left: 0; top: 664px; width: 390px; height: 96px; padding: 12px 14px 22px; border-top: 1px solid var(--bord); background: #0f0f12; display: grid; grid-template-columns: 64px minmax(0, 1fr) 50px; align-items: center; gap: 10px; }
+  .appareil { width: 64px; height: 64px; border-radius: 50%; background: var(--or); display: grid; place-items: center; font-size: 26px; flex: none; }
+  .fin { flex: 1; min-width: 0; height: 50px; border: 1px solid #3a3a40; border-radius: 999px; display: grid; place-items: center; font: 600 16px/1 Barlow, sans-serif; }
+  .micro { width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--bord); display: grid; place-items: center; font-size: 19px; opacity: .55; flex: none; }
+</style>
+</head>
+<body>
+  <div class="statut"><span>16:31</span><i></i></div>
+  <header class="tete">
+    <div><h1>Clio grise · FX-482-KL</h1><p>Pour l’atelier peinture</p></div>
+    <span class="qui">peintre</span>
+  </header>
+  <main class="fil">
+    <div class="photo"><img src="photo-portiere.jpg" alt=""></div>
+    <div class="heure"><b>✓</b>16:31:10</div>
+    <p class="nom">Marcel</p>
+    <p class="bulle">Portière avant gauche, apprêt. Photo rangée dans le fil du chantier.</p>
+    <p class="nom">Marcel</p>
+    <p class="bulle">C’est fini pour aujourd’hui, ou la voiture part&nbsp;?</p>
+    <div class="choix"><span>🌙</span><span>Fin de journée</span></div>
+    <div class="choix"><span>🚗</span><span>Terminé, elle part</span></div>
+  </main>
+  <footer class="bas">
+    <span class="appareil">📷</span>
+    <span class="fin">Fin des travaux</span>
+    <span class="micro">🎙️</span>
+  </footer>
+</body>
+</html>

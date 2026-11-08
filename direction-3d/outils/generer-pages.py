@@ -9,7 +9,7 @@ PROPOSITIONS = [
      "ACCROCHE": "Copilotes en service sur votre matière"},
     {"fichier": "flux.html",     "LETTRE": "B", "NOM": "Salle des flux",       "AMBIANCE": "flux",     "THEME": ' data-theme="dark"',
      "ACCROCHE": "La boucle tourne : circuler, calculer, déclarer"},
-    {"fichier": "maquette.html", "LETTRE": "C", "NOM": "Maquette d’architecte","AMBIANCE": "maquette", "THEME": "",
+    {"fichier": "maquette.html", "LETTRE": "C", "NOM": "Maquette d’architecte","AMBIANCE": "maquette", "THEME": ' data-theme="light"',
      "ACCROCHE": "Votre organisation, vue d’en haut"},
 ]
 

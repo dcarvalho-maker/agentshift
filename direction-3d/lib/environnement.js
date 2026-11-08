@@ -135,6 +135,7 @@ export function creerEnvironnement({ canvas, stations, ambiance = "atelier" }) {
   if (iso) {
     const plateau = new THREE.Mesh(new RoundedBoxGeometry(30, 0.5, 14, 6, 0.24), new THREE.MeshStandardMaterial({ color: 0xF4EFE6, roughness: 0.9 }));
     plateau.position.set(0.5, -0.25, -1.2); plateau.receiveShadow = true; scene.add(plateau);
+    sol.visible = false; // le plateau reçoit les ombres ; deux surfaces au même niveau feraient des stries
   }
 
   // --- 1. La pile de l’OS sur la matériauthèque --------------------------------

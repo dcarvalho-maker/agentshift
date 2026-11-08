@@ -22,15 +22,25 @@
   .dir div { display: grid; gap: var(--e-2); padding: 0 var(--e-2) var(--e-2); }
   .dir h2 { font-size: var(--t-xl); }
   .dir p { font-size: var(--t-s); color: var(--graphite-2); }
+  .dir--retenue { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; }
+  .dir--retenue h2 { font-size: var(--t-2xl); }
+  .dir--retenue p { font-size: var(--t-m); }
+  @media (max-width: 760px) { .dir--retenue { grid-template-columns: 1fr; } .dir--retenue h2 { font-size: var(--t-xl); } }
+  .sous-titre { font-size: var(--t-l); color: var(--graphite-2); }
 </style>
 </head>
 <body>
 <main class="cadre">
   <header class="tete">
     <span class="etiquette">AgentShift · directions réalistes · maquette d’écran</span>
-    <h1>Deux directions, en images réelles</h1>
+    <h1>Directions réalistes, en images réelles</h1>
     <p>Chaque page est une suite de plans que le défilement fait avancer. Les textes restent en HTML ; les images et les mouvements de caméra sont générés, la maquette est modélisée dans Blender.</p>
   </header>
+  <a class="dir dir--retenue verre verre--saut" href="combinee.html">
+    <img src="medias/maquette-ensemble.webp" alt="">
+    <div><span class="etat etat--cours">Direction retenue · 2 et 3 combinées</span><h2>De la maquette à l’atelier</h2><p>La maquette ouvre le récit : la caméra descend vers les trois paliers, puis entre dans l’atelier réel. MATIÈRE et COPILOTE se jouent à l’établi, SAUT revient à la maquette, et la maison livrée la prolonge. Projets et Contact ont chacun leur plan filmé. Pensée aussi pour le téléphone.</p></div>
+  </a>
+  <h2 class="sous-titre">Les deux directions d’origine</h2>
   <section class="grille" aria-label="Les deux directions">
     <a class="dir verre" href="atelier.html">
       <img src="medias/atelier-accueil.webp" alt="">

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgentShift · Atelier augmenté</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Direction réaliste 2 du site agentshift.pro : un atelier où chaque personne travaille avec un agent. Maquette d’écran, non publiée.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../direction-3d/lib/tokens.css">
+<link rel="stylesheet" href="../direction-3d/lib/composants.css">
+<style>
+  /* Un plan = une scène photographique collante plein écran que le défilement
+     fait avancer ; le texte vit dans un panneau de verre sur le tiers gauche. */
+  :root { --plan-hauteur: 280vh; }
+  .entete {
+    position: fixed; z-index: 10; top: calc(var(--e-3) + env(safe-area-inset-top, 0px));
+    left: max(var(--e-3), env(safe-area-inset-left, 0px)); right: max(var(--e-3), env(safe-area-inset-right, 0px));
+    display: flex; align-items: center; justify-content: space-between; gap: var(--e-3);
+    padding: var(--e-2) var(--e-2) var(--e-2) var(--e-4); border-radius: var(--r-pilule);
+  }
+  .marque { font: 600 var(--t-m)/1 var(--f-titre); text-decoration: none; display: flex; align-items: center; gap: var(--e-2); }
+  .marque i { width: 12px; height: 12px; border-radius: 50%; background: var(--or); box-shadow: 0 0 12px var(--halo-or); }
+  .entete nav { display: flex; gap: var(--e-4); }
+  .entete nav a { text-decoration: none; font-size: var(--t-s); color: var(--graphite-2); }
+  @media (max-width: 860px) { .entete nav { display: none; } }
+
+  .plan { position: relative; height: var(--plan-hauteur); }
+  .scene { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; background: var(--brume-2); }
+  .scene img, .scene video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 78% 50%; }
+  .scene video { opacity: 0; transition: opacity 400ms var(--courbe); }
+  .video-prete .scene video { opacity: 1; }
+  .scene::after { /* voile doux à gauche pour la lecture, comme une lumière qui retombe */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(232,230,225,.55) 0%, rgba(232,230,225,.18) 38%, transparent 60%);
+  }
+  .texte {
+    position: absolute; z-index: 2; inset: 0; display: grid; align-content: center;
+    padding-left: max(var(--e-5), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-3), env(safe-area-inset-right, 0px));
+    padding-block: var(--e-8) var(--e-6);
+  }
+  .panneau { max-width: 440px; min-width: 0; padding: var(--e-5); display: grid; gap: var(--e-4);
+    transform: translateY(calc((0.5 - var(--avance, 0)) * 40px)); }
+  @media (max-width: 700px) {
+    .texte { align-content: end; padding-left: max(var(--e-3), env(safe-area-inset-left, 0px)); }
+    .panneau { padding: var(--e-4); }
+    .scene::after { background: linear-gradient(0deg, rgba(232,230,225,.7) 0%, transparent 55%); }
+  }
+  h1 { font-size: clamp(1.9rem, 3vw, 2.7rem); }
+  h1 span { display: block; color: var(--graphite-2); }
+  h2 { font-size: clamp(1.6rem, 2.4vw, 2.2rem); }
+  .chapeau { font-size: var(--t-l); line-height: 1.5; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--e-3); }
+  .boucle { margin: 0; padding: 0; list-style: none; counter-reset: v; display: grid; gap: var(--e-2); }
+  .boucle li { counter-increment: v; position: relative; padding-left: 2.6em; font-size: var(--t-s); }
+  .boucle li::before { content: counter(v, decimal-leading-zero); position: absolute; left: 0; font: 500 var(--t-xs)/1.9 var(--f-code); color: var(--graphite-2); }
+  .palier dl { font-size: var(--t-s); }
+
+  .calme { position: relative; z-index: 1; background: var(--brume); padding-block: var(--e-8);
+    padding-left: max(var(--e-3), env(safe-area-inset-left, 0px)); padding-right: max(var(--e-3), env(safe-area-inset-right, 0px)); }
+  .calme > div { max-width: 1120px; margin: 0 auto; display: grid; gap: var(--e-5); }
+  .grille { display: grid; gap: var(--e-3); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .pied { text-align: center; padding: var(--e-6) var(--e-3) calc(var(--e-6) + env(safe-area-inset-bottom, 0px)); font: 400 var(--t-xs)/1.6 var(--f-code); color: var(--graphite-2); background: var(--brume); }
+</style>
+</head>
+<body>
+<header class="entete verre">
+  <a class="marque" href="../direction-3d/index.html"><i aria-hidden="true"></i>AgentShift</a>
+  <nav aria-label="Sections">
+    <a href="#organisation">Organisation</a><a href="#matiere">Approche</a><a href="#projets">Projets</a><a href="#contact">Contact</a>
+  </nav>
+  <a class="bouton bouton--or" href="/configurateur.html">Évaluer ma matière</a>
+</header>
+
+<main>
+  <section class="plan" id="accueil">
+    <div class="scene">
+      <img src="medias/atelier-accueil.webp" alt="Un atelier de fabrication lumineux : une fraiseuse découpe un panneau de bouleau, une artisane lit sa tablette, trois panneaux d’agents flottent autour d’elle." fetchpriority="high">
+      <video data-defile muted playsinline preload="auto" poster="medias/atelier-accueil.webp" aria-hidden="true"><source src="medias/atelier-accueil.mp4" type="video/mp4"></video>
+      <div class="texte"><div class="panneau verre verre--saut">
+        <span class="etat etat--cours">Copilotes en service sur votre matière</span>
+        <h1>Un modèle public connaît le résultat. <span>Votre entreprise connaît la manière.</span></h1>
+        <p class="chapeau">Je capte ce que vos équipes savent faire, je le structure en un jeu de référence, et je branche dessus des copilotes qui le respectent.</p>
+        <div class="actions"><a class="bouton bouton--or" href="/configurateur.html">Évaluer ma matière →</a><a class="bouton" href="#contact">Réserver un appel →</a></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="plan" id="organisation">
+    <div class="scene">
+      <img src="medias/atelier-boucle.webp" alt="L’atelier vu de la mezzanine : des fils d’or relient les personnes et les machines en une boucle, avec cinq étiquettes : circuler, calculer, déclarer, arbitrer, commander." loading="lazy">
+      <video data-defile muted playsinline preload="metadata" aria-hidden="true"><source src="medias/atelier-boucle.mp4" type="video/mp4"></video>
+      <div class="texte"><div class="panneau verre">
+        <span class="etiquette">Organisation cognitive</span>
+        <h2>Vos équipes décident. Les agents font circuler le reste.</h2>
+        <p>Chaque personne travaille avec un agent à côté d’elle. Autour, des automatisations tournent en continu sur la matière de l’entreprise.</p>
+        <ol class="boucle">
+          <li><b>Circuler.</b> Le relevé du chantier arrive à l’atelier sans ressaisie.</li>
+          <li><b>Calculer.</b> Le débit, les quantités et le prix se tiennent à jour.</li>
+          <li><b>Déclarer.</b> Un écart remonte avec sa source : mesuré, observé ou déclaré.</li>
+          <li><b>Arbitrer.</b> Le chef d’atelier tranche. L’agent applique.</li>
+          <li><b>Commander.</b> Le fichier d’usinage part à la machine.</li>
+        </ol>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="plan" id="matiere">
+    <div class="scene">
+      <img src="medias/atelier-matieres.webp" alt="Sur un établi : travertin, chêne, profilés d’acier, bloc de pisé, rouleau de lin, terrazzo recyclé, plaque de carbone, et une carte « Débit calculé : 14 panneaux »." loading="lazy">
+      <video data-defile muted playsinline preload="metadata" aria-hidden="true"><source src="medias/atelier-matieres.mp4" type="video/mp4"></video>
+      <div class="texte"><article class="panneau palier verre verre--socle">
+        <div class="palier__tete"><h2>MATIÈRE</h2><span class="etiquette">Palier 1 · le socle</span></div>
+        <p>Un socle propre et vérifié, avant tout agent. Brancher un agent sur une matière non convertie donne des réponses plausibles et fausses.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Vos sources inventoriées et extraites, vos référentiels réconciliés, et un jeu de 20 à 50 questions validées par vos anciens.</dd>
+          <dt>Délai</dt><dd>De huit à vingt jours d’intervention, sur quatre à huit semaines.</dd>
+          <dt>Consomme</dt><dd>De 9 600 à 24 000 € HT selon le volume et les sources.</dd>
+          <dt>Arrêt</dt><dd>À la fin de chaque jalon. Vous gardez ce qui est livré.</dd>
+        </dl>
+      </article></div>
+    </div>
+  </section>
+
+  <section class="plan" id="copilote">
+    <div class="scene">
+      <img src="medias/atelier-cote.webp" alt="Un menuisier trace une cote sur un caisson en contreplaqué ; une carte « Écart de cote : 2 mm, source : mesuré sur le relevé » propose d’arbitrer." loading="lazy">
+      <video data-defile muted playsinline preload="metadata" aria-hidden="true"><source src="medias/atelier-cote.mp4" type="video/mp4"></video>
+      <div class="texte"><article class="panneau palier verre">
+        <div class="palier__tete"><h2>COPILOTE</h2><span class="etiquette">Palier 2 · une équipe</span></div>
+        <p>Un copilote dans une équipe, sur un service, avec une métrique cible écrite au départ.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Un copilote en service, la mesure avant et après, et ce qu’il faut pour qu’il tourne sans nous.</dd>
+          <dt>Délai</dt><dd>Douze semaines, trois jours toutes les deux semaines.</dd>
+          <dt>Consomme</dt><dd>18 jours, soit 21 600 € HT. Sans socle propre, MATIÈRE passe d’abord.</dd>
+          <dt>Arrêt</dt><dd>Toutes les deux semaines. Vous gardez le copilote et sa mesure.</dd>
+        </dl>
+      </article></div>
+    </div>
+  </section>
+
+  <section class="plan" id="saut">
+    <div class="scene">
+      <img src="medias/ouvrage-livre.webp" alt="Une maison contemporaine livrée : mur en pisé, cuisine en chêne, plan en travertin, poutres en bois, et l’étiquette « Livré, conforme au plan »." loading="lazy">
+      <video data-defile muted playsinline preload="metadata" aria-hidden="true"><source src="medias/ouvrage-livre.mp4" type="video/mp4"></video>
+      <div class="texte"><article class="panneau palier verre verre--saut">
+        <div class="palier__tete"><h2>SAUT</h2><span class="etiquette">Palier 3 · l’organisation</span></div>
+        <p>Transformer l’organisation, service après service, sur l’année.</p>
+        <dl>
+          <dt>Vous obtenez</dt><dd>Une organisation où le savoir est capté, structuré et utilisé par des copilotes qui tournent sans nous.</dd>
+          <dt>Délai</dt><dd>Trois jours toutes les deux semaines, sur un an.</dd>
+          <dt>Consomme</dt><dd>Environ 100 000 € HT par an. Sans socle propre, MATIÈRE passe d’abord.</dd>
+          <dt>Arrêt</dt><dd>Toutes les deux semaines. Vous gardez tout ce qui est livré.</dd>
+        </dl>
+      </article></div>
+    </div>
+  </section>
+
+  <section class="calme" id="projets" aria-labelledby="t-projets"><div>
+    <span class="etiquette">Projets</span>
+    <h2 id="t-projets">Trois projets où je mets l’agentique à l’épreuve</h2>
+    <div class="grille">
+      <article class="projet verre"><span class="etat etat--cours">Essai en atelier · observé</span><h3>Marcel</h3><p>Le copilote d’atelier, en messagerie. Le peintre photographie, Marcel reconnaît le véhicule, range chaque photo dans le fil du chantier et impute les coûts.</p></article>
+      <article class="projet verre"><span class="etat etat--attend">Prototype · relevé</span><h3>Wood Maker</h3><p>Cuisine, dressing, bibliothèque : un seul modèle tient le projet, du relevé aux fichiers d’usinage, sans ressaisie.</p></article>
+      <article class="projet verre"><span class="etat">Recherche</span><h3>HALF</h3><p>L’intelligence coopérative sur le terrain : une base mobile électrique et open source, pilotée sous ROS2.</p></article>
+    </div>
+  </div></section>
+
+  <section class="calme" id="contact" aria-labelledby="t-contact"><div>
+    <article class="panneau verre verre--saut" style="transform:none">
+      <span class="etiquette">Contact · 45 minutes</span>
+      <h2 id="t-contact">Partir d’un de vos documents</h2>
+      <p>Envoyez un devis, un plan ou une fiche avant l’appel, je vous dis ce que votre matière vaut. Le compte rendu vous reste.</p>
+      <div class="actions"><a class="bouton bouton--or" href="/#contact">Réserver un appel →</a></div>
+    </article>
+  </div></section>
+</main>
+<footer class="pied">© 2026 AgentShift · David Carvalho · contact@agentshift.pro<br>Direction réaliste 2 · Atelier augmenté. Images et plans générés, maquette d’écran : le site en ligne fait foi.</footer>
+<script src="defilement.js" defer></script>
+</body>
+</html>

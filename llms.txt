@@ -1,0 +1,16 @@
+# AgentShift
+
+> AgentShift est le cabinet de David Carvalho, fondateur, basé à Antibes. Je ne déploie pas des outils IA : je conçois l’organisation cognitive qui les rend utiles. Elle part de votre matière, ce qui se fait et se dit chaque jour chez vous. Je capte ce que vos équipes savent faire, je le structure en un jeu de référence (golden dataset), puis je branche dessus des copilotes qui le respectent. Trois paliers, MATIÈRE, COPILOTE et SAUT, chacun avec sa condition d’arrêt. Le site est bilingue (français et anglais) à la même adresse.
+
+## Pages
+
+- [Accueil](https://agentshift.pro/) : l’approche, les trois paliers (MATIÈRE, COPILOTE, SAUT), le parcours du fondateur et les projets de recherche action agentique.
+- [Configurateur](https://agentshift.pro/configurateur.html) : choisissez votre ambition, décrivez votre matière et obtenez le palier, le délai et la condition d’arrêt. Sans e-mail.
+- [Golden dataset pour PME](https://agentshift.pro/golden-dataset-pme.html) : le jeu de référence qui dit si un agent IA répond juste, trois notions à ne pas confondre, comment il se construit et ce que vous gardez.
+- [Mentions légales](https://agentshift.pro/mentions-legales.html) : mentions légales du site.
+- [Politique de confidentialité](https://agentshift.pro/politique-confidentialite.html) : politique de confidentialité (RGPD) du site.
+- [Conditions générales de vente](https://agentshift.pro/cgv.html) : conditions générales de vente des prestations.
+
+## Contact
+
+contact@agentshift.pro
